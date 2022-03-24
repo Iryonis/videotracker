@@ -1,6 +1,6 @@
 # VideoTracker_G006
 
-Sa vas buguée ?!
+
 
 ## Getting started
 
