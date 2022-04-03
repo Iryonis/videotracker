@@ -1,20 +1,11 @@
-#import tkinter as tk
+
 from tkinter import *
 import PIL.Image, PIL.ImageTk
 from tkinter import ttk
-
-#class View(tk.Frame):
-#
-#    def __init__(self, parent):
-#        super().__init__(parent)
-#        
-#    
-#    def setController(self, controller):
-#        self.controller = controller
         
 from tkinter import *
 
-class Application():
+class View():
     
 
     def __init__(self):
@@ -35,6 +26,6 @@ class Application():
             
 
 if __name__ == '__main__':
-    app = Application()
+    app = View()
 
     

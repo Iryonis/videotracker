@@ -1,8 +1,8 @@
-
 import tkinter as tk
-import src.controllers.Controller
-import src.views.view
-import src.models.Video
+from src.controllers.Controller import Controller
+from src.views.view import View
+from src.models.Video import Video
+
 class Application(tk.Tk):
 
     def __init__(self):

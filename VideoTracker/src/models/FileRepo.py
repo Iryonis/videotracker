@@ -1,22 +1,20 @@
+from .Point import Point
+import csv
+
 class FileRepo:
-    def exportDataToString(dataTimes, dataPoints):
+    def exportDataToString(self, dataTimes, dataPoints):
         text = ""
+        delim = ";"
         for i in range(len(dataTimes)):
-            text += str(dataTimes[i])  + str(dataPoints[i].getX()) + str(dataPoints[i].getY()) + " \n"
+            text += str(dataTimes[i])  + delim + str(dataPoints[i].getX()) + delim + str(dataPoints[i].getY()) + " \n"
         return text
-            
-            
-    def exportDataToCsv(dataTimes, dataPoints):
-        fichier = open("releve_de_points.csv", mode='x')
-        res = exportDataToString(dataTimes, dataPoints)
-        fichier.write(res)
-        fichier.close()
-        
-        
-        
-        
-#Utiliser la fonction open pour créer un fichier
-#Se renseigner sur try cash
-        
-            
-        
+
+    def exportDataToCsv(self, dataTimes, dataPoints):
+        try:
+            fichier = open("releve_de_points.csv", mode='w')
+            res = self.exportDataToString(dataTimes, dataPoints)
+            fichier.write(res)
+            fichier.close()
+        except IOError:
+            print("Erreur lors de la creation du fichier, veuillez reessayer.\n")
+
