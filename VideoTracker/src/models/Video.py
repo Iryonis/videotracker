@@ -21,7 +21,7 @@ class Video:
 
     def open_file(self):
         self.pause = True
-        self.filename = "jamy.mp4"
+        self.filename = fd.askopenfilename()
         print(self.filename)
         self.cap = cv2.VideoCapture(Load_video)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
