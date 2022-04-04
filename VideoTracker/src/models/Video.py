@@ -1,11 +1,7 @@
 from tkinter import *
-from tkinter import messagebox
 import PIL.Image, PIL.ImageTk
 import cv2
-import sys
-sys.path.append("../")
-from Application import Application
-sys.path.pop()
+from Load_video import *
 
 
 class Video:
@@ -24,23 +20,26 @@ class Video:
 
 
     def open_file(self):
-        self.pause = False
+        self.pause = True
         self.filename = "jamy.mp4"
         print(self.filename)
-        self.cap = cv2.VideoCapture(self.filename)
+        self.cap = cv2.VideoCapture(Load_video)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = self.width, height = self.height)
 
+    def play_button(self):
+        self.pause = False
+
+    def pause_button(self):
+        self.pause = True
+
 
     # get only one frame    
     def get_frame(self):   
-        try:
-            if self.cap.isOpened():
-                ret, frame = self.cap.read()
-                return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
-        except:
-            messagebox.showerror(title='Alert', message='End of the video.')
+        if self.cap.isOpened():
+            ret, frame = self.cap.read()
+            return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
 
 
     def play_video(self):
@@ -57,8 +56,4 @@ class Video:
     def __del__(self):
         if self.cap.isOpened():
             self.cap.release()
-
-
-# Create a window and pass it to videoGUI Class
-Application(Tk(), "Video Tracker")
 
