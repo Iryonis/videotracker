@@ -7,19 +7,28 @@ from tkinter import filedialog as fd
 class Video:
 
     def __init__(self, window, window_title):
+        print("Video.py: __init__()")
         try:
             self.window = window
             self.window.title(window_title)
             self.canvas = Canvas(window)
             self.canvas.pack()
             self.delay = 15   # ms
-            #self.open_file()
-            #self.play_video()
+            print("Video.py: __init__() - OK")
+        except Exception as e:
+            print("Video.py: ERROR detected on init: [", e, "]")
+            return None
+
+    def open_window(self):
+        print("View.py: open_window called")
+        try:
             self.window.mainloop()
-        except:
+        except Exception as e:
+            print("View.py: ERROR detected on opening window: [", e, "]")
             return None
 
     def open_file(self):
+        print("Video.py: open_file()")
         self.pause = True
         self.filename = fd.askopenfilename()
         print(self.filename)
@@ -54,5 +63,6 @@ class Video:
         try:
             if self.cap.isOpened():
                 self.cap.release()
-        except:
-            print("No video source")
+        except Exception as e:
+            print("Video.py: ERROR detected on delete: [", e, "]")
+            return None
