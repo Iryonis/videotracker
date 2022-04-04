@@ -10,12 +10,16 @@ class Application(tk.Tk):
         self.title('Video Tracker')
         # create a view and place it on the root window
         view = View()
+        if view == None:
+            exit(84)
         # create a video model
         video = Video(view.get_window(), self.title)
+        if video == None:
+            exit(84)
         # create a controller
-        controller = Controller(video, view)
+        #controller = Controller(video, view)
         # set the controller to view
-        view.setController(controller)
+        view.setController(Controller(video, view))
 
 if __name__ == '__main__':
     app = Application()

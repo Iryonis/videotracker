@@ -7,14 +7,17 @@ from tkinter import filedialog as fd
 class Video:
 
     def __init__(self, window, window_title):
-        self.window = window
-        self.window.title(window_title)
-        self.canvas = Canvas(window)
-        self.canvas.pack()
-        self.delay = 15   # ms
-        #self.open_file()
-        #self.play_video()
-        self.window.mainloop()
+        try:
+            self.window = window
+            self.window.title(window_title)
+            self.canvas = Canvas(window)
+            self.canvas.pack()
+            self.delay = 15   # ms
+            #self.open_file()
+            #self.play_video()
+            self.window.mainloop()
+        except:
+            return None
 
     def open_file(self):
         self.pause = True
@@ -48,5 +51,8 @@ class Video:
 
     # Release the video source when the object is destroyed
     def __del__(self):
-        if self.cap.isOpened():
-            self.cap.release()
+        try:
+            if self.cap.isOpened():
+                self.cap.release()
+        except:
+            print("No video source")
