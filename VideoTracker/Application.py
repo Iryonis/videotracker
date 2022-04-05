@@ -8,20 +8,16 @@ class Application(tk.Tk):
     def __init__(self):
         super().__init__()
         self.title('Video Tracker')
-        # create a view and place it on the root window
         view = View()
         if view == None:
             exit(84)
         print("View created")
-        # create a video model
-        video = Video(view.get_window(), self.title)
+        video = Video(view.get_window())
         if video == None:
             exit(84)
         print("Video created")
-        # create a controller
         controller = Controller(video, view)
         print("Controller created")
-        # set the controller to view
         view.setController(controller)
         print("Controller set")
         view.create_button_echelle()

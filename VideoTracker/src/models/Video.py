@@ -6,11 +6,10 @@ from tkinter import filedialog as fd
 
 class Video:
 
-    def __init__(self, window, window_title):
+    def __init__(self, window):
         print("Video.py: __init__()")
         try:
             self.window = window
-            self.window.title(window_title)
             self.canvas = Canvas(self.window)
             self.canvas.pack()
             self.delay = 5
@@ -60,10 +59,10 @@ class Video:
         if not self.pause:
             self.window.after(self.delay, self.play_video)
 
-    def __del__(self):
+"""     def __del__(self):
         try:
             if self.cap.isOpened():
                 self.cap.release()
         except Exception as e:
             print("Video.py: ERROR detected on delete: [", e, "]")
-            return None
+            return None """
