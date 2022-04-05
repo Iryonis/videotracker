@@ -52,7 +52,7 @@ class Video:
                 ret, frame = self.cap.read()
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         except:
-            print("FIN DE LA VIDEO")     
+            print("The video has come to an end.")     
 
     def play_video(self):
         try:
@@ -63,7 +63,7 @@ class Video:
             if not self.pause:
                 self.window.after(self.delay, self.play_video)
         except:
-            print("ADRIEN DEDICACE")
+            print("The video has already ended or you haven't chosen a video.")
 
     def __del__(self):
         try:
