@@ -22,7 +22,7 @@ class Application(tk.Tk):
         print("Controller set")
         view.create_button_echelle()
         print("Button echelle created")
-        controller.open_window()
+        view.open_window()
 
 if __name__ == '__main__':
     app = Application()

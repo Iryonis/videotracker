@@ -54,7 +54,7 @@ class View():
 
     def load_video(self):
         print("View.py: load_video called")
-        self.controller.get_video()
+        self.video.open_file
 """         except Exception as e:
             print("View.py: ERROR detected while loading a video: [", e, "]")
             return None """

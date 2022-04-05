@@ -46,7 +46,6 @@ class Video:
     def get_frame(self):
         if self.cap.isOpened():
             ret, frame = self.cap.read()
-            print('un truc comme ça')
             return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
             
 

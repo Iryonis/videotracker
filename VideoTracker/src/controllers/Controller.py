@@ -1,6 +1,5 @@
 import tkinter as tk
-from ..models.Video import Video
-from ..views.view import View
+
 
 class Controller:
 
@@ -8,10 +7,3 @@ class Controller:
         print("Controller")
         self.video = video
         self.view = view
-
-    def get_video(self):
-        print("get_video")
-        self.video.open_file()
-
-    def open_window(self):
-        self.view.open_window()
