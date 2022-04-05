@@ -47,12 +47,13 @@ class View():
     def create_button_echelle(self):
         print("View.py: create_button_echelle called")
         Button(self.fenetre, text ="Définir l'échelle", command = self.load_video, font = ('calibri', 10, 'bold', 'underline',)).pack(side=RIGHT, padx=5, pady=5)
-        Button(self.fenetre, text ='|<<',font= 'calibri').pack(side=LEFT, padx=5, pady=5)
-        Button(self.fenetre, text ="|<",font= 'calibri').pack(side=LEFT, padx=5, pady=5)
-        button = Button(self.fenetre, text='||',font= 'calibri')
+        Button(self.fenetre, text ='|<<',font= ('calibri', 10, 'bold')).pack(side=LEFT, padx=5, pady=5)
+        Button(self.fenetre, text ="|<",font= ('calibri', 10, 'bold')).pack(side=LEFT, padx=5, pady=5)
+        button = Button(self.fenetre, text='||', font = ('calibri', 10, 'bold'))
+        button.config(command = lambda :changeText(button))
         button.pack(side=LEFT, padx=5, pady=5)
-        Button(self.fenetre, text ='>|',font= 'calibri').pack(side=LEFT, padx=5, pady=5)
-        Button(self.fenetre, text ='>>|',font= 'calibri').pack(side=LEFT, padx=5, pady=5)
+        Button(self.fenetre, text ='>|', font= ('calibri', 10, 'bold')).pack(side=LEFT, padx=5, pady=5)
+        Button(self.fenetre, text ='>>|',font= ('calibri', 10, 'bold')).pack(side=LEFT, padx=5, pady=5)
         return button
 
     def get_window(self):
