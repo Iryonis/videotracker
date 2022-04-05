@@ -6,8 +6,6 @@ from src.models.Video import Video
 class Application(tk.Tk):
 
     def __init__(self):
-        super().__init__()
-        self.title('Video Tracker')
         view = View()
         if view == None:
             exit(84)
@@ -20,8 +18,8 @@ class Application(tk.Tk):
         print("Controller created")
         view.setController(controller)
         print("Controller set")
-        view.create_button_echelle()
-        print("Button echelle created")
+        view.create_interface()
+        print("Interface created")
         view.open_window()
 
 if __name__ == '__main__':

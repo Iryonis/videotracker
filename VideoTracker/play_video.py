@@ -1,31 +1,25 @@
 import cv2
 import numpy as np
-from tkinter import *
+from tkinter import filedialog as fd
 
-class Video:
+filename = fd.askopenfilename()
+cap = cv2.VideoCapture(filename)
 
-    def __init__(self):
+if (cap.isOpened()== False): 
+  print("Error opening video stream or file")
 
+while(cap.isOpened()):
+  ret, frame = cap.read()
+  if ret == True:
 
-        cap = cv2.VideoCapture('jamy.mp4')
- 
-        if (cap.isOpened()== False):
-            print("Erreur lors de l'ouverture du fichier.")
- 
-        while(cap.isOpened()):
-            ret, frame = cap.read()
-            if ret == True:
- 
-                cv2.imshow('Frame',frame)
- 
-                if cv2.waitKey(25) & 0xFF == ord('q'):
-                    break
- 
-                else:
-                    break
- 
-        cap.release()
- 
-        cv2.destroyAllWindows()
+    cv2.imshow('Frame',frame)
 
-Video()
+    if cv2.waitKey(25) & 0xFF == ord('q'):
+      break
+
+  else: 
+    break
+
+cap.release()
+
+cv2.destroyAllWindows()
