@@ -1,4 +1,5 @@
 from tkinter import *
+import tkinter
 import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter import filedialog as fd
@@ -10,8 +11,8 @@ class Video:
         print("Video.py: __init__()")
         try:
             self.window = window
-            self.canvas = Canvas(self.window)
-            self.canvas.pack()
+            self.canvas = Canvas(self.window, bg="black")
+            self.canvas.pack(side=TOP)
             self.delay = 5
             print("Video.py: __init__() - OK")
         except Exception as e:
@@ -29,16 +30,12 @@ class Video:
     def open_file(self):
         print("Video.py: open_file()")
         self.pause = False
-        self.filename = fd.askopenfilename()
+        self.filename ="c:/Users/Guilhem/VideoTracker/VideoTracker/jamy.mp4"
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width = self.width, height = self.height)
-        ret, frame = self.get_frame()
-        if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
 
     def play_button(self):
         self.pause = False
@@ -49,7 +46,9 @@ class Video:
     def get_frame(self):
         if self.cap.isOpened():
             ret, frame = self.cap.read()
+            print('un truc comme ça')
             return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
+            
 
     def play_video(self):
         ret, frame = self.get_frame()

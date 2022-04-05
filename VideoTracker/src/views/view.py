@@ -35,7 +35,7 @@ class View():
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
         tk.Button(buttonsFrame, text ="Définir l'échelle", command = self.load_video, font = ('calibri', 10, 'bold', 'underline',)).pack(side= tk.RIGHT, padx=5, pady=5)
-        tk.Button(buttonsFrame, text ='|<<',font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
+        tk.Button(buttonsFrame, text ='|<<',font= ('calibri', 10, 'bold'), command = lambda: self.controller.video.play_video()).pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ="|<",font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         button = tk.Button(buttonsFrame, text='||', font = ('calibri', 10, 'bold'))
         button.config(command = lambda :changeText(button))
@@ -54,8 +54,7 @@ class View():
 
     def load_video(self):
         print("View.py: load_video called")
-        try:
-            self.controller.get_video()
-        except Exception as e:
+        self.controller.get_video()
+"""         except Exception as e:
             print("View.py: ERROR detected while loading a video: [", e, "]")
-            return None
+            return None """
