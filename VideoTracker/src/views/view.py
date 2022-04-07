@@ -1,12 +1,6 @@
 import PIL.Image, PIL.ImageTk
 import tkinter as tk
 
-def changeText(button):
-    if(button['text']=='||'):
-        button['text']='>'
-    else:
-        button['text']='||'
-
 def saveAs():
     print("Save as...")
 
@@ -22,6 +16,7 @@ class View():
             self.fenetre = tk.Tk()
             self.fenetre.withdraw
             self.fenetre.title("Video Tracker")
+            self.fenetre.state('zoomed')
         except Exception as e:
             print("View.py: ERROR detected on init: [", e, "]")
             return None
@@ -54,7 +49,7 @@ class View():
         tk.Button(buttonsFrame, text ='|<<',font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ="|<",font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         button = tk.Button(buttonsFrame, text='>', font = ('calibri', 10, 'bold'))
-        button.config(command = lambda: [changeText(button), self.controller.video.play_video()])
+        button.config(command = lambda: self.controller.video.play_or_pause(button))
         button.pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ='>|', font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ='>>|',font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)

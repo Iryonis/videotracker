@@ -10,7 +10,6 @@ class Video:
         print("Video.py: __init__()")
         try:
             self.window = window
-            self.window.attributes("-zoomed", True)
             self.canvas = Canvas(self.window, bg="black")
             self.canvas.pack(side=TOP, expand=True)
             self.delay = 15
@@ -35,7 +34,8 @@ class Video:
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.delay = int(1000/self.cap.get(cv2.CAP_PROP_FPS))
+        self.delay = 1
+        #self.delay = int(600/self.cap.get(cv2.CAP_PROP_FPS))
         self.canvas.config(width = self.width, height = self.height)
         print(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         ret, frame = self.get_frame()
@@ -43,11 +43,17 @@ class Video:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
 
-    def play_button(self):
-        self.pause = False
+    def play_or_pause(self, button):
+        self.changeText(button)
+        self.pause = not self.pause
+        if not self.pause:
+            self.play_video()
 
-    def pause_button(self):
-        self.pause = True
+    def changeText(self, button):
+        if(button['text']=='||'):
+            button['text']='>'
+        else:
+            button['text']='||'
 
     def get_frame(self):
         try:
