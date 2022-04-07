@@ -12,7 +12,7 @@ class Video:
             self.window = window
             self.canvas = Canvas(self.window, bg="black")
             self.canvas.pack(side=TOP, expand=True)
-            self.delay = 15
+            self.delay = 18
             print("Video.py: __init__() - OK")
         except Exception as e:
             print("Video.py: ERROR detected on init: [", e, "]")
@@ -28,14 +28,12 @@ class Video:
 
     def open_file(self):
         print("Video.py: open_file()")
-        self.pause = False
+        self.pause = True
         self.filename = fd.askopenfilename()
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.delay = 1
-        #self.delay = int(600/self.cap.get(cv2.CAP_PROP_FPS))
         self.canvas.config(width = self.width, height = self.height)
         print(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         ret, frame = self.get_frame()
