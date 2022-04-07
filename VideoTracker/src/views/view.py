@@ -1,7 +1,6 @@
 import PIL.Image, PIL.ImageTk
 import tkinter as tk
 
-
 def changeText(button):
     if(button['text']=='||'):
         button['text']='>'
@@ -52,10 +51,10 @@ class View():
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
         tk.Button(buttonsFrame, text ="Définir l'échelle", font = ('calibri', 10, 'bold', 'underline',)).pack(side= tk.RIGHT, padx=5, pady=5)
-        tk.Button(buttonsFrame, text ='|<<',font= ('calibri', 10, 'bold'), command = lambda: self.controller.video.play_video()).pack(side = tk.LEFT, padx=5, pady=5)
+        tk.Button(buttonsFrame, text ='|<<',font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ="|<",font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
-        button = tk.Button(buttonsFrame, text='||', font = ('calibri', 10, 'bold'))
-        button.config(command = lambda: changeText(button))
+        button = tk.Button(buttonsFrame, text='>', font = ('calibri', 10, 'bold'))
+        button.config(command = lambda: [changeText(button), self.controller.video.play_video()])
         button.pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ='>|', font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)
         tk.Button(buttonsFrame, text ='>>|',font= ('calibri', 10, 'bold')).pack(side = tk.LEFT, padx=5, pady=5)

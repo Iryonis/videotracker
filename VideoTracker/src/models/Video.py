@@ -10,9 +10,10 @@ class Video:
         print("Video.py: __init__()")
         try:
             self.window = window
+            self.window.attributes("-zoomed", True)
             self.canvas = Canvas(self.window, bg="black")
-            self.canvas.pack(side=TOP)
-            self.delay = 5
+            self.canvas.pack(side=TOP, expand=True)
+            self.delay = 15
             print("Video.py: __init__() - OK")
         except Exception as e:
             print("Video.py: ERROR detected on init: [", e, "]")
@@ -34,7 +35,9 @@ class Video:
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+        self.delay = int(1000/self.cap.get(cv2.CAP_PROP_FPS))
         self.canvas.config(width = self.width, height = self.height)
+        print(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         ret, frame = self.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
@@ -64,6 +67,7 @@ class Video:
                 self.window.after(self.delay, self.play_video)
         except:
             print("The video has already ended or you haven't chosen a video.")
+        
 
     def __del__(self):
         try:
