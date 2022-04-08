@@ -46,11 +46,11 @@ class View():
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
         tk.Button(buttonsFrame, text ="Définir l'échelle", font = ('calibri', 20, 'bold', 'underline',)).pack(side= tk.RIGHT, padx=20, pady=7)
-        tk.Button(buttonsFrame, text ="|<",font= ('calibri', 20, 'bold')).pack(side = tk.LEFT, padx=30, pady=7)
+        tk.Button(buttonsFrame, text ="|<",font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.previousFrame()).pack(side = tk.LEFT, padx=30, pady=7)
         button = tk.Button(buttonsFrame, text='>', font = ('calibri', 20, 'bold'))
         button.config(command = lambda: self.controller.video.play_or_pause(button))
         button.pack(side = tk.LEFT, padx=10, pady=7)
-        tk.Button(buttonsFrame, text ='>|', font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.addOneFrame()).pack(side = tk.LEFT, padx=30, pady=7)
+        tk.Button(buttonsFrame, text ='>|', font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.nextFrame()).pack(side = tk.LEFT, padx=30, pady=7)
         return button
 
     def get_window(self):
