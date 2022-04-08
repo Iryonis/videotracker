@@ -53,6 +53,12 @@ class Video:
         else:
             button['text']='||'
 
+    def addOneFrame(self):
+        if not self.pause:
+            self.pause
+        self.window.after(1, self.play_video)
+        print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+
     def get_frame(self):
         try:
             if self.cap.isOpened():
