@@ -1,8 +1,10 @@
 from .Point import Point
-import csv
 from tkinter import filedialog as fd
 
 class FileRepo:
+
+    def __init__(self):
+        pass
 
     def exportDataToString(self, dataTimes, dataPoints):
         text = ""
@@ -13,7 +15,7 @@ class FileRepo:
 
     def exportDataToCsv(self, dataTimes, dataPoints):
         try:
-            filepath = fd.asksaveasfilename(initialdir= '~/VideoTracker/VideoTracker/resources', initialfile="releve_de_points", filetypes=[("CSV Files", '*.csv')])
+            filepath = fd.asksaveasfilename(initialdir= '~/VideoTracker/VideoTracker/resources/resultats', initialfile="releve_de_points.csv", defaultextension=".csv", filetypes=[("CSV Files", '*.csv')])
             file = open(filepath, mode='w')
             res = self.exportDataToString(dataTimes, dataPoints)
             file.write(res)

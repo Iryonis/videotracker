@@ -37,7 +37,12 @@ class View():
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu = menuFile)
         menuFile.add_command(label='Load the video', command = self.load_video)
-        menuFile.add_command(label="Save as", command = lambda: self.controller.filerepo.exportDataToCsv(self, dataTimes, dataPoints))
+        Point1 = self.controller.point(0,2)
+        Point2 = self.controller.point(1.2,4)
+        Point3 = self.controller.point(1111,-4)
+        dataTimes = [0,1,2]
+        dataPoints = [Point1, Point2, Point3]
+        menuFile.add_command(label="Save as", command = lambda: self.controller.filerepo.exportDataToCsv([], dataTimes, dataPoints))
         menuFile.add_command(label="Save", command = save)
 
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
