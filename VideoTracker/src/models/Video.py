@@ -54,17 +54,14 @@ class Video:
             button['text']='||'
 
     def nextFrame(self):
-        if not self.pause:
-            self.pause
         self.window.after(1, self.play_video)
         print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
     
     def previousFrame(self):
-        if not self.pause:
-            self.pause
         frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame-1)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame-2)
         print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+        self.play_video()
 
     def get_frame(self):
         try:
