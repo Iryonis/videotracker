@@ -1,4 +1,3 @@
-from .Point import Point
 from tkinter import filedialog as fd
 
 class FileRepo:
