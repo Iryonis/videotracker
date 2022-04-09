@@ -1,5 +1,6 @@
 from .Point import Point
 import csv
+from tkinter import filedialog as fd
 
 class FileRepo:
     def exportDataToString(self, dataTimes, dataPoints):
@@ -17,4 +18,10 @@ class FileRepo:
             fichier.close()
         except IOError:
             print("Erreur lors de la creation du fichier, veuillez reessayer.\n")
+
+    def save_as():
+        dirName = fd.askdirectory()
+        return dirName
+
+
 

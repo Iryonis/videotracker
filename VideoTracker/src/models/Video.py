@@ -29,7 +29,7 @@ class Video:
     def open_file(self):
         print("Video.py: open_file()")
         self.pause = True
-        self.filename = fd.askopenfilename()
+        self.filename = fd.askopenfilename(initialdir='~/VideoTracker/VideoTracker/resources/videos', filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
         print(self.filename)
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)

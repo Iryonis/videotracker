@@ -2,6 +2,7 @@ import tkinter as tk
 from src.controllers.Controller import Controller
 from src.views.view import View
 from src.models.Video import Video
+from src.models.FileRepo import FileRepo
 
 class Application(tk.Tk):
 
@@ -14,7 +15,7 @@ class Application(tk.Tk):
         if video == None:
             exit(84)
         print("Video created")
-        controller = Controller(video, view)
+        controller = Controller(video, view, FileRepo)
         print("Controller created")
         view.setController(controller)
         print("Controller set")
