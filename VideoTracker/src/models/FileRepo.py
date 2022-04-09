@@ -3,6 +3,7 @@ import csv
 from tkinter import filedialog as fd
 
 class FileRepo:
+
     def exportDataToString(self, dataTimes, dataPoints):
         text = ""
         delim = ";"
@@ -12,16 +13,15 @@ class FileRepo:
 
     def exportDataToCsv(self, dataTimes, dataPoints):
         try:
-            fichier = open("releve_de_points.csv", mode='w')
+            filepath = fd.asksaveasfilename(initialdir= '~/VideoTracker/VideoTracker/resources', initialfile="releve_de_points", filetypes=[("CSV Files", '*.csv')])
+            file = open(filepath, mode='w')
             res = self.exportDataToString(dataTimes, dataPoints)
-            fichier.write(res)
-            fichier.close()
+            file.write(res)
+            file.close()
         except IOError:
             print("Erreur lors de la creation du fichier, veuillez reessayer.\n")
 
-    def save_as():
-        dirName = fd.askdirectory()
-        return dirName
+
 
 
 

@@ -37,7 +37,7 @@ class View():
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu = menuFile)
         menuFile.add_command(label='Load the video', command = self.load_video)
-        menuFile.add_command(label="Save as")
+        menuFile.add_command(label="Save as", command = lambda: self.controller.filerepo.exportDataToCsv(self, dataTimes, dataPoints))
         menuFile.add_command(label="Save", command = save)
 
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
