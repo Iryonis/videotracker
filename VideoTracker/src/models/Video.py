@@ -3,6 +3,7 @@ import tkinter
 import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter import filedialog as fd
+import webbrowser
 
 class Video:
 
@@ -94,10 +95,16 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
+        
+    def aboutApp(self):
+        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
 
     def aboutUs(self):
-        pass
-    
+        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
+   
+    def aboutProject(self):
+        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
+
     def aboutApp(self):
         pass
 
