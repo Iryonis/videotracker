@@ -1,5 +1,6 @@
-import PIL.Image, PIL.ImageTk
 import tkinter as tk
+import cv2
+import PIL.Image, PIL.ImageTk
 
 def save():
     print("Saved")
@@ -50,11 +51,6 @@ class View():
         menuFile.add_separator()
         menuFile.add_command(label = "Quit the app", underline = 0, command = lambda: self.controller.video.quit(self.fenetre))
         self.fenetre.bind_all('<Control-Key-q>', lambda q : self.controller.video.quit(self.fenetre))
-        menuAbout = tk.Menu(menuBar, tearoff=0)
-        menuBar.add_cascade(label="About", menu = menuAbout)
-        menuAbout.add_command(label = "The app", command = self.controller.video.aboutApp())
-        menuAbout.add_command(label = "Us", command = lambda: self.controller.video.aboutUs())
-        menuAbout.add_command(label = "The project", command = lambda: self.controller.video.aboutProject())
 
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
@@ -64,6 +60,16 @@ class View():
         button.config(command = lambda: self.controller.video.play_or_pause(button))
         button.pack(side = tk.LEFT, padx=10, pady=7)
         tk.Button(buttonsFrame, text ='>|', font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.nextFrame()).pack(side = tk.LEFT, padx=30, pady=7)
+
+        timelineFrame = tk.Frame(self.fenetre)
+        timelineFrame.pack(side = tk.BOTTOM, fill = tk.X)
+        self.frame_number = cv2.CAP_PROP_POS_FRAMES
+        self.timeline = tk.Scale(timelineFrame, orient = 'horizontal', width= 15, from_= 0, to=self.frame_number-1, showvalue=0)
+        self.timeline.pack(side = tk.BOTTOM, fill= tk.X)
+        self.timeline.bind("<Button-1>", lambda x: (self.controller.video.set_to_frame(self.timeline.get())))
+        tk.Scale(self.fenetre, orient='horizontal', from_=0, to=10,
+        resolution=0.1, tickinterval=2, length=350,
+        label='Volume (db)')
 
     def get_window(self):
         print("View.py: get_window called")

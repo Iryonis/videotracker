@@ -1,9 +1,8 @@
 from tkinter import *
-import tkinter
 import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter import filedialog as fd
-import webbrowser
+from tkinter import messagebox
 
 class Video:
 
@@ -26,12 +25,11 @@ class Video:
         except Exception as e:
             print("View.py: ERROR detected on opening window: [", e, "]")
             return None
-
+  
     def open_file(self):
         print("Video.py: open_file()")
         self.pause = True
-        self.filename = fd.askopenfilename(initialdir='~/VideoTracker/VideoTracker/resources/videos', filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
-        print(self.filename)
+        self.filename = fd.askopenfilename(initialdir='~/ProjetVideoTracker/VideoTracker/resources/videos', filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -43,10 +41,14 @@ class Video:
             self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
 
     def play_or_pause(self, button):
-        self.changeText(button)
-        self.pause = not self.pause
-        if not self.pause:
-            self.play_video()
+        try:
+            if self.cap.isOpened():
+                self.changeText(button)
+                self.pause = not self.pause
+                if not self.pause:
+                    self.play_video()
+        except:
+            messagebox.showerror("Warning", "You haven't opened a video for the moment ; thus, you can't launch it.")
 
     def changeText(self, button):
         if(button['text']=='||'):
@@ -78,11 +80,16 @@ class Video:
             if ret:
                 self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+
             if not self.pause:
                 self.window.after(self.delay, self.play_video)
         except:
-            print("The video has already ended or you haven't chosen a video.")
-        
+            messagebox.showerror("Error", "The video has already ended or you haven't chosen a video.")
+
+    def set_to_frame(self, frame_number):
+        self.frame_number = frame_number
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
+        self.play_video()
 
     def __del__(self):
         try:
@@ -95,18 +102,5 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
-        
-    def aboutApp(self):
-        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
 
-    def aboutUs(self):
-        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
-   
-    def aboutProject(self):
-        webbrowser.open_new_tab("https://gitlab.emi.u-bordeaux.fr/gubonnefous/videotracker_g006/-/blob/main/README.md")
 
-    def aboutApp(self):
-        pass
-
-    def aboutProject(self):
-        pass
