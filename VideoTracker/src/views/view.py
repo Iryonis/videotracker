@@ -36,14 +36,22 @@ class View():
         self.fenetre.config(menu=menuBar)
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu = menuFile)
-        menuFile.add_command(label='Load the video', command = self.load_video)
+        menuFile.add_command(label='Load the video', underline = 1, command = self.load_video, )
+        #self.fenetre.bind_all('<Control-Key-o>', self.load_video())
         Point1 = self.controller.point(0,2)
         Point2 = self.controller.point(1.2,4)
         Point3 = self.controller.point(1111,-4)
         dataTimes = [0,1,2]
         dataPoints = [Point1, Point2, Point3]
-        menuFile.add_command(label="Save as", command = lambda: self.controller.filerepo.exportDataToCsv([], dataTimes, dataPoints))
-        menuFile.add_command(label="Save", command = save)
+        menuFile.add_command(label="Save as", underline = 1, command = lambda: self.controller.filerepo.exportDataToCsv([], dataTimes, dataPoints))
+        menuFile.add_command(label="Save", underline = 0, command = save)
+        menuFile.add_separator()
+        menuFile.add_command(label = "Quit the app", underline = 0, command = lambda: self.controller.video.quit(self.fenetre))
+        menuAbout = tk.Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="About", menu = menuAbout)
+        menuAbout.add_command(label = "The app", command = self.controller.video.aboutApp())
+        menuAbout.add_command(label = "Us", command = self.controller.video.aboutUs())
+        menuAbout.add_command(label = "The project", command = self.controller.video.aboutProject())
 
         buttonsFrame = tk.Frame(self.fenetre, bg='#FFFFFF')
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
@@ -53,7 +61,6 @@ class View():
         button.config(command = lambda: self.controller.video.play_or_pause(button))
         button.pack(side = tk.LEFT, padx=10, pady=7)
         tk.Button(buttonsFrame, text ='>|', font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.nextFrame()).pack(side = tk.LEFT, padx=30, pady=7)
-        return button
 
     def get_window(self):
         print("View.py: get_window called")

@@ -90,3 +90,16 @@ class Video:
         except Exception as e:
             print("Video.py: ERROR detected on delete: [", e, "]")
             return None 
+
+    def quit(self, window):
+        self.__del__()
+        window.destroy()
+
+    def aboutUs(self):
+        pass
+    
+    def aboutApp(self):
+        pass
+
+    def aboutProject(self):
+        pass
