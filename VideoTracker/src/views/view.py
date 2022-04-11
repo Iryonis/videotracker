@@ -1,6 +1,7 @@
 import tkinter as tk
 import cv2
 import PIL.Image, PIL.ImageTk
+import platform
 
 def save():
     print("Saved")
@@ -14,6 +15,10 @@ class View():
             self.fenetre = tk.Tk()
             self.fenetre.withdraw
             self.fenetre.title("Video Tracker")
+            if platform.system() == 'windows':
+                self.fenetre.state('zoomed', True)
+            elif platform.system() == "linux":
+                self.fenetre.state('-zoomed', True)
             self.fenetre.state('zoomed')
         except Exception as e:
             print("View.py: ERROR detected on init: [", e, "]")
