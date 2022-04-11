@@ -7,7 +7,6 @@ from src.models.FileRepo import FileRepo
 
 
 class Application(tk.Tk):
-
     def __init__(self):
         view = View()
         if view == None:
@@ -25,5 +24,6 @@ class Application(tk.Tk):
         print("Interface created")
         view.open_window()
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     app = Application()

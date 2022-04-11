@@ -1,7 +1,7 @@
 import tkinter as tk
 
-class Controller:
 
+class Controller:
     def __init__(self, video, view, point, filerepo):
         print("Controller")
         self.video = video

@@ -5,8 +5,8 @@ from tkinter import filedialog as fd
 from tkinter import messagebox
 import os
 
-class Video:
 
+class Video:
     def __init__(self, window):
         print("Video.py: __init__()")
         try:
@@ -26,20 +26,26 @@ class Video:
         except Exception as e:
             print("View.py: ERROR detected on opening window: [", e, "]")
             return None
-  
+
     def open_file(self):
         print("Video.py: open_file()")
         self.pause = True
-        self.filename = fd.askopenfilename(initialdir=os.getcwd()+"/VideoTracker/resources/videos", filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
+        self.filename = fd.askopenfilename(
+            initialdir=os.getcwd() + "/VideoTracker/resources/videos",
+            filetypes=(
+                ("MP4 Files", "*.mp4"),
+                ("MKV Files", "*.mkv"),
+            ),
+        )
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.config(width = self.width, height = self.height)
+        self.canvas.config(width=self.width, height=self.height)
         print(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
         ret, frame = self.get_frame()
         if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
+            self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
 
     def play_or_pause(self, button):
         try:
@@ -49,21 +55,24 @@ class Video:
                 if not self.pause:
                     self.play_video()
         except:
-            messagebox.showerror("Warning", "You haven't opened a video for the moment ; thus, you can't launch it.")
+            messagebox.showerror(
+                "Warning",
+                "You haven't opened a video for the moment ; thus, you can't launch it.",
+            )
 
     def changeText(self, button):
-        if(button['text']=='||'):
-            button['text']='>'
+        if button["text"] == "||":
+            button["text"] = ">"
         else:
-            button['text']='||'
+            button["text"] = "||"
 
     def nextFrame(self):
         self.window.after(1, self.play_video)
         print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
-    
+
     def previousFrame(self):
         frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame-2)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
         print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
         self.play_video()
 
@@ -73,19 +82,21 @@ class Video:
                 ret, frame = self.cap.read()
                 return (ret, cv2.cvtColor(frame, cv2.COLOR_BGR2RGB))
         except:
-            print("The video has come to an end.")     
+            print("The video has come to an end.")
 
     def play_video(self):
         try:
             ret, frame = self.get_frame()
             if ret:
-                self.photo = PIL.ImageTk.PhotoImage(image = PIL.Image.fromarray(frame))
-                self.canvas.create_image(0, 0, image = self.photo, anchor = NW)
+                self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
+                self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
 
             if not self.pause:
                 self.window.after(self.delay, self.play_video)
         except:
-            messagebox.showerror("Error", "The video has already ended or you haven't chosen a video.")
+            messagebox.showerror(
+                "Error", "The video has already ended or you haven't chosen a video."
+            )
 
     def set_to_frame(self, frame_number):
         self.frame_number = frame_number
@@ -98,16 +109,14 @@ class Video:
                 self.cap.release()
         except Exception as e:
             print("Video.py: ERROR detected on delete: [", e, "]")
-            return None 
+            return None
 
     def quit(self, window):
         self.__del__()
         window.destroy()
 
     def timelineFollow(self):
-        self.frameNow = cv2.CAP_PROP_POS_FRAMES-1
+        self.frameNow = cv2.CAP_PROP_POS_FRAMES - 1
         self.frameTotal = cv2.CAP_PROP_FRAME_COUNT
-        self.ratio = self.frameTotal//self.frameNow
+        self.ratio = self.frameTotal // self.frameNow
         return self.ratio
-
-

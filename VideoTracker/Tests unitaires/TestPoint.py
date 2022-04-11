@@ -1,8 +1,8 @@
 from src.models.Point import Point
 import unittest
 
-class Test_Point(unittest.TestCase):
 
+class Test_Point(unittest.TestCase):
     def setUp(self):
         self.Point = Point()
         self.X1 = 6
@@ -19,7 +19,7 @@ class Test_Point(unittest.TestCase):
     def test_setXPetitEntier(self):
         self.Point.setX(self.X1)
         self.assertTrue(self.Point.getX() is self.X1)
-    
+
     def test_setYPetitEntier(self):
         self.Point.setY(self.Y1)
         self.assertTrue(self.Point.getY() is self.Y1)
@@ -27,17 +27,17 @@ class Test_Point(unittest.TestCase):
     def test_XNegatif(self):
         self.Point.setX(self.X2)
         self.assertTrue(self.Point.getX() is self.X2)
-    
+
     def test_YDeuxChiffres(self):
-        self.Point.setY(self.Y2)   
+        self.Point.setY(self.Y2)
         self.assertTrue(self.Point.getY() is self.Y2)
-        
+
     def test_YNegatif(self):
         self.Point.setX(self.Y3)
         self.assertTrue(self.Point.getX() is self.Y3)
 
     def test_XDeuxChiffres(self):
-        self.Point.setY(self.X3)   
+        self.Point.setY(self.X3)
         self.assertTrue(self.Point.getY() is self.X3)
 
     def test_XDecimal(self):
@@ -45,7 +45,7 @@ class Test_Point(unittest.TestCase):
         self.assertTrue(self.Point.getX() is self.X4)
 
     def test_YDecimal(self):
-        self.Point.setY(self.Y4)   
+        self.Point.setY(self.Y4)
         self.assertTrue(self.Point.getY() is self.Y4)
 
     def test_XLettres(self):
@@ -53,8 +53,9 @@ class Test_Point(unittest.TestCase):
         self.assertTrue(self.Point.getX() is self.X5)
 
     def test_YLettres(self):
-        self.Point.setY(self.Y5)   
+        self.Point.setY(self.Y5)
         self.assertTrue(self.Point.getY() is self.Y5)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main(verbosity=2)
