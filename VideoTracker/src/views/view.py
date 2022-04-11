@@ -49,8 +49,8 @@ class View():
         Point3 = self.controller.point(1111,-4)
         dataTimes = [0,1,2]
         dataPoints = [Point1, Point2, Point3]
-        menuFile.add_command(label="Save as", underline = 1, command = lambda: self.controller.filerepo.exportDataToCsv([], dataTimes, dataPoints))
-        self.fenetre.bind_all('<Control-Key-a>', lambda a : self.controller.filerepo.exportDataToCsv([], dataTimes, dataPoints))
+        menuFile.add_command(label="Save as", underline = 1, command = lambda: self.controller.filerepo.exportDataToCsv(self.controller.filerepo, dataTimes, dataPoints))
+        self.fenetre.bind_all('<Control-Key-a>', lambda a : self.controller.filerepo.exportDataToCsv(self.controller.filerepo, dataTimes, dataPoints))
         menuFile.add_command(label="Save", underline = 0, command = lambda: save)
         self.fenetre.bind_all('<Control-Key-s>', lambda s : save)
         menuFile.add_separator()

@@ -3,6 +3,7 @@ import PIL.Image, PIL.ImageTk
 import cv2
 from tkinter import filedialog as fd
 from tkinter import messagebox
+import os
 
 class Video:
 
@@ -29,7 +30,7 @@ class Video:
     def open_file(self):
         print("Video.py: open_file()")
         self.pause = True
-        self.filename = fd.askopenfilename(initialdir='~/ProjetVideoTracker/VideoTracker/resources/videos', filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
+        self.filename = fd.askopenfilename(initialdir=os.getcwd()+"/VideoTracker/resources/videos", filetypes = (("MP4 Files","*.mp4"),("MKV Files","*.mkv"),))
         self.cap = cv2.VideoCapture(self.filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -102,5 +103,11 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
+
+    def timelineFollow(self):
+        self.frameNow = cv2.CAP_PROP_POS_FRAMES-1
+        self.frameTotal = cv2.CAP_PROP_FRAME_COUNT
+        self.ratio = self.frameTotal//self.frameNow
+        return self.ratio
 
 
