@@ -56,10 +56,13 @@ class View():
         buttonsFrame.pack(side = tk.BOTTOM, fill =tk.X)
         tk.Button(buttonsFrame, text ="Définir l'échelle", font = ('calibri', 20, 'bold', 'underline',)).pack(side= tk.RIGHT, padx=20, pady=7)
         tk.Button(buttonsFrame, text ="|<", font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.previousFrame()).pack(side = tk.LEFT, padx=30, pady=7)
+        self.fenetre.bind_all('<Left>', lambda l : self.controller.video.previousFrame())
         button = tk.Button(buttonsFrame, text='>', font = ('calibri', 20, 'bold'))
         button.config(command = lambda: self.controller.video.play_or_pause(button))
+        self.fenetre.bind_all('<space>', lambda s : self.controller.video.play_or_pause(button))
         button.pack(side = tk.LEFT, padx=10, pady=7)
         tk.Button(buttonsFrame, text ='>|', font= ('calibri', 20, 'bold'), command = lambda: self.controller.video.nextFrame()).pack(side = tk.LEFT, padx=30, pady=7)
+        self.fenetre.bind_all('<Right>', lambda r : self.controller.video.nextFrame())
 
         timelineFrame = tk.Frame(self.fenetre)
         timelineFrame.pack(side = tk.BOTTOM, fill = tk.X)
