@@ -45,7 +45,12 @@ class View:
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu=menuFile)
         menuFile.add_command(
-            label="Load the video", underline=1, command=self.load_video
+            label="Load the video",
+            underline=1,
+            command=lambda: [
+                self.load_video,
+                self.controller.video.resetStopwatch(stopwatch),
+            ],
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
         Point1 = self.controller.point(0, 2)
@@ -96,6 +101,11 @@ class View:
 
         buttonsFrame = tk.Frame(self.fenetre, bg="#FFFFFF")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
+        self.running = False
+        self.update_time = ""
+        self.secondssSw = 0
+        stopwatch = tk.Label(buttonsFrame, text="00", font=("Arial", 20))
+        stopwatch.place(relx=0.5, rely=0.5, anchor="center")
         tk.Button(
             buttonsFrame,
             text="Définir l'échelle",
@@ -110,9 +120,14 @@ class View:
             buttonsFrame,
             text="Beginning of the video",
             font=("calibri", 18),
-            command= lambda: self.controller.video.firstFrame(),
+            command=lambda: [
+                self.controller.video.firstFrame(),
+                self.controller.video.resetStopwatch(stopwatch),
+            ],
         ).pack(side=tk.LEFT, padx=30, pady=7)
-        self.fenetre.bind_all("<Control-Key-b>", lambda b: self.controller.video.firstFrame())
+        self.fenetre.bind_all(
+            "<Control-Key-b>", lambda b: self.controller.video.firstFrame()
+        )
         tk.Button(
             buttonsFrame,
             text="|<",
@@ -121,7 +136,12 @@ class View:
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
         button = tk.Button(buttonsFrame, text=">", font=("calibri", 20, "bold"))
-        button.config(command=lambda: self.controller.video.play_or_pause(button))
+        button.config(
+            command=lambda: [
+                self.controller.video.play_or_pause(button),
+                self.controller.video.startStopwatch(stopwatch),
+            ]
+        )
         self.fenetre.bind_all(
             "<space>", lambda s: self.controller.video.play_or_pause(button)
         )

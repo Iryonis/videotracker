@@ -68,35 +68,40 @@ class Video:
         try:
             if self.cap.isOpened():
                 self.window.after(1, self.play_video)
-                print("La frame actuelle (nextFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
-        except:
-            messagebox.showerror(
-                    "Error", "You haven't opened a video yet."
+                print(
+                    "La frame actuelle (nextFrame) est :",
+                    self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
+        except:
+            messagebox.showerror("Error", "You haven't opened a video yet.")
 
     def previousFrame(self):
         try:
             if self.cap.isOpened():
                 frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
-                print("La frame actuelle (previousFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+                print(
+                    "La frame actuelle (previousFrame) est :",
+                    self.cap.get(cv2.CAP_PROP_POS_FRAMES),
+                )
                 self.play_video()
         except:
-            messagebox.showerror(
-                    "Error", "You haven't opened a video yet."
-                )
+            messagebox.showerror("Error", "You haven't opened a video yet.")
 
     def firstFrame(self):
         try:
             if self.cap.isOpened():
-                self.frameOne = cv2.CAP_PROP_FRAME_COUNT - (cv2.CAP_PROP_FRAME_COUNT -1)
+                self.frameOne = cv2.CAP_PROP_FRAME_COUNT - (
+                    cv2.CAP_PROP_FRAME_COUNT - 1
+                )
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frameOne)
-                print("La frame actuelle (firstFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+                print(
+                    "La frame actuelle (firstFrame) est :",
+                    self.cap.get(cv2.CAP_PROP_POS_FRAMES),
+                )
                 self.play_video()
         except:
-                messagebox.showerror(
-                    "Error", "You haven't opened a video yet."
-                )
+            messagebox.showerror("Error", "You haven't opened a video yet.")
 
     def get_frame(self):
         try:
@@ -130,3 +135,29 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
+
+    def startStopwatch(self, stopwatch):
+        if not self.running:
+            stopwatch.after(1000)
+            self.update(stopwatch)
+            self.running = True
+
+    def pauseStopwatch(self, stopwatch):
+        if self.running:
+            stopwatch.after_cancel(self.update_time)
+            self.running = False
+
+    def resetStopwatch(self, stopwatch):
+        if self.running:
+            stopwatch.after_cancel(self.update_time)
+            self.running = False
+        self.secondsSw = 0
+        stopwatch.config(text="00")
+
+    def update(self, stopwatch):
+        self.secondsSw += 1
+        seconds_string = (
+            f"{self.secondsSw}" if self.secondsSw > 9 else f"0{self.secondsSw}"
+        )
+        stopwatch.config(text=seconds_string)
+        self.update_time = stopwatch.after(1000, self.update)
