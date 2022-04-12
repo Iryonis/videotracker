@@ -1,4 +1,8 @@
-from src.models.Point import Point
+import sys
+import os
+
+sys.path.append(os.getcwd() + "/VideoTracker/src/models")
+from Point import Point
 import unittest
 
 

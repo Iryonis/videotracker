@@ -59,9 +59,9 @@ class Video:
             )
 
     def changeText(self, button):
-        if button["text"] == "||":
+        if self.pause == False:
             button["text"] = ">"
-        else:
+        elif self.pause == True:
             button["text"] = "||"
 
     def nextFrame(self):
@@ -91,10 +91,9 @@ class Video:
     def firstFrame(self):
         try:
             if self.cap.isOpened():
-                self.frameOne = cv2.CAP_PROP_FRAME_COUNT - (
-                    cv2.CAP_PROP_FRAME_COUNT - 1
-                )
-                self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frameOne)
+                if self.pause == False:
+                    self.pause = True
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 print(
                     "La frame actuelle (firstFrame) est :",
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
@@ -102,6 +101,12 @@ class Video:
                 self.play_video()
         except:
             messagebox.showerror("Error", "You haven't opened a video yet.")
+
+    def currentFrame(self):
+        frameActuelle = "The current frame is : " + str(
+            int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+        )
+        messagebox.showinfo("Current Frame", frameActuelle)
 
     def get_frame(self):
         try:
@@ -135,29 +140,3 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
-
-    def startStopwatch(self, stopwatch):
-        if not self.running:
-            stopwatch.after(1000)
-            self.update(stopwatch)
-            self.running = True
-
-    def pauseStopwatch(self, stopwatch):
-        if self.running:
-            stopwatch.after_cancel(self.update_time)
-            self.running = False
-
-    def resetStopwatch(self, stopwatch):
-        if self.running:
-            stopwatch.after_cancel(self.update_time)
-            self.running = False
-        self.secondsSw = 0
-        stopwatch.config(text="00")
-
-    def update(self, stopwatch):
-        self.secondsSw += 1
-        seconds_string = (
-            f"{self.secondsSw}" if self.secondsSw > 9 else f"0{self.secondsSw}"
-        )
-        stopwatch.config(text=seconds_string)
-        self.update_time = stopwatch.after(1000, self.update)

@@ -1,3 +1,4 @@
+from imghdr import tests
 import sys
 import os
 
@@ -41,7 +42,7 @@ class Test_FileRepo(unittest.TestCase):
         self.assertTrue(
             filecmp.cmp(
                 os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv",
-                "verificationtrue.csv",
+                os.getcwd() + "/VideoTracker/Tests unitaires/verificationtrue.csv",
             )
         )
 
@@ -53,7 +54,7 @@ class Test_FileRepo(unittest.TestCase):
         self.assertFalse(
             filecmp.cmp(
                 os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv",
-                "verificationfalse.csv",
+                os.getcwd() + "/VideoTracker/Tests unitaires/verificationfalse.csv",
             )
         )
 

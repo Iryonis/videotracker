@@ -47,10 +47,7 @@ class View:
         menuFile.add_command(
             label="Load the video",
             underline=1,
-            command=lambda: [
-                self.load_video,
-                self.controller.video.resetStopwatch(stopwatch),
-            ],
+            command=self.load_video,
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
         Point1 = self.controller.point(0, 2)
@@ -61,34 +58,37 @@ class View:
         menuFile.add_command(
             label="Save as",
             underline=1,
-            command=lambda: self.controller.filerepo.exportDataToCsv(
+            command=lambda: self.controller.filerepo.saveAs(
                 self.controller.filerepo,
                 dataTimes,
                 dataPoints,
-                fd.asksaveasfilename(
-                    initialdir=os.getcwd() + "/VideoTracker/resources/resultats",
-                    initialfile="releve_de_points.csv",
-                    defaultextension=".csv",
-                    filetypes=[("CSV Files", "*.csv")],
-                ),
             ),
         )
         self.fenetre.bind_all(
             "<Control-Key-a>",
-            lambda a: self.controller.filerepo.exportDataToCsv(
+            lambda a: self.controller.filerepo.saveAs(
                 self.controller.filerepo,
                 dataTimes,
                 dataPoints,
-                fd.asksaveasfilename(
-                    initialdir=os.getcwd() + "/VideoTracker/resources/resultats",
-                    initialfile="releve_de_points.csv",
-                    defaultextension=".csv",
-                    filetypes=[("CSV Files", "*.csv")],
-                ),
             ),
         )
-        menuFile.add_command(label="Save", underline=0, command=lambda: save)
-        self.fenetre.bind_all("<Control-Key-s>", lambda s: save)
+        menuFile.add_command(
+            label="Save",
+            underline=0,
+            command=lambda: self.controller.filerepo.save(
+                self.controller.filerepo,
+                dataTimes,
+                dataPoints,
+            ),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-s>",
+            lambda s: self.controller.filerepo.save(
+                self.controller.filerepo,
+                dataTimes,
+                dataPoints,
+            ),
+        )
         menuFile.add_separator()
         menuFile.add_command(
             label="Quit the app",
@@ -98,14 +98,25 @@ class View:
         self.fenetre.bind_all(
             "<Control-Key-q>", lambda q: self.controller.video.quit(self.fenetre)
         )
+        menuTools = tk.Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Tools", menu=menuTools)
+        menuTools.add_command(
+            label="Current frame",
+            underline=1,
+            command=lambda: self.controller.video.currentFrame(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-u>", lambda u: self.controller.video.currentFrame()
+        )
+        menuTools.add_command(
+            label="Go to frame",
+            underline=0,
+            command=lambda: self.goToFrameWindow(),
+        )
+        self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
 
         buttonsFrame = tk.Frame(self.fenetre, bg="#FFFFFF")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
-        self.running = False
-        self.update_time = ""
-        self.secondssSw = 0
-        stopwatch = tk.Label(buttonsFrame, text="00", font=("Arial", 20))
-        stopwatch.place(relx=0.5, rely=0.5, anchor="center")
         tk.Button(
             buttonsFrame,
             text="Définir l'échelle",
@@ -120,10 +131,7 @@ class View:
             buttonsFrame,
             text="Beginning of the video",
             font=("calibri", 18),
-            command=lambda: [
-                self.controller.video.firstFrame(),
-                self.controller.video.resetStopwatch(stopwatch),
-            ],
+            command=lambda: self.controller.video.firstFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all(
             "<Control-Key-b>", lambda b: self.controller.video.firstFrame()
@@ -137,10 +145,7 @@ class View:
         self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
         button = tk.Button(buttonsFrame, text=">", font=("calibri", 20, "bold"))
         button.config(
-            command=lambda: [
-                self.controller.video.play_or_pause(button),
-                self.controller.video.startStopwatch(stopwatch),
-            ]
+            command=lambda: self.controller.video.play_or_pause(button),
         )
         self.fenetre.bind_all(
             "<space>", lambda s: self.controller.video.play_or_pause(button)
@@ -165,3 +170,18 @@ class View:
     def load_video(self):
         print("View.py: open_file called")
         self.controller.video.open_file()
+
+    def goToFrameWindow(self):
+        F_Window = tk.Tk()
+        F_Window.title("Choose when to go")
+        F_Window.geometry("800x500")
+        F_Window.resizable(False, False)
+        tk.Button(
+            F_Window,
+            text="OK",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.chooseValue(),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
+    def chooseValue(self):
+        pass
