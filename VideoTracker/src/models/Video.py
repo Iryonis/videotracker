@@ -17,7 +17,6 @@ class Video:
             print("Video.py: __init__() - OK")
         except Exception as e:
             print("Video.py: ERROR detected on init: [", e, "]")
-            return None
 
     def open_window(self):
         print("View.py: open_window called")
@@ -25,7 +24,6 @@ class Video:
             self.window.mainloop()
         except Exception as e:
             print("View.py: ERROR detected on opening window: [", e, "]")
-            return None
 
     def open_file(self):
         print("Video.py: open_file()")
@@ -67,14 +65,38 @@ class Video:
             button["text"] = "||"
 
     def nextFrame(self):
-        self.window.after(1, self.play_video)
-        print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+        try:
+            if self.cap.isOpened():
+                self.window.after(1, self.play_video)
+                print("La frame actuelle (nextFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+        except:
+            messagebox.showerror(
+                    "Error", "You haven't opened a video yet."
+                )
 
     def previousFrame(self):
-        frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
-        print("La frame actuelle est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
-        self.play_video()
+        try:
+            if self.cap.isOpened():
+                frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
+                print("La frame actuelle (previousFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+                self.play_video()
+        except:
+            messagebox.showerror(
+                    "Error", "You haven't opened a video yet."
+                )
+
+    def firstFrame(self):
+        try:
+            if self.cap.isOpened():
+                self.frameOne = cv2.CAP_PROP_FRAME_COUNT - (cv2.CAP_PROP_FRAME_COUNT -1)
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, self.frameOne)
+                print("La frame actuelle (firstFrame) est :", self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+                self.play_video()
+        except:
+                messagebox.showerror(
+                    "Error", "You haven't opened a video yet."
+                )
 
     def get_frame(self):
         try:
@@ -98,25 +120,13 @@ class Video:
                 "Error", "The video has already ended or you haven't chosen a video."
             )
 
-    def set_to_frame(self, frame_number):
-        self.frame_number = frame_number
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame_number)
-        self.play_video()
-
     def __del__(self):
         try:
             if self.cap.isOpened():
                 self.cap.release()
         except Exception as e:
             print("Video.py: ERROR detected on delete: [", e, "]")
-            return None
 
     def quit(self, window):
         self.__del__()
         window.destroy()
-
-    def timelineFollow(self):
-        self.frameNow = cv2.CAP_PROP_POS_FRAMES - 1
-        self.frameTotal = cv2.CAP_PROP_FRAME_COUNT
-        self.ratio = self.frameTotal // self.frameNow
-        return self.ratio

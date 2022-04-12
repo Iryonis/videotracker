@@ -108,6 +108,13 @@ class View:
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
+            text="Beginning of the video",
+            font=("calibri", 18),
+            command= lambda: self.controller.video.firstFrame(),
+        ).pack(side=tk.LEFT, padx=30, pady=7)
+        self.fenetre.bind_all("<Control-Key-b>", lambda b: self.controller.video.firstFrame())
+        tk.Button(
+            buttonsFrame,
             text="|<",
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.previousFrame(),
@@ -126,33 +133,6 @@ class View:
             command=lambda: self.controller.video.nextFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all("<Right>", lambda r: self.controller.video.nextFrame())
-
-        timelineFrame = tk.Frame(self.fenetre)
-        timelineFrame.pack(side=tk.BOTTOM, fill=tk.X)
-        self.frame_number = cv2.CAP_PROP_POS_FRAMES
-        self.timeline = tk.Scale(
-            timelineFrame,
-            orient="horizontal",
-            width=15,
-            from_=0,
-            to=self.frame_number - 1,
-            showvalue=0,
-        )
-        self.timeline.pack(side=tk.BOTTOM, fill=tk.X)
-        self.timeline.bind(
-            "<Button-1>",
-            lambda x: (self.controller.video.set_to_frame(self.timeline.get())),
-        )
-        tk.Scale(
-            self.fenetre,
-            orient="horizontal",
-            from_=0,
-            to=10,
-            resolution=0.1,
-            tickinterval=2,
-            length=350,
-            label="Volume (db)",
-        )
 
     def get_window(self):
         print("View.py: get_window called")
