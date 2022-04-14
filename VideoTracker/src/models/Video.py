@@ -29,7 +29,7 @@ class Video:
         print("Video.py: open_file()")
         self.pause = True
         self.filename = fd.askopenfilename(
-            initialdir=os.getcwd() + "/VideoTracker/resources/videos",
+            initialdir= (os.getcwd() + "/VideoTracker/resources/videos"),
             filetypes=(
                 ("MP4 Files", "*.mp4"),
                 ("MKV Files", "*.mkv"),
@@ -54,7 +54,7 @@ class Video:
                     self.play_video()
         except:
             messagebox.showerror(
-                "Warning",
+                "Error - Button Play/Pause",
                 "You haven't opened a video for the moment ; thus, you can't launch it.",
             )
 
@@ -73,7 +73,7 @@ class Video:
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
         except:
-            messagebox.showerror("Error", "You haven't opened a video yet.")
+            messagebox.showerror("Error - Next Frame", "You haven't opened a video yet.")
 
     def previousFrame(self):
         try:
@@ -86,7 +86,7 @@ class Video:
                 )
                 self.play_video()
         except:
-            messagebox.showerror("Error", "You haven't opened a video yet.")
+            messagebox.showerror("Error - Previous Frame", "You haven't opened a video yet.")
 
     def firstFrame(self):
         try:
@@ -103,10 +103,12 @@ class Video:
             messagebox.showerror("Error", "You haven't opened a video yet.")
 
     def currentFrame(self):
-        frameActuelle = "The current frame is : " + str(
-            int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
-        )
-        messagebox.showinfo("Current Frame", frameActuelle)
+        try:
+            if self.cap.isOpened():
+                frameActuelle = "The current frame is : " + str(int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))) + "/" + str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+                messagebox.showinfo("Current Frame", frameActuelle)
+        except:
+            messagebox.showerror("Error - Current Frame", "You haven't opened a video yet.")
 
     def get_frame(self):
         try:
@@ -127,7 +129,7 @@ class Video:
                 self.window.after(self.delay, self.play_video)
         except:
             messagebox.showerror(
-                "Error", "The video has already ended or you haven't chosen a video."
+                "Error - Playing the video", "The video has already ended or you haven't chosen a video."
             )
 
     def __del__(self):

@@ -17,11 +17,10 @@ class View:
             self.fenetre = tk.Tk()
             self.fenetre.withdraw
             self.fenetre.title("Video Tracker")
-            if platform.system() == "windows":
-                self.fenetre.state("zoomed", True)
-            elif platform.system() == "linux":
-                self.fenetre.state("-zoomed", True)
-            self.fenetre.state("zoomed")
+            if platform.system() == 'Windows':
+                self.fenetre.attributes("zoomed", True)
+            elif platform.system() == 'Linux' :
+                self.fenetre.attributes("-zoomed", True)
         except Exception as e:
             print("View.py: ERROR detected on init: [", e, "]")
             return None
