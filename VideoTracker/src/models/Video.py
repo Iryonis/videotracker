@@ -11,7 +11,7 @@ class Video:
         print("Video.py: __init__()")
         try:
             self.window = window
-            self.canvas = Canvas(self.window,width=1000, height=600 ,bg="black")
+            self.canvas = Canvas(self.window,width=1000, height=600 ,bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
             self.delay = 18
             print("Video.py: __init__() - OK")

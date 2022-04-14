@@ -11,6 +11,7 @@ class View:
         print("View.py: View created")
         try:
             self.fenetre = tk.Tk()
+            self.fenetre.configure(bg="#C1F4C5")
             self.fenetre.withdraw
             self.fenetre.title("Video Tracker")
             if platform.system() == 'Windows':
@@ -35,7 +36,7 @@ class View:
 
     def create_interface(self):
         print("View.py: create_button_echelle called")
-        menuBar = tk.Menu(self.fenetre)
+        menuBar = tk.Menu(self.fenetre,bg="#FF9F45")
         self.fenetre.config(menu=menuBar)
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu=menuFile)
@@ -108,13 +109,19 @@ class View:
             underline=0,
             command=lambda: self.goToFrameWindow(),
         )
+        menuHelp = tk.Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Help", menu=menuHelp)
+        menuHelp.add_command(
+            label="Shortcut",
+            underline=0)
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
 
-        buttonsFrame = tk.Frame(self.fenetre, bg="#FFFFFF")
+        buttonsFrame = tk.Frame(self.fenetre, bg="#FF9F45")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         tk.Button(
             buttonsFrame,
             text="Définir l'échelle",
+            bg="#FF9F45",
             activebackground='#E9967A',
             font=(
                 "calibri",
@@ -124,6 +131,7 @@ class View:
         tk.Button(
             buttonsFrame,
             text="Beginning of the video",
+            bg="#FF9F45",
             activebackground='#E9967A',
             font=("calibri", 18),
             command=lambda: self.controller.video.firstFrame(),
@@ -134,13 +142,14 @@ class View:
         tk.Button(
             buttonsFrame,
             text="|<",
+            bg="#FF9F45",
             activebackground='#E9967A',
             width = 10,
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.previousFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
-        button = tk.Button(buttonsFrame, text=">", activebackground='#E9967A', width = 15, font=("calibri", 25, "bold"))
+        button = tk.Button(buttonsFrame, text=">",bg="#FF9F45", activebackground='#E9967A', width = 15, font=("calibri", 25, "bold"))
         button.config(
             command=lambda: self.controller.video.play_or_pause(button),
         )
@@ -151,6 +160,7 @@ class View:
         tk.Button(
             buttonsFrame,
             text=">|",
+            bg="#FF9F45",
             activebackground='#E9967A',
             width = 10,
             font=("calibri", 20, "bold"),
