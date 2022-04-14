@@ -2,7 +2,7 @@ from imghdr import tests
 import sys
 import os
 
-sys.path.append(os.getcwd() + "/VideoTracker/src/models")
+sys.path.append(os.getcwd() + "/src/models")
 from FileRepo import FileRepo
 from Point import Point
 

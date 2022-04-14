@@ -23,7 +23,7 @@ class FileRepo:
     def exportDataToCsv(self, dataTimes, dataPoints, filepath):
         try:
             file = open(filepath, mode="w")
-            text = self.exportDataToString(dataTimes, dataPoints)
+            text = self.exportDataToString(self, dataTimes, dataPoints)
             file.write(text)
             file.close()
         except IOError:
@@ -31,7 +31,7 @@ class FileRepo:
 
     def saveAs(self, dataTimes, dataPoints):
         self.filepath = fd.asksaveasfilename(
-            initialdir=os.getcwd() + "/VideoTracker/resources/resultats",
+            initialdir=os.getcwd() + "/resources/resultats",
             initialfile="releve_de_points.csv",
             defaultextension=".csv",
             filetypes=[("CSV Files", "*.csv")],

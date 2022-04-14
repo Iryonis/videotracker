@@ -1,7 +1,7 @@
 import sys
 import os
 
-sys.path.append(os.getcwd() + "/VideoTracker/src/models")
+sys.path.append(os.getcwd() + "/src/models")
 from Point import Point
 import unittest
 

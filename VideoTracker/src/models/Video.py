@@ -29,7 +29,7 @@ class Video:
         print("Video.py: open_file()")
         self.pause = True
         self.filename = fd.askopenfilename(
-            initialdir= (os.getcwd() + "/VideoTracker/resources/videos"),
+            initialdir= (os.getcwd() + "/resources/videos"),
             filetypes=(
                 ("MP4 Files", "*.mp4"),
                 ("MKV Files", "*.mkv"),

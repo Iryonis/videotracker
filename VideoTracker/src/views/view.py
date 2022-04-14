@@ -1,10 +1,6 @@
 import tkinter as tk
-import cv2
 import PIL.Image, PIL.ImageTk
 import platform
-import os
-from tkinter import filedialog as fd
-from time import strftime
 
 def save():
     print("Saved")
