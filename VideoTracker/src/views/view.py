@@ -4,7 +4,7 @@ import PIL.Image, PIL.ImageTk
 import platform
 import os
 from tkinter import filedialog as fd
-
+from time import strftime
 
 def save():
     print("Saved")
@@ -129,6 +129,7 @@ class View:
         tk.Button(
             buttonsFrame,
             text="Beginning of the video",
+            activebackground='blue',
             font=("calibri", 18),
             command=lambda: self.controller.video.firstFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7)
@@ -137,12 +138,12 @@ class View:
         )
         tk.Button(
             buttonsFrame,
-            text="|<",
+            text="     |<     ",
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.previousFrame(),
-        ).pack(side=tk.LEFT, padx=30, pady=7)
+        ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
-        button = tk.Button(buttonsFrame, text=">", font=("calibri", 20, "bold"))
+        button = tk.Button(buttonsFrame, text="     >     ", font=("calibri", 20, "bold"))
         button.config(
             command=lambda: self.controller.video.play_or_pause(button),
         )
@@ -152,10 +153,10 @@ class View:
         button.pack(side=tk.LEFT, padx=10, pady=7)
         tk.Button(
             buttonsFrame,
-            text=">|",
+            text="     >|     ",
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.nextFrame(),
-        ).pack(side=tk.LEFT, padx=30, pady=7)
+        ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all("<Right>", lambda r: self.controller.video.nextFrame())
 
     def get_window(self):
