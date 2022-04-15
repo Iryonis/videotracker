@@ -1,5 +1,6 @@
 from tkinter import filedialog as fd
 import os
+import platform
 
 
 class FileRepo:
@@ -30,8 +31,12 @@ class FileRepo:
             print("Erreur lors de la creation du fichier, veuillez reessayer.\n")
 
     def saveAs(self, dataTimes, dataPoints):
+        if platform.system() == "Windows":
+            self.nextPath = "/VideoTracker/resources/resultats"
+        elif platform.system() == "Linux":
+            self.nextPath = "/resources/resultats"
         self.filepath = fd.asksaveasfilename(
-            initialdir=os.getcwd() + "/resources/resultats",
+            initialdir=os.getcwd() + self.nextPath,
             initialfile="releve_de_points.csv",
             defaultextension=".csv",
             filetypes=[("CSV Files", "*.csv")],

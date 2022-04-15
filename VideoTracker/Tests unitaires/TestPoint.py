@@ -1,7 +1,12 @@
 import sys
 import os
+import platform
 
-sys.path.append(os.getcwd() + "/src/models")
+if platform.system() == "Windows":
+    nextPathA = "/VideoTracker/src/models"
+elif platform.system() == "Linux":
+    nextPathA = "/src/models"
+sys.path.append(os.getcwd() + nextPathA)
 from Point import Point
 import unittest
 

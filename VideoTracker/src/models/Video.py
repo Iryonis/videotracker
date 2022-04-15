@@ -4,14 +4,16 @@ import cv2
 from tkinter import filedialog as fd
 from tkinter import messagebox
 import os
+import platform
 
 
 class Video:
     def __init__(self, window):
         print("Video.py: __init__()")
         try:
+            print(os.getcwd())
             self.window = window
-            self.canvas = Canvas(self.window,width=1000, height=600 ,bg="#03051E")
+            self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
             self.delay = 18
             print("Video.py: __init__() - OK")
@@ -27,9 +29,13 @@ class Video:
 
     def open_file(self):
         print("Video.py: open_file()")
+        if platform.system() == "Windows":
+            self.nextPath = "/VideoTracker/resources/videos"
+        elif platform.system() == "Linux":
+            self.nextPath = "/resources/videos"
         self.pause = True
         self.filename = fd.askopenfilename(
-            initialdir= (os.getcwd() + "/resources/videos"),
+            initialdir=(os.getcwd() + self.nextPath),
             filetypes=(
                 ("MP4 Files", "*.mp4"),
                 ("MKV Files", "*.mkv"),
@@ -73,7 +79,9 @@ class Video:
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
         except:
-            messagebox.showerror("Error - Next Frame", "You haven't opened a video yet.")
+            messagebox.showerror(
+                "Error - Next Frame", "You haven't opened a video yet."
+            )
 
     def previousFrame(self):
         try:
@@ -86,7 +94,9 @@ class Video:
                 )
                 self.play_video()
         except:
-            messagebox.showerror("Error - Previous Frame", "You haven't opened a video yet.")
+            messagebox.showerror(
+                "Error - Previous Frame", "You haven't opened a video yet."
+            )
 
     def firstFrame(self):
         try:
@@ -105,10 +115,17 @@ class Video:
     def currentFrame(self):
         try:
             if self.cap.isOpened():
-                frameActuelle = "The current frame is : " + str(int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))) + "/" + str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+                frameActuelle = (
+                    "The current frame is : "
+                    + str(int(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
+                    + "/"
+                    + str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+                )
                 messagebox.showinfo("Current Frame", frameActuelle)
         except:
-            messagebox.showerror("Error - Current Frame", "You haven't opened a video yet.")
+            messagebox.showerror(
+                "Error - Current Frame", "You haven't opened a video yet."
+            )
 
     def get_frame(self):
         try:
@@ -129,7 +146,8 @@ class Video:
                 self.window.after(self.delay, self.play_video)
         except:
             messagebox.showerror(
-                "Error - Playing the video", "The video has already ended or you haven't chosen a video."
+                "Error - Playing the video",
+                "The video has already ended or you haven't chosen a video.",
             )
 
     def __del__(self):
@@ -142,3 +160,6 @@ class Video:
     def quit(self, window):
         self.__del__()
         window.destroy()
+
+    def closeHelp(self, H_Window):
+        H_Window.quit()

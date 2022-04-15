@@ -1,8 +1,13 @@
 from imghdr import tests
 import sys
 import os
+import platform
 
-sys.path.append(os.getcwd() + "/src/models")
+if platform.system() == "Windows":
+    nextPathA = "/VideoTracker/src/models"
+elif platform.system() == "Linux":
+    nextPathA = "/src/models"
+sys.path.append(os.getcwd() + nextPathA)
 from FileRepo import FileRepo
 from Point import Point
 
@@ -21,6 +26,12 @@ class Test_FileRepo(unittest.TestCase):
         self.fileCSV = FileRepo()
         self.testTrue = "0;0;2 \n1;1.2;4 \n2;1111;-4 \n"
         self.testFalse = "0;1;2\n1;3;4 2;1111;-4\n"
+        if platform.system() == "Windows":
+            self.nextPath = "/VideoTracker/resources/resultats"
+            self.nextPathV = "/VideoTracker/Tests unitaires"
+        elif platform.system() == "Linux":
+            self.nextPath = "/resources/resultats"
+            self.nextPathV = "/Tests unitaires"
 
     # Test pour exportDataToString :
 
@@ -35,26 +46,22 @@ class Test_FileRepo(unittest.TestCase):
     # Test pour exportDataToCsv :
 
     def test_exportDataToCsvTrue(self):
-        filepath = (
-            os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv"
-        )
+        filepath = os.getcwd() + self.nextPath + "/releve_de_points.csv"
         self.fileCSV.exportDataToCsv(self.dataTimes, self.dataPoints, filepath)
         self.assertTrue(
             filecmp.cmp(
-                os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv",
-                os.getcwd() + "/VideoTracker/Tests unitaires/verificationtrue.csv",
+                os.getcwd() + self.nextPath + "/releve_de_points.csv",
+                os.getcwd() + self.nextPathV + "/verificationtrue.csv",
             )
         )
 
     def test_exportDataToCsvFalse(self):
-        filepath = (
-            os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv"
-        )
+        filepath = os.getcwd() + self.nextPath + "/releve_de_points.csv"
         self.fileCSV.exportDataToCsv(self.dataTimes, self.dataPoints, filepath)
         self.assertFalse(
             filecmp.cmp(
-                os.getcwd() + "/VideoTracker/resources/resultats/releve_de_points.csv",
-                os.getcwd() + "/VideoTracker/Tests unitaires/verificationfalse.csv",
+                os.getcwd() + self.nextPath + "/releve_de_points.csv",
+                os.getcwd() + self.nextPathV + "/verificationfalse.csv",
             )
         )
 

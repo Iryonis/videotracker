@@ -2,21 +2,18 @@ import tkinter as tk
 import PIL.Image, PIL.ImageTk
 import platform
 
-def save():
-    print("Saved")
-
 
 class View:
     def __init__(self):
         print("View.py: View created")
         try:
             self.fenetre = tk.Tk()
-            self.fenetre.configure(bg="#C1F4C5")
+            self.fenetre.configure(bg="black")
             self.fenetre.withdraw
             self.fenetre.title("Video Tracker")
-            if platform.system() == 'Windows':
-                self.fenetre.attributes("zoomed", True)
-            elif platform.system() == 'Linux' :
+            if platform.system() == "Windows":
+                self.fenetre.attributes("-fullscreen", True)
+            elif platform.system() == "Linux":
                 self.fenetre.attributes("-zoomed", True)
         except Exception as e:
             print("View.py: ERROR detected on init: [", e, "]")
@@ -36,7 +33,7 @@ class View:
 
     def create_interface(self):
         print("View.py: create_button_echelle called")
-        menuBar = tk.Menu(self.fenetre,bg="#FF9F45")
+        menuBar = tk.Menu(self.fenetre)
         self.fenetre.config(menu=menuBar)
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu=menuFile)
@@ -112,17 +109,17 @@ class View:
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
         menuHelp.add_command(
-            label="Shortcut",
-            underline=0)
-        self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
+            label="Shortcut", underline=1, command=lambda: self.goToFrameHelp()
+        )
+        self.fenetre.bind_all("<Control-Key-h>", lambda h: self.goToFrameHelp())
 
-        buttonsFrame = tk.Frame(self.fenetre, bg="#FF9F45")
+        buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         tk.Button(
             buttonsFrame,
-            text="Définir l'échelle",
+            text="Set up scale",
             bg="#FF9F45",
-            activebackground='#E9967A',
+            activebackground="#ADDAEF",
             font=(
                 "calibri",
                 20,
@@ -130,9 +127,9 @@ class View:
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
-            text="Beginning of the video",
+            text="Start from the beginning",
             bg="#FF9F45",
-            activebackground='#E9967A',
+            activebackground="#ADDAEF",
             font=("calibri", 18),
             command=lambda: self.controller.video.firstFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7)
@@ -143,13 +140,20 @@ class View:
             buttonsFrame,
             text="|<",
             bg="#FF9F45",
-            activebackground='#E9967A',
-            width = 10,
+            activebackground="#ADDAEF",
+            width=10,
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.previousFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
-        button = tk.Button(buttonsFrame, text=">",bg="#FF9F45", activebackground='#E9967A', width = 15, font=("calibri", 25, "bold"))
+        button = tk.Button(
+            buttonsFrame,
+            text=">",
+            bg="#FF9F45",
+            activebackground="#ADDAEF",
+            width=15,
+            font=("calibri", 25, "bold"),
+        )
         button.config(
             command=lambda: self.controller.video.play_or_pause(button),
         )
@@ -161,8 +165,8 @@ class View:
             buttonsFrame,
             text=">|",
             bg="#FF9F45",
-            activebackground='#E9967A',
-            width = 10,
+            activebackground="#ADDAEF",
+            width=10,
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.nextFrame(),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
@@ -182,15 +186,37 @@ class View:
 
     def goToFrameWindow(self):
         F_Window = tk.Tk()
+        F_Window.configure(background="#ADDAEF")
         F_Window.title("Choose when to go")
         F_Window.geometry("800x500")
         F_Window.resizable(False, False)
         tk.Button(
             F_Window,
             text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
             font=("calibri", 20, "bold"),
             command=lambda: self.chooseValue(),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
     def chooseValue(self):
         pass
+
+    def goToFrameHelp(self):
+        H_Window = tk.Tk()
+        H_Window.configure(background="#ADDAEF")
+        H_Window.title("Instruction manual")
+        H_Window.geometry("800x500")
+        H_Window.resizable(False, False)
+        tk.Button(
+            H_Window,
+            text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.controller.video.closeHelp(H_Window),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
