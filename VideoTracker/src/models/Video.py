@@ -11,11 +11,10 @@ class Video:
     def __init__(self, window):
         print("Video.py: __init__()")
         try:
-            print(os.getcwd())
             self.window = window
             self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
-            self.delay = 18
+            self.delay = 0
             print("Video.py: __init__() - OK")
         except Exception as e:
             print("Video.py: ERROR detected on init: [", e, "]")
@@ -45,7 +44,7 @@ class Video:
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width=self.width, height=self.height)
-        print(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        self.delay = ((1/self.cap.get(cv2.CAP_PROP_FPS))*1000)
         ret, frame = self.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
@@ -98,8 +97,9 @@ class Video:
                 "Error - Previous Frame", "You haven't opened a video yet."
             )
 
-    def firstFrame(self):
+    def firstFrame(self, button):
         try:
+            button["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -121,11 +121,20 @@ class Video:
                     + "/"
                     + str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
                 )
-                messagebox.showinfo("Current Frame", frameActuelle)
+                return frameActuelle
         except:
             messagebox.showerror(
                 "Error - Current Frame", "You haven't opened a video yet."
             )
+
+    def chooseValue(self, entry, window):
+        value = entry.get()
+        if value == "":
+            pass
+        value = float(value)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, value)
+        self.play_video()
+        window.destroy()
 
     def get_frame(self):
         try:
@@ -138,12 +147,11 @@ class Video:
     def play_video(self):
         try:
             ret, frame = self.get_frame()
+            if (not self.pause) and ret:
+                self.window.after(int(self.delay), self.play_video)
             if ret:
                 self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
-
-            if not self.pause:
-                self.window.after(self.delay, self.play_video)
         except:
             messagebox.showerror(
                 "Error - Playing the video",
@@ -162,4 +170,10 @@ class Video:
         window.destroy()
 
     def closeHelp(self, H_Window):
-        H_Window.quit()
+        H_Window.destroy()
+
+    def videoOpened(self):
+        if self.cap.isOpened():
+            return True
+        else:
+            return False

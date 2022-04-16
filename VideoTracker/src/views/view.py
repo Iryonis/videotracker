@@ -1,6 +1,7 @@
 import tkinter as tk
 import PIL.Image, PIL.ImageTk
 import platform
+from tkinter import messagebox
 
 
 class View:
@@ -40,7 +41,7 @@ class View:
         menuFile.add_command(
             label="Load the video",
             underline=1,
-            command=self.load_video,
+            command=lambda: self.load_video(),
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
         Point1 = self.controller.point(0, 2)
@@ -94,22 +95,18 @@ class View:
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
-            label="Current frame",
-            underline=1,
-            command=lambda: self.controller.video.currentFrame(),
-        )
-        self.fenetre.bind_all(
-            "<Control-Key-u>", lambda u: self.controller.video.currentFrame()
-        )
-        menuTools.add_command(
             label="Go to frame",
             underline=0,
             command=lambda: self.goToFrameWindow(),
         )
+        self.fenetre.bind_all("<Return>", lambda g: self.goToFrameWindow())
+        self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
         menuHelp.add_command(
-            label="Shortcut", underline=1, command=lambda: self.goToFrameHelp()
+            label="Instruction manual",
+            underline=1,
+            command=lambda: self.goToFrameHelp(),
         )
         self.fenetre.bind_all("<Control-Key-h>", lambda h: self.goToFrameHelp())
 
@@ -131,10 +128,10 @@ class View:
             bg="#FF9F45",
             activebackground="#ADDAEF",
             font=("calibri", 18),
-            command=lambda: self.controller.video.firstFrame(),
+            command=lambda: self.controller.video.firstFrame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all(
-            "<Control-Key-b>", lambda b: self.controller.video.firstFrame()
+            "<Control-Key-b>", lambda b: self.controller.video.firstFrame(button)
         )
         tk.Button(
             buttonsFrame,
@@ -185,30 +182,48 @@ class View:
         self.controller.video.open_file()
 
     def goToFrameWindow(self):
-        F_Window = tk.Tk()
-        F_Window.configure(background="#ADDAEF")
-        F_Window.title("Choose when to go")
-        F_Window.geometry("800x500")
-        F_Window.resizable(False, False)
-        tk.Button(
-            F_Window,
-            text="OK",
-            width=20,
-            height=2,
-            background="#9DCDE3",
-            activebackground="#ADDAEF",
-            font=("calibri", 20, "bold"),
-            command=lambda: self.chooseValue(),
-        ).pack(side=tk.BOTTOM, padx=30, pady=7)
+        try:
+            if self.controller.video.videoOpened() == True:
+                F_Window = tk.Tk()
+                F_Window.configure(background="#ADDAEF")
+                F_Window.title("Choose when to go")
+                w_width = 450
+                w_height = 150
+                s_width = F_Window.winfo_screenwidth()
+                s_height = F_Window.winfo_screenheight()
+                center_x = int(s_width / 2 - w_width / 2)
+                center_y = int(s_height / 2 - w_height / 2)
+                F_Window.geometry(f"{w_width}x{w_height}+{center_x}+{center_y}")
+                F_Window.resizable(False, False)
 
-    def chooseValue(self):
-        pass
+                tk.Label(F_Window, text="Enter the frame you want to go").pack(
+                    side=tk.TOP, pady=7
+                )
+                entry = tk.Entry(F_Window)
+                entry.pack(side=tk.TOP, pady=7)
+                tk.Label(F_Window, text=self.controller.video.currentFrame()).pack(
+                    side=tk.LEFT, padx=10
+                )
+                tk.Button(
+                    F_Window,
+                    text="OK",
+                    width=20,
+                    height=2,
+                    background="#9DCDE3",
+                    activebackground="#ADDAEF",
+                    font=("calibri", 20, "bold"),
+                    command=lambda: self.controller.video.chooseValue(entry, F_Window),
+                ).pack(side=tk.BOTTOM, padx=30, pady=7)
+        except:
+            messagebox.showerror(
+                "Error - Go to frame", "You haven't opened a video yet."
+            )
 
     def goToFrameHelp(self):
         H_Window = tk.Tk()
         H_Window.configure(background="#ADDAEF")
         H_Window.title("Instruction manual")
-        H_Window.geometry("800x500")
+        H_Window.geometry("800x500+300+300")
         H_Window.resizable(False, False)
         tk.Button(
             H_Window,
