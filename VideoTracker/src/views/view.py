@@ -39,8 +39,9 @@ class View:
         menuFile = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Files", menu=menuFile)
         menuFile.add_command(
-            label="Load the video",
-            underline=1,
+            label="Open the video",
+            underline=0,
+            accelerator="(Ctrl + O)",
             command=lambda: self.load_video(),
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
@@ -52,6 +53,7 @@ class View:
         menuFile.add_command(
             label="Save as",
             underline=1,
+            accelerator="(Ctrl + A)",
             command=lambda: self.controller.filerepo.saveAs(
                 self.controller.filerepo,
                 dataTimes,
@@ -69,6 +71,7 @@ class View:
         menuFile.add_command(
             label="Save",
             underline=0,
+            accelerator="(Ctrl + S)",
             command=lambda: self.controller.filerepo.save(
                 self.controller.filerepo,
                 dataTimes,
@@ -87,6 +90,7 @@ class View:
         menuFile.add_command(
             label="Quit the app",
             underline=0,
+            accelerator="(Ctrl + Q)",
             command=lambda: self.controller.video.quit(self.fenetre),
         )
         self.fenetre.bind_all(
@@ -97,6 +101,7 @@ class View:
         menuTools.add_command(
             label="Go to frame...",
             underline=0,
+            accelerator="(Ctrl + G)",
             command=lambda: self.goToFrameWindow(),
         )
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
@@ -109,10 +114,11 @@ class View:
         menuBar.add_cascade(label="Help", menu=menuHelp)
         menuHelp.add_command(
             label="Instruction manual",
-            underline=1,
+            underline=0,
+            accelerator="(Ctrl + I)",
             command=lambda: self.goToFrameHelp(),
         )
-        self.fenetre.bind_all("<Control-Key-h>", lambda h: self.goToFrameHelp())
+        self.fenetre.bind_all("<Control-Key-i>", lambda h: self.goToFrameHelp())
 
         buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
