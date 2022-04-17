@@ -5,11 +5,16 @@ import os
 import platform
 import matplotlib.pyplot as plt
 import csv
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class Graph:
     def __init__(self):
         pass
+
+    def setController(self, controller):
+        print("Graph.py: Controller set")
+        self.controller = controller
 
     def window_pos(self, window, w_width, w_height):
         s_width = window.winfo_screenwidth()
@@ -48,9 +53,19 @@ class Graph:
         G_Window.geometry(self.window_pos(self, G_Window, w_width, w_height))
         G_Window.resizable(False, False)
 
-        plt.figure(figsize=(16, 12))
+        plot = plt.figure(figsize=(11, 6))
         plt.scatter(x, y, c=t)
-        plt.show()
+        plt.title("Graphique y = f(x)")
+        plt.xlabel("Axe des X")
+        plt.ylabel("Axe des Y")
+        cbar = plt.colorbar()
+        cbar.ax.set_title("Temps (en secondes)")
+        axis = plt.gca()
+        axis.set_facecolor("#ADDAEF")
+        plot.patch.set_facecolor("#ADDAEF")
+        graph = FigureCanvasTkAgg(plot, master=G_Window)
+        graph.get_tk_widget().pack(side=tk.TOP)
+        graph.draw()
 
         tk.Button(
             G_Window,

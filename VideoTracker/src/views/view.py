@@ -95,14 +95,14 @@ class View:
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
-            label="Go to frame",
+            label="Go to frame...",
             underline=0,
             command=lambda: self.goToFrameWindow(),
         )
         self.fenetre.bind_all("<Return>", lambda g: self.goToFrameWindow())
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
         menuTools.add_command(
-            label="Graph",
+            label="Plot graph",
             underline=0,
             command=lambda: self.controller.graph.windowGraph(self.controller.graph),
         )
