@@ -5,6 +5,7 @@ from tkinter import filedialog as fd
 from tkinter import messagebox
 import os
 import platform
+import sys
 
 
 class Video:
@@ -161,21 +162,10 @@ class Video:
                 self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
-            messagebox.showerror(
-                "Error - Playing the video",
-                "The video has already ended or you haven't chosen a video.",
-            )
+            print("play_video - Error")
 
-    def __del__(self):
-        try:
-            if self.cap.isOpened():
-                self.cap.release()
-        except Exception as e:
-            print("Video.py: ERROR detected on delete: [", e, "]")
-
-    def quit(self, window):
-        self.__del__()
-        window.destroy()
+    def quit(self):
+        sys.exit()
 
     def close(self, window):
         window.destroy()

@@ -1,6 +1,5 @@
 import tkinter as tk
 from tkinter import filedialog as fd
-from tkinter import messagebox
 import os
 import platform
 import matplotlib.pyplot as plt
@@ -48,7 +47,7 @@ class Graph:
         x = [float(i) for i in x]
         y = [float(i) for i in y]
         # Créer une fenêtre grâce à Tkinter
-        G_Window = tk.Tk()
+        G_Window = tk.Toplevel()
         G_Window.configure(background="#ADDAEF")
         G_Window.title("Graph")
         w_width = int(G_Window.winfo_screenwidth() / float(1.8))

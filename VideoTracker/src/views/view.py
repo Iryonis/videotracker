@@ -1,5 +1,4 @@
 import tkinter as tk
-import PIL.Image, PIL.ImageTk
 import platform
 from tkinter import messagebox
 
@@ -91,10 +90,10 @@ class View:
             label="Quit the app",
             underline=0,
             accelerator="(Ctrl + Q)",
-            command=lambda: self.controller.video.quit(self.fenetre),
+            command=lambda: self.controller.video.quit(),
         )
         self.fenetre.bind_all(
-            "<Control-Key-q>", lambda q: self.controller.video.quit(self.fenetre)
+            "<Control-Key-q>", lambda q: self.controller.video.quit()
         )
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
@@ -244,7 +243,7 @@ class View:
             )
 
     def goToFrameHelp(self):
-        H_Window = tk.Tk()
+        H_Window = tk.Toplevel()
         H_Window.configure(background="#ADDAEF")
         H_Window.title("Instruction manual")
         w_width = int(H_Window.winfo_screenwidth() / float(2.2))
