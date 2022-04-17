@@ -116,7 +116,9 @@ class Video:
                 )
                 self.play_video()
         except:
-            messagebox.showerror("Error - First Frame", "You haven't opened a video yet.")
+            messagebox.showerror(
+                "Error - First Frame", "You haven't opened a video yet."
+            )
 
     def currentFrame(self):
         try:

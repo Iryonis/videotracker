@@ -99,7 +99,6 @@ class View:
             underline=0,
             command=lambda: self.goToFrameWindow(),
         )
-        self.fenetre.bind_all("<Return>", lambda g: self.goToFrameWindow())
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
         menuTools.add_command(
             label="Plot graph",
@@ -147,7 +146,9 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.previousFrame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
-        self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame(button))
+        self.fenetre.bind_all(
+            "<Left>", lambda l: self.controller.video.previousFrame(button)
+        )
         button = tk.Button(
             buttonsFrame,
             text=">",
@@ -172,7 +173,9 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.nextFrame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
-        self.fenetre.bind_all("<Right>", lambda r: self.controller.video.nextFrame(button))
+        self.fenetre.bind_all(
+            "<Right>", lambda r: self.controller.video.nextFrame(button)
+        )
 
     def get_window(self):
         print("View.py: get_window called")
@@ -197,9 +200,10 @@ class View:
     def goToFrameWindow(self):
         try:
             if self.controller.video.videoOpened() == True:
-                F_Window = tk.Tk()
+                F_Window = tk.Toplevel()
                 F_Window.configure(background="#ADDAEF")
                 F_Window.title("Choose when to go")
+                F_Window.grab_set()
                 w_width = 450
                 w_height = 150
                 F_Window.geometry(self.window_pos(F_Window, w_width, w_height))
