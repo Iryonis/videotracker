@@ -44,7 +44,7 @@ class Video:
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width=self.width, height=self.height)
-        self.delay = ((1/self.cap.get(cv2.CAP_PROP_FPS))*1000)
+        self.delay = (1 / self.cap.get(cv2.CAP_PROP_FPS)) * 1000
         ret, frame = self.get_frame()
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))

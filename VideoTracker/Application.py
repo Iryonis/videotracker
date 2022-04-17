@@ -4,6 +4,7 @@ from src.views.view import View
 from src.models.Video import Video
 from src.models.Point import Point
 from src.models.FileRepo import FileRepo
+from src.models.Graph import Graph
 
 
 class Application(tk.Tk):
@@ -16,7 +17,7 @@ class Application(tk.Tk):
         if video == None:
             exit(84)
         print("Video created")
-        controller = Controller(video, view, Point, FileRepo)
+        controller = Controller(video, view, Point, FileRepo, Graph)
         print("Controller created")
         view.setController(controller)
         print("Controller set")
