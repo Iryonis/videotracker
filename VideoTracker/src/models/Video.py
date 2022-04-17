@@ -130,7 +130,7 @@ class Video:
     def chooseValue(self, entry, window):
         value = entry.get()
         if value == "":
-            pass
+            window.destroy()
         value = float(value)
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, value)
         self.play_video()
@@ -169,8 +169,8 @@ class Video:
         self.__del__()
         window.destroy()
 
-    def closeHelp(self, H_Window):
-        H_Window.destroy()
+    def close(self, window):
+        window.destroy()
 
     def videoOpened(self):
         if self.cap.isOpened():

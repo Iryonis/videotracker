@@ -101,6 +101,11 @@ class View:
         )
         self.fenetre.bind_all("<Return>", lambda g: self.goToFrameWindow())
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
+        menuTools.add_command(
+            label="Graph",
+            underline=0,
+            command=lambda: self.goToFrameGraph(),
+        )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
         menuHelp.add_command(
@@ -181,6 +186,14 @@ class View:
         print("View.py: open_file called")
         self.controller.video.open_file()
 
+    def window_pos(self, window, w_width, w_height):
+        s_width = window.winfo_screenwidth()
+        s_height = window.winfo_screenheight()
+        self.center_x = int(s_width / 2 - w_width / 2)
+        self.center_y = int(s_height / 2 - w_height / 2)
+        pos = f"{w_width}x{w_height}+{self.center_x}+{self.center_y}"
+        return pos
+
     def goToFrameWindow(self):
         try:
             if self.controller.video.videoOpened() == True:
@@ -189,11 +202,7 @@ class View:
                 F_Window.title("Choose when to go")
                 w_width = 450
                 w_height = 150
-                s_width = F_Window.winfo_screenwidth()
-                s_height = F_Window.winfo_screenheight()
-                center_x = int(s_width / 2 - w_width / 2)
-                center_y = int(s_height / 2 - w_height / 2)
-                F_Window.geometry(f"{w_width}x{w_height}+{center_x}+{center_y}")
+                F_Window.geometry(self.window_pos(F_Window, w_width, w_height))
                 F_Window.resizable(False, False)
 
                 tk.Label(F_Window, text="Enter the frame you want to go").pack(
@@ -201,6 +210,7 @@ class View:
                 )
                 entry = tk.Entry(F_Window)
                 entry.pack(side=tk.TOP, pady=7)
+                entry.focus()
                 tk.Label(F_Window, text=self.controller.video.currentFrame()).pack(
                     side=tk.LEFT, padx=10
                 )
@@ -214,16 +224,37 @@ class View:
                     font=("calibri", 20, "bold"),
                     command=lambda: self.controller.video.chooseValue(entry, F_Window),
                 ).pack(side=tk.BOTTOM, padx=30, pady=7)
+                F_Window.bind_all("<Return>", lambda g: self.controller.video.chooseValue(entry, F_Window))
         except:
             messagebox.showerror(
                 "Error - Go to frame", "You haven't opened a video yet."
             )
+    def goToFrameGraph(self):
+        G_Window = tk.Tk()
+        G_Window.configure(background="#ADDAEF")
+        G_Window.title("Graph")
+        w_width = int(G_Window.winfo_screenwidth()/ float(1.8))
+        w_height = int(G_Window.winfo_screenheight()/ float(1.5))
+        G_Window.geometry(self.window_pos(G_Window, w_width, w_height))
+        G_Window.resizable(False, False)
+        tk.Button(
+            G_Window,
+            text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.controller.video.close(G_Window),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
     def goToFrameHelp(self):
         H_Window = tk.Tk()
         H_Window.configure(background="#ADDAEF")
         H_Window.title("Instruction manual")
-        H_Window.geometry("800x500+300+300")
+        w_width = int(H_Window.winfo_screenwidth()/ float(2.2))
+        w_height = int(H_Window.winfo_screenheight()/ float(2))
+        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
         H_Window.resizable(False, False)
         tk.Button(
             H_Window,
@@ -233,5 +264,5 @@ class View:
             background="#9DCDE3",
             activebackground="#ADDAEF",
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.closeHelp(H_Window),
+            command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
