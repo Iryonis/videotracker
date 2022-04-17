@@ -60,7 +60,7 @@ class Video:
         except:
             messagebox.showerror(
                 "Error - Button Play/Pause",
-                "You haven't opened a video for the moment ; thus, you can't launch it.",
+                "You haven't opened a video for the moment ; thus, you can't start it.",
             )
 
     def changeText(self, button):
@@ -69,9 +69,12 @@ class Video:
         elif self.pause == True:
             button["text"] = "||"
 
-    def nextFrame(self):
+    def nextFrame(self, button):
         try:
+            button["text"] = ">"
             if self.cap.isOpened():
+                if self.pause == False:
+                    self.pause = True
                 self.window.after(1, self.play_video)
                 print(
                     "La frame actuelle (nextFrame) est :",
@@ -82,9 +85,12 @@ class Video:
                 "Error - Next Frame", "You haven't opened a video yet."
             )
 
-    def previousFrame(self):
+    def previousFrame(self, button):
         try:
+            button["text"] = ">"
             if self.cap.isOpened():
+                if self.pause == False:
+                    self.pause = True
                 frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
                 print(
@@ -110,7 +116,7 @@ class Video:
                 )
                 self.play_video()
         except:
-            messagebox.showerror("Error", "You haven't opened a video yet.")
+            messagebox.showerror("Error - First Frame", "You haven't opened a video yet.")
 
     def currentFrame(self):
         try:

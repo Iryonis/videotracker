@@ -145,9 +145,9 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.previousFrame(),
+            command=lambda: self.controller.video.previousFrame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
-        self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame())
+        self.fenetre.bind_all("<Left>", lambda l: self.controller.video.previousFrame(button))
         button = tk.Button(
             buttonsFrame,
             text=">",
@@ -170,9 +170,9 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.nextFrame(),
+            command=lambda: self.controller.video.nextFrame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
-        self.fenetre.bind_all("<Right>", lambda r: self.controller.video.nextFrame())
+        self.fenetre.bind_all("<Right>", lambda r: self.controller.video.nextFrame(button))
 
     def get_window(self):
         print("View.py: get_window called")
