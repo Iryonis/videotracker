@@ -25,6 +25,7 @@ class Graph:
         return pos
 
     def windowGraph(self):
+        # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
         if platform.system() == "Windows":
             nextPath = "/VideoTracker/resources/resultats"
         elif platform.system() == "Linux":
@@ -33,6 +34,7 @@ class Graph:
             initialdir=(os.getcwd() + nextPath),
             filetypes=(("CSV Files", "*.csv"),),
         )
+        # Récupère les données des colonnes 0, 1 et 2
         t = []
         x = []
         y = []
@@ -45,6 +47,7 @@ class Graph:
         t = [int(i) for i in t]
         x = [float(i) for i in x]
         y = [float(i) for i in y]
+        # Créer une fenêtre grâce à Tkinter
         G_Window = tk.Tk()
         G_Window.configure(background="#ADDAEF")
         G_Window.title("Graph")
@@ -53,6 +56,7 @@ class Graph:
         G_Window.geometry(self.window_pos(self, G_Window, w_width, w_height))
         G_Window.resizable(False, False)
 
+        # Construit le graphique grâce à matplotlib
         plot = plt.figure(figsize=(11, 6))
         plt.scatter(x, y, c=t)
         plt.title("Graphique y = f(x)")
@@ -67,6 +71,7 @@ class Graph:
         graph.get_tk_widget().pack(side=tk.TOP)
         graph.draw()
 
+        # Créer le bouton pour fermer la fenêtre avec Tkinter
         tk.Button(
             G_Window,
             text="OK",
