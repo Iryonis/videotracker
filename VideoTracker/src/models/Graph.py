@@ -25,24 +25,27 @@ class Graph:
             initialdir=(os.getcwd() + nextPath),
             filetypes=(("CSV Files", "*.csv"),),
         )
-        self.windowGraph(filename)
+        self.retrieveData(filename)
+        self.windowGraph()
 
-    def windowGraph(self, filename):
+    def retrieveData(self, filename):
         # Récupère les données des colonnes 0, 1 et 2
-        t = []
-        x = []
-        y = []
+        self.t = []
+        self.x = []
+        self.y = []
         with open(filename, "r") as headers:
             my_reader = csv.reader(headers, delimiter=";")
             for col in my_reader:
-                t += [col[0]]
-                x += [col[1]]
-                y += [col[2]]
-        t = [int(i) for i in t]
-        x = [float(i) for i in x]
-        y = [float(i) for i in y]
-        print(t)
+                self.t += [col[0]]
+                self.x += [col[1]]
+                self.y += [col[2]]
+        self.t = [int(i) for i in self.t]
+        self.x = [float(i) for i in self.x]
+        self.y = [float(i) for i in self.y]
+
         # Créer une fenêtre grâce à Tkinter
+
+    def windowGraph(self):
         G_Window = tk.Toplevel()
         G_Window.configure(background="#ADDAEF")
         G_Window.title("Graph")
@@ -53,7 +56,7 @@ class Graph:
 
         # Construit le graphique grâce à matplotlib
         plot = plt.figure(figsize=(11, 6))
-        plt.scatter(x, y, c=t)
+        plt.scatter(self.x, self.y, c=self.t)
         plt.title("Graphique y = f(x)")
         plt.xlabel("Axe des X")
         plt.ylabel("Axe des Y")
@@ -77,3 +80,13 @@ class Graph:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.close(G_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
+    def window_t(self):
+        self.t
+        return self.t
+
+    def window_x(self):
+        return self.x
+
+    def window_y(self):
+        return self.y

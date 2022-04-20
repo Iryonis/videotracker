@@ -44,9 +44,9 @@ class View:
             command=lambda: self.load_video(),
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
-        Point1 = self.controller.point(0, 2)
-        Point2 = self.controller.point(1.2, 4)
-        Point3 = self.controller.point(1111, -4)
+        Point1 = self.controller.point(0, 4)
+        Point2 = self.controller.point(1.5, 5)
+        Point3 = self.controller.point(111, -6)
         dataTimes = [0, 1, 2]
         dataPoints = [Point1, Point2, Point3]
         menuFile.add_command(
