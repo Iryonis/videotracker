@@ -1,6 +1,3 @@
-import tkinter as tk
-
-
 class Controller:
     def __init__(self, video, view, point, filerepo, graph):
         self.video = video

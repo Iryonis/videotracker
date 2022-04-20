@@ -15,14 +15,6 @@ class Graph:
         print("Graph.py: Controller set")
         self.controller = controller
 
-    def window_pos(self, window, w_width, w_height):
-        s_width = window.winfo_screenwidth()
-        s_height = window.winfo_screenheight()
-        self.center_x = int(s_width / 2 - w_width / 2)
-        self.center_y = int(s_height / 2 - w_height / 2)
-        pos = f"{w_width}x{w_height}+{self.center_x}+{self.center_y}"
-        return pos
-
     def windowGraph(self):
         # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
         if platform.system() == "Windows":
@@ -52,7 +44,7 @@ class Graph:
         G_Window.title("Graph")
         w_width = int(G_Window.winfo_screenwidth() / float(1.8))
         w_height = int(G_Window.winfo_screenheight() / float(1.5))
-        G_Window.geometry(self.window_pos(self, G_Window, w_width, w_height))
+        G_Window.geometry(self.controller.view.window_pos(G_Window, w_width, w_height))
         G_Window.resizable(False, False)
 
         # Construit le graphique grâce à matplotlib

@@ -17,7 +17,11 @@ class Application(tk.Tk):
         if video == None:
             exit(84)
         print("Video created")
-        controller = Controller(video, view, Point, FileRepo, Graph)
+        filerepo = FileRepo()
+        print("FileRepo created")
+        graph = Graph()
+        print("Graph created")
+        controller = Controller(video, view, Point, filerepo, graph)
         print("Controller created")
         view.setController(controller)
         print("Controller set")

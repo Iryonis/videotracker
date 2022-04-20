@@ -54,7 +54,6 @@ class View:
             underline=1,
             accelerator="(Ctrl + A)",
             command=lambda: self.controller.filerepo.saveAs(
-                self.controller.filerepo,
                 dataTimes,
                 dataPoints,
             ),
@@ -62,7 +61,6 @@ class View:
         self.fenetre.bind_all(
             "<Control-Key-a>",
             lambda a: self.controller.filerepo.saveAs(
-                self.controller.filerepo,
                 dataTimes,
                 dataPoints,
             ),
@@ -72,7 +70,6 @@ class View:
             underline=0,
             accelerator="(Ctrl + S)",
             command=lambda: self.controller.filerepo.save(
-                self.controller.filerepo,
                 dataTimes,
                 dataPoints,
             ),
@@ -80,7 +77,6 @@ class View:
         self.fenetre.bind_all(
             "<Control-Key-s>",
             lambda s: self.controller.filerepo.save(
-                self.controller.filerepo,
                 dataTimes,
                 dataPoints,
             ),
@@ -92,9 +88,7 @@ class View:
             accelerator="(Ctrl + Q)",
             command=lambda: self.controller.video.quit(),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-q>", lambda q: self.controller.video.quit()
-        )
+        self.fenetre.bind_all("<Control-Key-q>", lambda q: self.controller.video.quit())
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
@@ -107,7 +101,7 @@ class View:
         menuTools.add_command(
             label="Plot graph",
             underline=0,
-            command=lambda: self.controller.graph.windowGraph(self.controller.graph),
+            command=lambda: self.controller.graph.windowGraph(),
         )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)

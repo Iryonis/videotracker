@@ -24,11 +24,11 @@ class FileRepo:
     def exportDataToCsv(self, dataTimes, dataPoints, filepath):
         try:
             file = open(filepath, mode="w")
-            text = self.exportDataToString(self, dataTimes, dataPoints)
+            text = self.exportDataToString(dataTimes, dataPoints)
             file.write(text)
             file.close()
         except IOError:
-            print("Erreur lors de la creation du fichier, veuillez reessayer.\n")
+            print("Error when creating the file, please retry.\n")
 
     def saveAs(self, dataTimes, dataPoints):
         if platform.system() == "Windows":
@@ -41,10 +41,10 @@ class FileRepo:
             defaultextension=".csv",
             filetypes=[("CSV Files", "*.csv")],
         )
-        self.exportDataToCsv(self, dataTimes, dataPoints, self.filepath)
+        self.exportDataToCsv(dataTimes, dataPoints, self.filepath)
 
     def save(self, dataTimes, dataPoints):
         try:
-            self.exportDataToCsv(self, dataTimes, dataPoints, self.filepath)
+            self.exportDataToCsv(dataTimes, dataPoints, self.filepath)
         except:
-            self.saveAs(self, dataTimes, dataPoints)
+            self.saveAs(dataTimes, dataPoints)
