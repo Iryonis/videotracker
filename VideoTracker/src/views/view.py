@@ -101,7 +101,7 @@ class View:
         menuTools.add_command(
             label="Plot graph",
             underline=0,
-            command=lambda: self.controller.graph.windowGraph(),
+            command=lambda: self.controller.graph.openFile(),
         )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)

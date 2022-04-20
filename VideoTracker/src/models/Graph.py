@@ -15,7 +15,7 @@ class Graph:
         print("Graph.py: Controller set")
         self.controller = controller
 
-    def windowGraph(self):
+    def openFile(self):
         # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
         if platform.system() == "Windows":
             nextPath = "/VideoTracker/resources/resultats"
@@ -25,6 +25,9 @@ class Graph:
             initialdir=(os.getcwd() + nextPath),
             filetypes=(("CSV Files", "*.csv"),),
         )
+        self.windowGraph(filename)
+
+    def windowGraph(self, filename):
         # Récupère les données des colonnes 0, 1 et 2
         t = []
         x = []
@@ -38,6 +41,7 @@ class Graph:
         t = [int(i) for i in t]
         x = [float(i) for i in x]
         y = [float(i) for i in y]
+        print(t)
         # Créer une fenêtre grâce à Tkinter
         G_Window = tk.Toplevel()
         G_Window.configure(background="#ADDAEF")
