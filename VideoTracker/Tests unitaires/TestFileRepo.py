@@ -1,4 +1,3 @@
-from imghdr import tests
 import sys
 import os
 import platform

@@ -10,12 +10,8 @@ from src.models.Graph import Graph
 class Application(tk.Tk):
     def __init__(self):
         view = View()
-        if view == None:
-            exit(84)
         print("View created")
         video = Video(view.get_window())
-        if video == None:
-            exit(84)
         print("Video created")
         filerepo = FileRepo()
         print("FileRepo created")
@@ -24,7 +20,8 @@ class Application(tk.Tk):
         controller = Controller(video, view, Point, filerepo, graph)
         print("Controller created")
         view.setController(controller)
-        print("Controller set")
+        graph.setController(controller)
+        print("Controller set for view.py and graph.py")
         view.create_interface()
         print("Interface created")
         view.open_window()

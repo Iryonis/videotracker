@@ -1,8 +1,4 @@
 class Point:
-    def setController(self, controller):
-        print("Graph.py: Controller set")
-        self.controller = controller
-
     def __init__(self, x=0, y=0):
         self.x = x
         self.y = y
