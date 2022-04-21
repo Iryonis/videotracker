@@ -11,48 +11,48 @@ build:
 test-graph:
   stage: test
   script :
-    - python3 -m unittest -v TestGraph.py
+    - python3 -m unittest -v TestsUnitaires/TestGraph.py
 
 test-filerepo:
   stage: test
   script :
-    - python3 -m unittest -v TestFileRepo.py
+    - python3 -m unittest -v TestsUnitaires/TestFileRepo.py
 
 test-point:
   stage: test
   script :
-    - python3 -m unittest -v TestPoint.py
+    - python3 -m unittest -v TestsUnitaires/TestPoint.py
 
 test-video:
   stage: test
   script :
-    - python3 -m unittest -v TestVideo.py
+    - python3 -m unittest -v TestsUnitaires/TestVideo.py
 
 coverage-graph:
-  stage: coverage
-  script :
-    - coverage run -m unittest
-    - coverage run --source=Graph -m pytest TestGraph.py
-    - coverage report -m
+    stage: coverage
+    script :
+      - coverage run -m unittest
+      - coverage run --source=Graph -m pytest TestsUnitaires/TestGraph.py
+      - coverage report -m
 
 coverage-filerepo:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=FileRepo -m pytest TestFileRepo.py
+    - coverage run --source=FileRepo -m pytest TestsUnitaires/TestFileRepo.py
     - coverage report -m
 
 coverage-point:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Point -m pytest TestPoint.py
+    - coverage run --source=Point -m pytest TestsUnitaires/TestPoint.py
     - coverage report -m
 
 coverage-video:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Video -m pytest TestVideo.py
+    - coverage run --source=Video -m pytest TestsUnitaires/TestVideo.py
     - coverage report -m
 
