@@ -5,11 +5,13 @@ import sys
 import os
 import platform
 
-# Import Graph.py :
+# Import Video.py :
 if platform.system() == "Windows":
     pathA = "/VideoTracker/src/models"
 elif platform.system() == "Linux":
     pathA = "/src/models"
+else:
+    pathA = "/VideoTracker/src/models"
 sys.path.append(os.getcwd() + pathA)
 from Video import Video
 
