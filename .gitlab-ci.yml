@@ -1,0 +1,58 @@
+stages:
+  - build
+  - test
+  - coverage
+
+build:
+  stage: build
+  script :
+    - pip install coverage
+
+test-graph:
+  stage: test
+  script :
+    - python3 -m unittest -v TestGraph.py
+
+test-filerepo:
+  stage: test
+  script :
+    - python3 -m unittest -v TestFileRepo.py
+
+test-point:
+  stage: test
+  script :
+    - python3 -m unittest -v TestPoint.py
+
+test-video:
+  stage: test
+  script :
+    - python3 -m unittest -v TestVideo.py
+
+coverage-graph:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=Graph -m pytest TestGraph.py
+    - coverage report -m
+
+coverage-filerepo:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=FileRepo -m pytest TestFileRepo.py
+    - coverage report -m
+
+coverage-point:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=Point -m pytest TestPoint.py
+    - coverage report -m
+
+coverage-video:
+  stage: coverage
+  script :
+    - coverage run -m unittest
+    - coverage run --source=Video -m pytest TestVideo.py
+    - coverage report -m
+
