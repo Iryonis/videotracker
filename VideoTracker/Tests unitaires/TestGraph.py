@@ -5,10 +5,10 @@ import platform
 
 # Import Graph.py :
 if platform.system() == "Windows":
-    nextPathA = "/VideoTracker/src/models"
+    pathA = "/VideoTracker/src/models"
 elif platform.system() == "Linux":
-    nextPathA = "/src/models"
-sys.path.append(os.getcwd() + nextPathA)
+    pathA = "/src/models"
+sys.path.append(os.getcwd() + pathA)
 from Graph import Graph
 
 # Pour le moment, le test n'est pas très intéressant étant donné que les données utilisées pour contruire le graphique

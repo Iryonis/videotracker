@@ -10,29 +10,27 @@ class View:
             self.fenetre = tk.Tk()
             self.fenetre.configure(bg="black")
             self.fenetre.withdraw
-            self.fenetre.title("Video Tracker")
+            self.fenetre.title("Video Tracker - V0.1.0")
             if platform.system() == "Windows":
                 self.fenetre.attributes("-fullscreen", True)
             elif platform.system() == "Linux":
                 self.fenetre.attributes("-zoomed", True)
         except Exception as e:
             print("View.py: ERROR detected on init: [", e, "]")
-            return None
 
     def open_window(self):
         print("View.py: open_window called")
         try:
             self.fenetre.mainloop()
         except Exception as e:
-            print("View.py: ERROR detected on opening window: [", e, "]")
-            return None
+            print("View.py: ERROR detected on open_window(): [", e, "]")
 
     def setController(self, controller):
         print("View.py: Controller set")
         self.controller = controller
 
     def create_interface(self):
-        print("View.py: create_button_echelle called")
+        print("View.py: create_interface called")
         menuBar = tk.Menu(self.fenetre)
         self.fenetre.config(menu=menuBar)
         menuFile = tk.Menu(menuBar, tearoff=0)
@@ -101,18 +99,25 @@ class View:
         menuTools.add_command(
             label="Plot graph",
             underline=0,
+            accelerator="(Ctrl + P)",
             command=lambda: self.controller.graph.openFile(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-p>", lambda p: self.controller.graph.openFile()
         )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
+        # WORK IN PROGRESS
         menuHelp.add_command(
             label="Instruction manual",
             underline=0,
             accelerator="(Ctrl + I)",
+            state=tk.DISABLED,
             command=lambda: self.goToFrameHelp(),
         )
         self.fenetre.bind_all("<Control-Key-i>", lambda h: self.goToFrameHelp())
 
+        # WORK IN PROGRESS
         buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         tk.Button(
@@ -178,15 +183,14 @@ class View:
         )
 
     def get_window(self):
-        print("View.py: get_window called")
         try:
+            print("View.py : get_window() called")
             return self.fenetre
         except Exception as e:
-            print("View.py: ERROR detected on getting window: [", e, "]")
-            return None
+            print("View.py : ERROR detected on get_window: [", e, "]")
 
     def load_video(self):
-        print("View.py: open_file called")
+        print("View.py: open_file() called")
         self.controller.video.browse_file()
 
     def window_pos(self, window, w_width, w_height):
@@ -199,6 +203,7 @@ class View:
 
     def goToFrameWindow(self):
         try:
+            # Si vidéo ouverte --> création d'une fenêtre fille
             if self.controller.video.videoOpened() == True:
                 F_Window = tk.Toplevel()
                 F_Window.configure(background="#ADDAEF")
@@ -209,6 +214,7 @@ class View:
                 F_Window.geometry(self.window_pos(F_Window, w_width, w_height))
                 F_Window.resizable(False, False)
 
+                # Création d'un label et d'un bouton
                 tk.Label(F_Window, text="Enter the frame you want to go").pack(
                     side=tk.TOP, pady=7
                 )
@@ -234,9 +240,10 @@ class View:
                 )
         except:
             messagebox.showerror(
-                "Error - Go to frame", "You haven't opened a video yet."
+                "Error - Go to frame...", "You haven't opened a video yet."
             )
 
+    # WORK IN PROGRESS
     def goToFrameHelp(self):
         H_Window = tk.Toplevel()
         H_Window.configure(background="#ADDAEF")

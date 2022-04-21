@@ -81,6 +81,7 @@ class Graph:
             command=lambda: self.controller.video.close(G_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
+    # Fonctions pour les tests unitaires de TestGraph.py
     def window_t(self):
         self.t
         return self.t

@@ -10,22 +10,21 @@ import sys
 
 class Video:
     def __init__(self, window):
-        print("Video.py: __init__()")
         try:
             self.window = window
             self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
             self.delay = 0
-            print("Video.py: __init__() - OK")
+            print("Video.py: __init__() called")
         except Exception as e:
-            print("Video.py: ERROR detected on init: [", e, "]")
+            print("Video.py: ERROR detected on __init__(): [", e, "]")
 
     def open_window(self):
         print("View.py: open_window called")
         try:
             self.window.mainloop()
         except Exception as e:
-            print("View.py: ERROR detected on opening window: [", e, "]")
+            print("View.py: ERROR detected on open_window(): [", e, "]")
 
     def browse_file(self):
         if platform.system() == "Windows":
@@ -165,14 +164,17 @@ class Video:
                 self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
-            print("play_video - Error --> probably video ended")
+            print("play_video() - ERROR --> this is probably that video has ended.")
 
+    # Ferme toutes les fenêtres et quitte le processus
     def quit(self):
         sys.exit()
 
+    # Ferme juste la fenêtre spécifiée
     def close(self, window):
         window.destroy()
 
+    # Vérifie si une vidéo est ouverte et retourne le booléen correspondant
     def videoOpened(self):
         if self.cap.isOpened():
             return True
