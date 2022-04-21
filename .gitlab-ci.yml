@@ -1,3 +1,8 @@
+default:
+  tags:
+    - CREMI
+    - Focal/Fossa
+
 stages:
   - build
   - test
