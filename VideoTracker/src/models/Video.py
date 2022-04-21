@@ -143,7 +143,13 @@ class Video:
         if value == "":
             window.destroy()
         value = float(value)
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, value)
+        if value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)):
+            print(value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+            maxF = (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
+            self.cap.set(cv2.CAP_PROP_POS_FRAMES, maxF)
+            self.play_video()
+            window.destroy()
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, value - 1)
         self.play_video()
         window.destroy()
 
