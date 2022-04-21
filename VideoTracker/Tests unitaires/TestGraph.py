@@ -16,7 +16,7 @@ from Graph import Graph
 # points seront récupérés sur la vidéo.
 
 
-class Test_Graph(unittest.TestCase, Graph):
+class Test_Graph(unittest.TestCase):
     def setUp(self):
         self.graph = Graph()
         if platform.system() == "Windows":

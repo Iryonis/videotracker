@@ -27,8 +27,7 @@ class Video:
         except Exception as e:
             print("View.py: ERROR detected on opening window: [", e, "]")
 
-    def open_file(self):
-        print("Video.py: open_file()")
+    def browse_file(self):
         if platform.system() == "Windows":
             self.nextPath = "/VideoTracker/resources/videos"
         elif platform.system() == "Linux":
@@ -41,7 +40,11 @@ class Video:
                 ("MKV Files", "*.mkv"),
             ),
         )
-        self.cap = cv2.VideoCapture(self.filename)
+        self.open_file(self.filename)
+
+    def open_file(self, filename):
+        print("Video.py: open_file()")
+        self.cap = cv2.VideoCapture(filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
         self.canvas.config(width=self.width, height=self.height)
@@ -162,7 +165,7 @@ class Video:
                 self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
-            print("play_video - Error")
+            print("play_video - Error --> probably video ended")
 
     def quit(self):
         sys.exit()
