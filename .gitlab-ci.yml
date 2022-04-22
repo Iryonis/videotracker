@@ -32,20 +32,20 @@ coverage-graph:
     stage: coverage
     script :
       - coverage run -m unittest
-      - coverage run --source=Graph -m pytest VideoTracker/TestsUnitaires/TestGraph.py
+      - coverage run -m pytest VideoTracker/TestsUnitaires/TestGraph.py
       - coverage report -m
 
 coverage-filerepo:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=FileRepo -m pytest VideoTracker/TestsUnitaires/TestFileRepo.py
+    - coverage run -m pytest VideoTracker/TestsUnitaires/TestFileRepo.py
     - coverage report -m
 
 coverage-point:
   stage: coverage
   script :
     - coverage run -m unittest
-    - coverage run --source=Point -m pytest VideoTracker/TestsUnitaires/TestPoint.py
+    - coverage run -m pytest VideoTracker/TestsUnitaires/TestPoint.py
     - coverage report -m
 

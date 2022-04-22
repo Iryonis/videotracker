@@ -15,10 +15,7 @@ class Graph:
 
     def openFile(self):
         # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
-        if platform.system() == "Windows":
-            nextPath = "/VideoTracker/resources/resultats"
-        elif platform.system() == "Linux":
-            nextPath = "/resources/resultats"
+        nextPath = "/VideoTracker/resources/resultats"
         filename = fd.askopenfilename(
             initialdir=(os.getcwd() + nextPath),
             filetypes=(("CSV Files", "*.csv"),),
