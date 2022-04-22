@@ -15,10 +15,7 @@ from src.models.Graph import Graph
 class Test_Graph(unittest.TestCase):
     def setUp(self):
         self.graph = Graph()
-        if platform.system() == "Windows":
-            self.nextPath = "/VideoTracker/resources/resultats"
-        elif platform.system() == "Linux":
-            self.nextPath = "/resources/resultats"
+        self.nextPath = "/VideoTracker/resources/resultats"
         self.path = os.getcwd() + self.nextPath + "/releve_de_points.csv"
 
     def test_retrieveData_tTrue(self):
