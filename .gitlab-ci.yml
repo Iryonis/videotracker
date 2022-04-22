@@ -28,11 +28,6 @@ test-point:
   script :
     - python3 -m unittest -v VideoTracker/TestsUnitaires/TestPoint.py
 
-test-video:
-  stage: test
-  script :
-    - python3 -m unittest -v VideoTracker/TestsUnitaires/TestVideo.py
-
 coverage-graph:
     stage: coverage
     script :
@@ -52,12 +47,5 @@ coverage-point:
   script :
     - coverage run -m unittest
     - coverage run --source=Point -m pytest VideoTracker/TestsUnitaires/TestPoint.py
-    - coverage report -m
-
-coverage-video:
-  stage: coverage
-  script :
-    - coverage run -m unittest
-    - coverage run --source=Video -m pytest VideoTracker/TestsUnitaires/TestVideo.py
     - coverage report -m
 
