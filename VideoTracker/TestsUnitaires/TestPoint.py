@@ -1,14 +1,11 @@
-import sys
-import os
-import platform
+import sys, os, unittest
 
-if platform.system() == "Windows":
-    nextPathA = "/VideoTracker/src/models"
-elif platform.system() == "Linux":
-    nextPathA = "/src/models"
-sys.path.append(os.getcwd() + nextPathA)
-from Point import Point
-import unittest
+# Import Point() :
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
+from src.models.Point import Point
 
 
 class Test_Point(unittest.TestCase):

@@ -1,15 +1,11 @@
-import unittest
-import sys
-import os
-import platform
+import unittest, sys, os, platform
 
-# Import Graph.py :
-if platform.system() == "Windows":
-    pathA = "/VideoTracker/src/models"
-elif platform.system() == "Linux":
-    pathA = "/src/models"
-sys.path.append(os.getcwd() + pathA)
-from Graph import Graph
+# Import Graph() :
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
+from src.models.Graph import Graph
 
 # Pour le moment, le test n'est pas très intéressant étant donné que les données utilisées pour contruire le graphique
 # sont des données définies manuellement lors de la programmation ; ce test unitaire prendra plus de sens lorsque les

@@ -1,18 +1,12 @@
-import sys
-import os
-import platform
+import sys, os, platform, unittest, filecmp
 
-if platform.system() == "Windows":
-    nextPathA = "/VideoTracker/src/models"
-elif platform.system() == "Linux":
-    nextPathA = "/src/models"
-sys.path.append(os.getcwd() + nextPathA)
-from FileRepo import FileRepo
-from Point import Point
+# Import FileRepo() and Point() :
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
 
-sys.path.pop()
-import unittest
-import filecmp
+from src.models.FileRepo import FileRepo
+from src.models.Point import Point
 
 
 class Test_FileRepo(unittest.TestCase):

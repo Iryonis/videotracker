@@ -1,10 +1,7 @@
-import unittest
+import unittest, cv2, sys, os, platform
 import tkinter as tk
-import cv2
-import sys, os
-import platform
 
-
+# Import Video() :
 currentdir = os.path.dirname(os.path.realpath(__file__))
 parentdir = os.path.dirname(currentdir)
 sys.path.append(parentdir)
