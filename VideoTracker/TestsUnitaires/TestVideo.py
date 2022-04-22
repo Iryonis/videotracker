@@ -1,19 +1,15 @@
 import unittest
 import tkinter as tk
 import cv2
-import sys
-import os
+import sys, os
 import platform
 
-# Import Video.py :
-if platform.system() == "Windows":
-    pathA = "/VideoTracker/src/models"
-elif platform.system() == "Linux":
-    pathA = "/src/models"
-else:
-    pathA = "/VideoTracker/src/models"
-sys.path.append(os.getcwd() + pathA)
-from Video import Video
+
+currentdir = os.path.dirname(os.path.realpath(__file__))
+parentdir = os.path.dirname(currentdir)
+sys.path.append(parentdir)
+
+from src.models.Video import Video
 
 
 class Test_Video(unittest.TestCase):
