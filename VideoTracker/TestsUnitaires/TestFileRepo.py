@@ -1,4 +1,4 @@
-import sys, os, platform, unittest, filecmp
+import sys, os, unittest, filecmp
 
 # Import FileRepo() and Point() :
 currentdir = os.path.dirname(os.path.realpath(__file__))
@@ -19,12 +19,8 @@ class Test_FileRepo(unittest.TestCase):
         self.fileCSV = FileRepo()
         self.testTrue = "0;0;2 \n1;1.2;4 \n2;1111;-4 \n"
         self.testFalse = "0;1;2\n1;3;4 2;1111;-4\n"
-        if platform.system() == "Windows":
-            self.nextPath = "/VideoTracker/resources/resultats"
-            self.nextPathV = "/VideoTracker/TestsUnitaires"
-        elif platform.system() == "Linux":
-            self.nextPath = "/resources/resultats"
-            self.nextPathV = "/TestsUnitaires"
+        self.nextPath = "/VideoTracker/resources/resultats"
+        self.nextPathV = "/VideoTracker/TestsUnitaires"
 
     # Test pour exportDataToString :
 

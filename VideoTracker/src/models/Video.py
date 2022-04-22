@@ -1,11 +1,7 @@
 from tkinter import *
-import PIL.Image, PIL.ImageTk
-import cv2
+import PIL.Image, PIL.ImageTk, cv2, os, platform, sys
 from tkinter import filedialog as fd
 from tkinter import messagebox
-import os
-import platform
-import sys
 
 
 class Video:

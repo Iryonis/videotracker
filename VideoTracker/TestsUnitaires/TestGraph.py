@@ -1,4 +1,4 @@
-import unittest, sys, os, platform
+import unittest, sys, os
 
 # Import Graph() :
 currentdir = os.path.dirname(os.path.realpath(__file__))
