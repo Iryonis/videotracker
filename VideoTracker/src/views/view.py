@@ -203,7 +203,7 @@ class View:
 
     def goToFrameWindow(self):
         try:
-            # Si vidéo ouverte --> création d'une fenêtre fille
+            # Si video ouverte --> creation d'une fenetre fille
             if self.controller.video.videoOpened() == True:
                 F_Window = tk.Toplevel()
                 F_Window.configure(background="#ADDAEF")
@@ -214,7 +214,7 @@ class View:
                 F_Window.geometry(self.window_pos(F_Window, w_width, w_height))
                 F_Window.resizable(False, False)
 
-                # Création d'un label et d'un bouton
+                # Creation d'un label et d'un bouton
                 tk.Label(F_Window, text="Enter the frame you want to go").pack(
                     side=tk.TOP, pady=7
                 )

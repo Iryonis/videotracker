@@ -3,7 +3,6 @@ import PIL.Image, PIL.ImageTk, cv2, os, platform, sys
 from tkinter import filedialog as fd
 from tkinter import messagebox
 
-
 class Video:
     def __init__(self, window):
         try:
@@ -23,7 +22,10 @@ class Video:
             print("View.py: ERROR detected on open_window(): [", e, "]")
 
     def browse_file(self):
-        self.nextPath = "/VideoTracker/resources/videos"
+        if platform.system() == 'Linux':
+            self.nextPath = "/resources/videos"
+        else:
+            self.nextPath = "/VideoTracker/resources/videos"
         self.pause = True
         self.filename = fd.askopenfilename(
             initialdir=(os.getcwd() + self.nextPath),
@@ -165,15 +167,15 @@ class Video:
         except:
             print("play_video() - ERROR --> this is probably that video has ended.")
 
-    # Ferme toutes les fenêtres et quitte le processus
+    # Ferme toutes les fenetres et quitte le processus
     def quit(self):
         sys.exit()
 
-    # Ferme juste la fenêtre spécifiée
+    # Ferme juste la fenetre specifiee
     def close(self, window):
         window.destroy()
 
-    # Vérifie si une vidéo est ouverte et retourne le booléen correspondant
+    # Vérifie si une video est ouverte et retourne le booleen correspondant
     def videoOpened(self):
         if self.cap.isOpened():
             return True
