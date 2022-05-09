@@ -20,6 +20,7 @@ class Application(tk.Tk):
         print("Graph created")
         dp = drawPoint(video.get_canvas())
         print("drawPoint created")
+        dp.click()
         controller = Controller(video, view, Point, filerepo, graph, dp)
         print("Controller created")
         view.setController(controller)

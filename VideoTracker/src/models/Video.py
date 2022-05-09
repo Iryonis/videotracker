@@ -10,6 +10,8 @@ class Video:
             self.window = window
             self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
+            self.width = 1000
+            self.height = 600
             self.delay = 0
             print("Video.py: __init__() called")
         except Exception as e:
@@ -45,6 +47,9 @@ class Video:
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
+
+    def getCanHeight(self):
+        return self.height
 
     def play_or_pause(self, button):
         try:

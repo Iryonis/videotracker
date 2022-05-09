@@ -9,12 +9,18 @@ class drawPoint:
         print("drawPoint.py: Controller set")
         self.controller = controller
 
-    def getorigin(self, event):
-        try:
-            x0 = event.x_root
-            y0 = event.y_root
-            x1 = x0 + 1
-            y1 = y0 + 1
-            self.canvas.create_oval(x0, y0, x1, y1, width=0, fill="red")
-        except:
-            print("Error when trying to draw a point.")
+    def click(self):
+        self.canvas.bind("<Button-3>", self.getCoord)
+
+    def getCoord(self, event):
+        self.x = int(self.canvas.winfo_pointerx() - self.canvas.winfo_rootx())
+        self.y = int(self.canvas.winfo_pointery() - self.canvas.winfo_rooty())
+        print(self.x, self.y)
+        self.canvas.create_oval(
+            int(self.x),
+            int(self.y),
+            int(self.x + 7),
+            int(self.y + 7),
+            width=0,
+            fill="red",
+        )
