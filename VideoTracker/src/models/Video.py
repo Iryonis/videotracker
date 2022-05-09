@@ -23,13 +23,10 @@ class Video:
             print("View.py: ERROR detected on open_window(): [", e, "]")
 
     def browse_file(self):
-        if platform.system() == "Linux":
-            self.nextPath = "/resources/videos"
-        else:
-            self.nextPath = "/VideoTracker/resources/videos"
+        nextPath = "/resources/videos"
         self.pause = True
         self.filename = fd.askopenfilename(
-            initialdir=(os.getcwd() + self.nextPath),
+            initialdir=(os.getcwd() + nextPath),
             filetypes=(
                 ("MP4 Files", "*.mp4"),
                 ("MKV Files", "*.mkv"),

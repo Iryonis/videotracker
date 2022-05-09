@@ -30,12 +30,9 @@ class FileRepo:
             print("Error when creating the file, please retry.\n")
 
     def saveAs(self, dataTimes, dataPoints):
-        if platform.system() == "Linux":
-            self.nextPath = "/resources/resultats"
-        else:
-            self.nextPath = "/VideoTracker/resources/resultats"
+        nextPath = "/resources/resultats"
         self.filepath = fd.asksaveasfilename(
-            initialdir=os.getcwd() + self.nextPath,
+            initialdir=os.getcwd() + nextPath,
             initialfile="releve_de_points.csv",
             defaultextension=".csv",
             filetypes=[("CSV Files", "*.csv")],
