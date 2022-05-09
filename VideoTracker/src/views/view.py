@@ -30,6 +30,7 @@ class View:
         self.controller = controller
 
     def create_interface(self):
+        self.canvas = self.controller.video.get_canvas()
         print("View.py: create_interface called")
         menuBar = tk.Menu(self.fenetre)
         self.fenetre.config(menu=menuBar)
@@ -181,6 +182,10 @@ class View:
         self.fenetre.bind_all(
             "<Right>", lambda r: self.controller.video.nextFrame(button)
         )
+        if self.fenetre.bind("<Button-3>", self.controller.drawpoint.getorigin):
+            print("Click droit !")
+        else:
+            print("Ça fonctionne pas !")
 
     def get_window(self):
         try:

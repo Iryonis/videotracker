@@ -3,6 +3,7 @@ import PIL.Image, PIL.ImageTk, cv2, os, platform, sys
 from tkinter import filedialog as fd
 from tkinter import messagebox
 
+
 class Video:
     def __init__(self, window):
         try:
@@ -22,7 +23,7 @@ class Video:
             print("View.py: ERROR detected on open_window(): [", e, "]")
 
     def browse_file(self):
-        if platform.system() == 'Linux':
+        if platform.system() == "Linux":
             self.nextPath = "/resources/videos"
         else:
             self.nextPath = "/VideoTracker/resources/videos"
@@ -181,3 +182,7 @@ class Video:
             return True
         else:
             return False
+
+    # Return le canvas, pour pouvoir l'utiliser dans drawPoint notamment
+    def get_canvas(self):
+        return self.canvas

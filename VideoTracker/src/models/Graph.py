@@ -15,7 +15,7 @@ class Graph:
 
     def openFile(self):
         # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
-        if platform.system() == 'Linux':
+        if platform.system() == "Linux":
             nextPath = "/resources/resultats"
         else:
             nextPath = "/VideoTracker/resources/resultats"

@@ -30,7 +30,7 @@ class FileRepo:
             print("Error when creating the file, please retry.\n")
 
     def saveAs(self, dataTimes, dataPoints):
-        if platform.system() == 'Linux':
+        if platform.system() == "Linux":
             self.nextPath = "/resources/resultats"
         else:
             self.nextPath = "/VideoTracker/resources/resultats"
