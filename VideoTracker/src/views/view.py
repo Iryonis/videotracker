@@ -88,6 +88,16 @@ class View:
             command=lambda: self.controller.video.quit(),
         )
         self.fenetre.bind_all("<Control-Key-q>", lambda q: self.controller.video.quit())
+        menuEdit = tk.Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Edit", menu=menuEdit)
+        menuEdit.add_command(
+            label="Show values...",
+            underline=5,
+            accelerator="(Ctrl + V)",
+            state=tk.DISABLED,
+            command=lambda: self.goToFrameSV(),
+        )
+        self.fenetre.bind_all("<Control-Key-v>", lambda v: self.goToFrameSV())
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
@@ -97,8 +107,10 @@ class View:
             command=lambda: self.goToFrameWindow(),
         )
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
-        menuTools.add_command(
-            label="Plot graph : X depending of T",
+        menuGraph = tk.Menu(menuTools, tearoff=0)
+        menuTools.add_cascade(label="Plot Graph...", menu=menuGraph)
+        menuGraph.add_command(
+            label="X depending of T",
             underline=13,
             accelerator="(Ctrl + X)",
             command=lambda: self.controller.graph.graphX(),
@@ -106,8 +118,8 @@ class View:
         self.fenetre.bind_all(
             "<Control-Key-x>", lambda x: self.controller.graph.graphX()
         )
-        menuTools.add_command(
-            label="Plot graph : Y depending of T",
+        menuGraph.add_command(
+            label="Y depending of T",
             underline=13,
             accelerator="(Ctrl + Y)",
             command=lambda: self.controller.graph.graphY(),
@@ -115,8 +127,8 @@ class View:
         self.fenetre.bind_all(
             "<Control-Key-y>", lambda y: self.controller.graph.graphY()
         )
-        menuTools.add_command(
-            label="Plot graph : X and Y depending of T",
+        menuGraph.add_command(
+            label="X and Y depending of T",
             underline=34,
             accelerator="(Ctrl + T)",
             command=lambda: self.controller.graph.graph3(),
@@ -285,3 +297,7 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
+    # WORK IN PROGRESS
+    def goToFrameSV(self):
+        pass
