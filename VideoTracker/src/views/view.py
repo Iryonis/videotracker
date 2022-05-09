@@ -98,13 +98,31 @@ class View:
         )
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
         menuTools.add_command(
-            label="Plot graph",
-            underline=0,
-            accelerator="(Ctrl + P)",
-            command=lambda: self.controller.graph.openFile(),
+            label="Plot graph : X depending of T",
+            underline=13,
+            accelerator="(Ctrl + X)",
+            command=lambda: self.controller.graph.graphX(),
         )
         self.fenetre.bind_all(
-            "<Control-Key-p>", lambda p: self.controller.graph.openFile()
+            "<Control-Key-x>", lambda x: self.controller.graph.graphX()
+        )
+        menuTools.add_command(
+            label="Plot graph : Y depending of T",
+            underline=13,
+            accelerator="(Ctrl + Y)",
+            command=lambda: self.controller.graph.graphY(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-y>", lambda y: self.controller.graph.graphY()
+        )
+        menuTools.add_command(
+            label="Plot graph : X and Y depending of T",
+            underline=34,
+            accelerator="(Ctrl + T)",
+            command=lambda: self.controller.graph.graph3(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-t>", lambda t: self.controller.graph.graph3()
         )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
