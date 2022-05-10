@@ -26,7 +26,6 @@ class Application(tk.Tk):
         graph.setController(controller)
         dp.setController(controller)
         print("Controller set for view.py, graph.py and drawPoint.py")
-        dp.click()
         view.create_interface()
         print("Interface created")
         view.open_window()

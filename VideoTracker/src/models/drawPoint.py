@@ -10,15 +10,20 @@ class drawPoint:
         self.controller = controller
 
     def click(self):
-        self.controller.video.canvas.bind("<Button-3>", self.putMarker)
+        if self.state == True:
+            self.controller.video.canvas.bind("<Button-3>", self.putMarker)
+        else:
+            self.controller.video.canvas.unbind("<Button-3>")
 
     def putPointClicked(self, buttonPoint):
         if self.state == True:
             self.state = False
             buttonPoint["text"] = "Click to place the points"
+            self.click()
         else:
             self.state = True
             buttonPoint["text"] = "Right-click on the video"
+            self.click()
 
     def putPoint(self, event):
         self.x = int(

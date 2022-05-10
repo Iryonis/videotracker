@@ -1,6 +1,5 @@
 from tkinter import *
-import PIL.Image, PIL.ImageTk, cv2, os, platform, sys
-from tkinter import filedialog as fd
+import PIL.Image, PIL.ImageTk, cv2, sys
 from tkinter import messagebox
 
 
@@ -21,18 +20,6 @@ class Video:
             self.window.mainloop()
         except Exception as e:
             print("View.py: ERROR detected on open_window(): [", e, "]")
-
-    def browse_file(self):
-        nextPath = "/resources/videos"
-        self.pause = True
-        self.filename = fd.askopenfilename(
-            initialdir=(os.getcwd() + nextPath),
-            filetypes=(
-                ("MP4 Files", "*.mp4"),
-                ("MKV Files", "*.mkv"),
-            ),
-        )
-        self.open_file(self.filename)
 
     def open_file(self, filename):
         print("Video.py: open_file()")

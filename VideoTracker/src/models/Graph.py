@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import filedialog as fd
-import os, platform, csv
+import os, csv
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
