@@ -30,7 +30,6 @@ class View:
         self.controller = controller
 
     def create_interface(self):
-        self.canvas = self.controller.video.get_canvas()
         print("View.py: create_interface called")
         menuBar = tk.Menu(self.fenetre)
         self.fenetre.config(menu=menuBar)
@@ -194,10 +193,17 @@ class View:
             font=("calibri", 25, "bold"),
         )
         button.config(
-            command=lambda: self.controller.video.play_or_pause(button),
+            command=lambda: [
+                self.controller.video.play_or_pause(),
+                self.controller.changeTextPlay(button),
+            ]
         )
         self.fenetre.bind_all(
-            "<space>", lambda s: self.controller.video.play_or_pause(button)
+            "<space>",
+            lambda s: [
+                self.controller.video.play_or_pause(),
+                self.controller.changeTextPlay(button),
+            ],
         )
         button.pack(side=tk.LEFT, padx=10, pady=7)
         tk.Button(
@@ -212,6 +218,21 @@ class View:
         self.fenetre.bind_all(
             "<Right>", lambda r: self.controller.video.nextFrame(button)
         )
+        buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
+        buttonPoint = tk.Button(
+            buttonsFrame,
+            text="Click to place the points",
+            bg="#FF9F45",
+            activebackground="#ADDAEF",
+            font=(
+                "calibri",
+                15,
+            ),
+        )
+        buttonPoint.config(
+            command=lambda: self.controller.drawpoint.putPointClicked(buttonPoint)
+        )
+        buttonPoint.pack(side=tk.LEFT, padx=30, pady=7)
 
     def get_window(self):
         try:

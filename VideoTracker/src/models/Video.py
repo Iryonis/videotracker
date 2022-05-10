@@ -10,8 +10,6 @@ class Video:
             self.window = window
             self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
-            self.width = 1000
-            self.height = 600
             self.delay = 0
             print("Video.py: __init__() called")
         except Exception as e:
@@ -48,13 +46,9 @@ class Video:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
 
-    def getCanHeight(self):
-        return self.height
-
-    def play_or_pause(self, button):
+    def play_or_pause(self):
         try:
             if self.cap.isOpened():
-                self.changeText(button)
                 self.pause = not self.pause
                 if not self.pause:
                     self.play_video()
@@ -64,15 +58,9 @@ class Video:
                 "You haven't opened a video for the moment ; thus, you can't start it.",
             )
 
-    def changeText(self, button):
-        if self.pause == False:
-            button["text"] = ">"
-        elif self.pause == True:
-            button["text"] = "||"
-
-    def nextFrame(self, button):
+    def nextFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -86,9 +74,9 @@ class Video:
                 "Error - Next Frame", "You haven't opened a video yet."
             )
 
-    def previousFrame(self, button):
+    def previousFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -104,9 +92,9 @@ class Video:
                 "Error - Previous Frame", "You haven't opened a video yet."
             )
 
-    def firstFrame(self, button):
+    def firstFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -184,7 +172,3 @@ class Video:
             return True
         else:
             return False
-
-    # Return le canvas, pour pouvoir l'utiliser dans drawPoint notamment
-    def get_canvas(self):
-        return self.canvas
