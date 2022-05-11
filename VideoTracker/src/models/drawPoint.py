@@ -1,6 +1,5 @@
 from tkinter import *
 
-
 class drawPoint:
     def __init__(self):
         self.state = False
