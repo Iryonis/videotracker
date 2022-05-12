@@ -1,9 +1,10 @@
 from cProfile import label
 import tkinter as tk
 import platform
-from tkinter import BOTTOM, Label, messagebox
+from tkinter import BOTTOM, TOP, Label, messagebox
 import tkinter
 from tkinter.tix import TEXT
+from typing import Text
 
 
 class View:
@@ -305,9 +306,10 @@ class View:
         w_width = int(H_Window.winfo_screenwidth() / float(2.2))
         w_height = int(H_Window.winfo_screenheight() / float(2))
         H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        TEXTE = "JE SUIS UN TEXTE" 
-        label = tk.Label(H_Window, text=TEXTE, background="#9DCDE3")
-        label.pack(side=tk.LEFT)
+        TEXTE = "Liste des raccourcis clavier :\n  -Ctrl+0 = Open the video \n  -Ctrl+A = Save as \n  -Ctrl+S = Save \n  -Ctrl+Q = Quit the application \n  -Ctrl+V = Show values \n  -Ctrl+G = Go to frame \n  -Ctrl+I = Help" 
+        label = tk.Label(H_Window, text=TEXTE, background="#9DCDE3", wraplength = 500,justify = tk.LEFT)
+        label.pack(side=TOP, fill='x')
+        label.place(x=0, y=0)
         tk.Button(
             H_Window,
             text="OK",
