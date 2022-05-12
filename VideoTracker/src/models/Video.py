@@ -1,7 +1,7 @@
 from tkinter import *
-import PIL.Image, PIL.ImageTk, cv2, os, platform, sys
-from tkinter import filedialog as fd
+import PIL.Image, PIL.ImageTk, cv2, sys
 from tkinter import messagebox
+
 
 class Video:
     def __init__(self, window):
@@ -21,21 +21,6 @@ class Video:
         except Exception as e:
             print("View.py: ERROR detected on open_window(): [", e, "]")
 
-    def browse_file(self):
-        if platform.system() == 'Linux':
-            self.nextPath = "/resources/videos"
-        else:
-            self.nextPath = "/VideoTracker/resources/videos"
-        self.pause = True
-        self.filename = fd.askopenfilename(
-            initialdir=(os.getcwd() + self.nextPath),
-            filetypes=(
-                ("MP4 Files", "*.mp4"),
-                ("MKV Files", "*.mkv"),
-            ),
-        )
-        self.open_file(self.filename)
-
     def open_file(self, filename):
         print("Video.py: open_file()")
         self.cap = cv2.VideoCapture(filename)
@@ -48,10 +33,9 @@ class Video:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
 
-    def play_or_pause(self, button):
+    def play_or_pause(self):
         try:
             if self.cap.isOpened():
-                self.changeText(button)
                 self.pause = not self.pause
                 if not self.pause:
                     self.play_video()
@@ -61,15 +45,9 @@ class Video:
                 "You haven't opened a video for the moment ; thus, you can't start it.",
             )
 
-    def changeText(self, button):
-        if self.pause == False:
-            button["text"] = ">"
-        elif self.pause == True:
-            button["text"] = "||"
-
-    def nextFrame(self, button):
+    def nextFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -83,9 +61,9 @@ class Video:
                 "Error - Next Frame", "You haven't opened a video yet."
             )
 
-    def previousFrame(self, button):
+    def previousFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -101,9 +79,9 @@ class Video:
                 "Error - Previous Frame", "You haven't opened a video yet."
             )
 
-    def firstFrame(self, button):
+    def firstFrame(self, buttonP):
         try:
-            button["text"] = ">"
+            buttonP["text"] = ">"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True

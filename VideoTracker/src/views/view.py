@@ -87,6 +87,16 @@ class View:
             command=lambda: self.controller.video.quit(),
         )
         self.fenetre.bind_all("<Control-Key-q>", lambda q: self.controller.video.quit())
+        menuEdit = tk.Menu(menuBar, tearoff=0)
+        menuBar.add_cascade(label="Edit", menu=menuEdit)
+        menuEdit.add_command(
+            label="Show values...",
+            underline=5,
+            accelerator="(Ctrl + V)",
+            state=tk.DISABLED,
+            command=lambda: self.goToFrameSV(),
+        )
+        self.fenetre.bind_all("<Control-Key-v>", lambda v: self.goToFrameSV())
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
@@ -96,14 +106,34 @@ class View:
             command=lambda: self.goToFrameWindow(),
         )
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
-        menuTools.add_command(
-            label="Plot graph",
-            underline=0,
-            accelerator="(Ctrl + P)",
-            command=lambda: self.controller.graph.openFile(),
+        menuGraph = tk.Menu(menuTools, tearoff=0)
+        menuTools.add_cascade(label="Plot Graph...", menu=menuGraph)
+        menuGraph.add_command(
+            label="X depending of T",
+            underline=13,
+            accelerator="(Ctrl + X)",
+            command=lambda: self.controller.graph.graphX(),
         )
         self.fenetre.bind_all(
-            "<Control-Key-p>", lambda p: self.controller.graph.openFile()
+            "<Control-Key-x>", lambda x: self.controller.graph.graphX()
+        )
+        menuGraph.add_command(
+            label="Y depending of T",
+            underline=13,
+            accelerator="(Ctrl + Y)",
+            command=lambda: self.controller.graph.graphY(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-y>", lambda y: self.controller.graph.graphY()
+        )
+        menuGraph.add_command(
+            label="X and Y depending of T",
+            underline=34,
+            accelerator="(Ctrl + T)",
+            command=lambda: self.controller.graph.graph3(),
+        )
+        self.fenetre.bind_all(
+            "<Control-Key-t>", lambda t: self.controller.graph.graph3()
         )
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
@@ -163,10 +193,17 @@ class View:
             font=("calibri", 25, "bold"),
         )
         button.config(
-            command=lambda: self.controller.video.play_or_pause(button),
+            command=lambda: [
+                self.controller.video.play_or_pause(),
+                self.controller.changeTextPlay(button),
+            ]
         )
         self.fenetre.bind_all(
-            "<space>", lambda s: self.controller.video.play_or_pause(button)
+            "<space>",
+            lambda s: [
+                self.controller.video.play_or_pause(),
+                self.controller.changeTextPlay(button),
+            ],
         )
         button.pack(side=tk.LEFT, padx=10, pady=7)
         tk.Button(
@@ -181,6 +218,21 @@ class View:
         self.fenetre.bind_all(
             "<Right>", lambda r: self.controller.video.nextFrame(button)
         )
+        buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
+        buttonPoint = tk.Button(
+            buttonsFrame,
+            text="Click to place the points",
+            bg="#FF9F45",
+            activebackground="#ADDAEF",
+            font=(
+                "calibri",
+                15,
+            ),
+        )
+        buttonPoint.config(
+            command=lambda: self.controller.drawpoint.putPointClicked(buttonPoint)
+        )
+        buttonPoint.pack(side=tk.LEFT, padx=30, pady=7)
 
     def get_window(self):
         try:
@@ -191,7 +243,7 @@ class View:
 
     def load_video(self):
         print("View.py: open_file() called")
-        self.controller.video.browse_file()
+        self.controller.browse_file()
 
     def window_pos(self, window, w_width, w_height):
         s_width = window.winfo_screenwidth()
@@ -262,3 +314,7 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
+    # WORK IN PROGRESS
+    def goToFrameSV(self):
+        pass

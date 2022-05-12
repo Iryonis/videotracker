@@ -5,6 +5,7 @@ from src.models.Video import Video
 from src.models.Point import Point
 from src.models.FileRepo import FileRepo
 from src.models.Graph import Graph
+from src.models.drawPoint import drawPoint
 
 
 class Application(tk.Tk):
@@ -17,11 +18,14 @@ class Application(tk.Tk):
         print("FileRepo created")
         graph = Graph()
         print("Graph created")
-        controller = Controller(video, view, Point, filerepo, graph)
+        dp = drawPoint()
+        print("drawPoint created")
+        controller = Controller(video, view, Point, filerepo, graph, dp)
         print("Controller created")
         view.setController(controller)
         graph.setController(controller)
-        print("Controller set for view.py and graph.py")
+        dp.setController(controller)
+        print("Controller set for view.py, graph.py and drawPoint.py")
         view.create_interface()
         print("Interface created")
         view.open_window()
