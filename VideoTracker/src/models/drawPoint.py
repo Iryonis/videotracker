@@ -27,6 +27,9 @@ class drawPoint:
             self.clickPutPoint()
 
     def putPoint(self, event):
+        xRep, yRep = self.marker
+        print(xRep)
+        print(yRep)
         self.x = int(
             self.controller.video.canvas.winfo_pointerx()
             - self.controller.video.canvas.winfo_rootx()
@@ -35,11 +38,6 @@ class drawPoint:
             self.controller.video.canvas.winfo_pointery()
             - self.controller.video.canvas.winfo_rooty()
         )
-        xRep, yRep = self.marker
-        print(xRep)
-        print(yRep)
-        self.x = int(self.x - xRep)
-        self.y = int(self.y - yRep)
         print(self.x, self.y)
         self.controller.video.canvas.create_oval(
             int(self.x),
@@ -50,7 +48,7 @@ class drawPoint:
             fill="red",
         )
 
-    def clickPutMarker(self):
+    def clickMarker(self):
         self.controller.video.canvas.bind("<Control-1>", self.putMarker)
 
     def putMarker(self, event):
@@ -74,3 +72,6 @@ class drawPoint:
         self.controller.video.canvas.create_line(int(x+3), int(y+3), int(x+3), int(y-203), fill ="red")
         self.marker = (x, y)
         print(self.marker)
+
+    def clickPutScale(self):
+        pass

@@ -161,7 +161,7 @@ class View:
                 "calibri",
                 20,
             ),
-            command=lambda: self.controller.drawpoint.clickPutMarker(),
+            command=lambda: self.controller.drawpoint.clickPutScale(),
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
