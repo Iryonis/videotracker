@@ -1,6 +1,9 @@
+from cProfile import label
 import tkinter as tk
 import platform
-from tkinter import messagebox
+from tkinter import BOTTOM, Label, messagebox
+import tkinter
+from tkinter.tix import TEXT
 
 
 class View:
@@ -142,7 +145,6 @@ class View:
             label="Instruction manual",
             underline=0,
             accelerator="(Ctrl + I)",
-            state=tk.DISABLED,
             command=lambda: self.goToFrameHelp(),
         )
         self.fenetre.bind_all("<Control-Key-i>", lambda h: self.goToFrameHelp())
@@ -303,7 +305,9 @@ class View:
         w_width = int(H_Window.winfo_screenwidth() / float(2.2))
         w_height = int(H_Window.winfo_screenheight() / float(2))
         H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        H_Window.resizable(False, False)
+        TEXTE = "JE SUIS UN TEXTE" 
+        label = tk.Label(H_Window, text=TEXTE, background="#9DCDE3")
+        label.pack(side=tk.LEFT)
         tk.Button(
             H_Window,
             text="OK",
@@ -314,7 +318,6 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
-
     # WORK IN PROGRESS
     def goToFrameSV(self):
         pass
