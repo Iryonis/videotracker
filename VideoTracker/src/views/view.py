@@ -157,12 +157,12 @@ class View:
             buttonsFrame,
             text="Set up scale",
             bg="#FF9F45",
-            state=tk.DISABLED,
             activebackground="#ADDAEF",
             font=(
                 "calibri",
                 20,
             ),
+            command=lambda: self.controller.drawpoint.clickPutScale(),
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
