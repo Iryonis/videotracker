@@ -8,7 +8,6 @@ class drawPoint:
         self.marker = (0, 0)
         self.i = 0
         self.dpts = dataPoints()
-        self.dpts.create_tab()
 
     def get_canvas(self, canvas):
         self.canvas = canvas

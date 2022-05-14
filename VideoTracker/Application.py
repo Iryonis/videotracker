@@ -18,7 +18,7 @@ class Application(tk.Tk):
         graph = Graph()
         print("Graph created")
         point = Point
-        print("Points created")
+        print("Point created")
         controller = Controller(video, view, point, filerepo, graph)
         print("Controller created")
         view.setController(controller)

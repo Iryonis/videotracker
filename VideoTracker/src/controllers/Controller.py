@@ -1,6 +1,7 @@
 from tkinter import filedialog as fd
 import os
-from src.models.drawPoint import drawPoint
+from ..models.drawPoint import drawPoint
+from tkinter import messagebox
 
 
 class Controller:
@@ -30,10 +31,16 @@ class Controller:
         self.video.open_file(filename)
 
     def clickScale(self):
-        if self.video.cap.isOpened():
-            self.dp = drawPoint()
-            self.dp.get_canvas(self.video.get_canvas())
-            self.dp.clickMarker(self.video.get_canvas())
+        try:
+            if self.video.cap.isOpened():
+                self.dp = drawPoint()
+                self.dp.get_canvas(self.video.get_canvas())
+                self.dp.clickMarker(self.video.get_canvas())
+                self.dp.dpts.create_tab(self.video.getTime())
+        except:
+            messagebox.showerror(
+                "Error - Set up scale", "You haven't opened a video yet."
+            )
 
     def putPointClickedController(self, buttonPoint):
         self.dp.putPointClicked(buttonPoint)
