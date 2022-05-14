@@ -1,5 +1,5 @@
 from tkinter import filedialog as fd
-import os, platform
+import os
 
 
 class FileRepo:

@@ -27,7 +27,6 @@ class Video:
         self.cap = cv2.VideoCapture(filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        print(self.height, self.max_height)
         if self.height > self.max_height:
             self.canvas.config(width=self.width, height=self.max_height)
         else:

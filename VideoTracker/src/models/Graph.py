@@ -3,16 +3,16 @@ from tkinter import filedialog as fd
 import os, csv
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
+from .Video import Video
+from ..views.view import View
 
 
 class Graph:
     def __init__(self):
+        self.view = View()
+        self.video = Video(self.view.get_window())
         global nb
         nb = 0
-
-    def setController(self, controller):
-        print("Graph.py: Controller set")
-        self.controller = controller
 
     def graphX(self):
         self.openFile()
@@ -63,7 +63,7 @@ class Graph:
         G_Window.configure(background="#ADDAEF")
         w_width = int(G_Window.winfo_screenwidth() / float(1.8))
         w_height = int(G_Window.winfo_screenheight() / float(1.5))
-        G_Window.geometry(self.controller.view.window_pos(G_Window, w_width, w_height))
+        G_Window.geometry(self.view.window_pos(G_Window, w_width, w_height))
         G_Window.resizable(False, False)
         global nb
 
@@ -87,7 +87,7 @@ class Graph:
             background="#9DCDE3",
             activebackground="#ADDAEF",
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.close(G_Window),
+            command=lambda: self.video.close(G_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
     def drawGraphX(self, window):

@@ -1,10 +1,6 @@
-from cProfile import label
 import tkinter as tk
 import platform
-from tkinter import BOTTOM, TOP, Label, messagebox
-import tkinter
-from tkinter.tix import TEXT
-from typing import Text
+from tkinter import messagebox
 
 
 class View:
@@ -53,43 +49,20 @@ class View:
             command=lambda: self.controller.video.play_or_pause(),
         )
         self.fenetre.bind_all("<Control-Key-p>", lambda p: self.controller.video.play_or_pause())
-        Point1 = self.controller.point(0, 4)
-        Point2 = self.controller.point(1.5, 5)
-        Point3 = self.controller.point(111, -6)
-        dataTimes = [0, 1, 2]
-        dataPoints = [Point1, Point2, Point3]
         menuFile.add_command(
             label="Save as",
             underline=1,
             accelerator="(Ctrl + A)",
-            command=lambda: self.controller.filerepo.saveAs(
-                dataTimes,
-                dataPoints,
-            ),
+            #command=lambda: self.controller.filerepo.saveAs(),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-a>",
-            lambda a: self.controller.filerepo.saveAs(
-                dataTimes,
-                dataPoints,
-            ),
-        )
+        #self.fenetre.bind_all("<Control-Key-a>",lambda a: self.controller.filerepo.saveAs())
         menuFile.add_command(
             label="Save",
             underline=0,
             accelerator="(Ctrl + S)",
-            command=lambda: self.controller.filerepo.save(
-                dataTimes,
-                dataPoints,
-            ),
+            #command=lambda: self.controller.filerepo.save(),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-s>",
-            lambda s: self.controller.filerepo.save(
-                dataTimes,
-                dataPoints,
-            ),
-        )
+        #self.fenetre.bind_all("<Control-Key-s>",lambda s: self.controller.filerepo.save())
         menuFile.add_separator()
         menuFile.add_command(
             label="Quit the app",
@@ -311,7 +284,7 @@ class View:
         H_Window = tk.Toplevel()
         H_Window.configure(background="#ADDAEF")
         H_Window.title("Instruction manual")
-        w_width = int(H_Window.winfo_screenwidth() / float(2.2))
+        w_width = 1000
         w_height = int(H_Window.winfo_screenheight() / float(2))
         H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
         TEXTE = "Liste des raccourcis clavier :\n  -Ctrl+0 = Open the video \n  -Ctrl+A = Save as \n  -Ctrl+S = Save \n  -Ctrl+Q = Quit the application \n  -Ctrl+V = Show values \n  -Ctrl+G = Go to frame \n  -Ctrl+I = Help" 
