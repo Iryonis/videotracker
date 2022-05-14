@@ -47,12 +47,12 @@ class View:
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
         menuFile.add_command(
-            label="Read the video",
+            label="Play the video",
             underline=0,
-            accelerator="(Ctrl + R)",
-            command=lambda: self.controller.video.read_video(),
+            accelerator="(Ctrl + P)",
+            command=lambda: self.controller.video.play_or_pause(),
         )
-        self.fenetre.bind_all("<Control-Key-r>", lambda r: self.controller.video.read_video())
+        self.fenetre.bind_all("<Control-Key-p>", lambda p: self.controller.video.play_or_pause())
         Point1 = self.controller.point(0, 4)
         Point2 = self.controller.point(1.5, 5)
         Point3 = self.controller.point(111, -6)
@@ -267,7 +267,7 @@ class View:
     def goToFrameWindow(self):
         try:
             # Si video ouverte --> creation d'une fenetre fille
-            if self.controller.video.videoOpened() == True:
+            if self.controller.video.cap.isOpened == True:
                 F_Window = tk.Toplevel()
                 F_Window.configure(background="#ADDAEF")
                 F_Window.title("Choose when to go")

@@ -10,6 +10,7 @@ class Video:
             self.canvas = Canvas(self.window, width=1000, height=600, bg="#03051E")
             self.canvas.pack(side=TOP, expand=True)
             self.delay = 0
+            self.max_height = self.window.winfo_screenheight() - 107
             print("Video.py: __init__() called")
         except Exception as e:
             print("Video.py: ERROR detected on __init__(): [", e, "]")
@@ -26,7 +27,11 @@ class Video:
         self.cap = cv2.VideoCapture(filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        self.canvas.config(width=self.width, height=self.height)
+        print(self.height, self.max_height)
+        if self.height > self.max_height:
+            self.canvas.config(width=self.width, height=self.max_height)
+        else:
+            self.canvas.config(width=self.width, height=self.height)
         self.delay = (1 / self.cap.get(cv2.CAP_PROP_FPS)) * 1000
         ret, frame = self.get_frame()
         if ret:
@@ -42,7 +47,7 @@ class Video:
                     self.play_video()
         except:
             messagebox.showerror(
-                "Error - Button Play/Pause",
+                "Error - Play video",
                 "You haven't opened a video for the moment ; thus, you can't start it.",
             )
 
