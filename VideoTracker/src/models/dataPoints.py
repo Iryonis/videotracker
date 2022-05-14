@@ -1,21 +1,17 @@
 from .Video import Video
 from .Point import Point
-from ..views.view import View
 
 
 class dataPoints:
-    def __init__(self, vL):
-        view = View()
-        self.video = Video(view.get_window())
+    def __init__(self):
         self.point = Point()
-        self.videoLenght = vL
 
     def create_tab(self):
-        self.tabPts = [0 for i in range(int(self.videoLenght))]
-        self.tabTmp = [0 for i in range(int(self.videoLenght))]
+        self.tabPts = [0 for i in range(int(100))]
+        self.tabTmp = [0 for i in range(int(100))]
 
     def tabPoints(self, i, x, y):
-        for i in range(int(self.videoLenght)):
-                self.tabPts[i] = self.point(x, y)
-                self.tabTmp[i] = self.video.getTime() + i
-                print(self.tabPts)
+        for i in range(int(100)):
+            self.tabPts[i] = self.point(x, y)
+            self.tabTmp[i] = Video.getTime() + i
+            print(self.tabPts)

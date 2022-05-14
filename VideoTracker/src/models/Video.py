@@ -15,13 +15,6 @@ class Video:
         except Exception as e:
             print("Video.py: ERROR detected on __init__(): [", e, "]")
 
-    def open_window(self):
-        print("View.py: open_window called")
-        try:
-            self.window.mainloop()
-        except Exception as e:
-            print("View.py: ERROR detected on open_window(): [", e, "]")
-
     def open_file(self, filename):
         print("Video.py: open_file()")
         self.cap = cv2.VideoCapture(filename)
@@ -37,6 +30,9 @@ class Video:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         self.videoLenght = str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+
+    def get_canvas(self):
+        return self.canvas
 
     def play_or_pause(self):
         try:
@@ -163,7 +159,7 @@ class Video:
             print("play_video() - ERROR --> this is probably that the video has ended.")
 
     def getTime(self):
-        return (int(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
+        return int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
 
     # Ferme toutes les fenetres et quitte le processus
     def quit(self):

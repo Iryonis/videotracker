@@ -1,6 +1,8 @@
 import tkinter as tk
 import platform
 from tkinter import messagebox
+import matplotlib.pyplot as plt
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 
 class View:
@@ -48,21 +50,23 @@ class View:
             accelerator="(Ctrl + P)",
             command=lambda: self.controller.video.play_or_pause(),
         )
-        self.fenetre.bind_all("<Control-Key-p>", lambda p: self.controller.video.play_or_pause())
+        self.fenetre.bind_all(
+            "<Control-Key-p>", lambda p: self.controller.video.play_or_pause()
+        )
         menuFile.add_command(
             label="Save as",
             underline=1,
             accelerator="(Ctrl + A)",
-            #command=lambda: self.controller.filerepo.saveAs(),
+            # command=lambda: self.controller.filerepo.saveAs(),
         )
-        #self.fenetre.bind_all("<Control-Key-a>",lambda a: self.controller.filerepo.saveAs())
+        # self.fenetre.bind_all("<Control-Key-a>",lambda a: self.controller.filerepo.saveAs())
         menuFile.add_command(
             label="Save",
             underline=0,
             accelerator="(Ctrl + S)",
-            #command=lambda: self.controller.filerepo.save(),
+            # command=lambda: self.controller.filerepo.save(),
         )
-        #self.fenetre.bind_all("<Control-Key-s>",lambda s: self.controller.filerepo.save())
+        # self.fenetre.bind_all("<Control-Key-s>",lambda s: self.controller.filerepo.save())
         menuFile.add_separator()
         menuFile.add_command(
             label="Quit the app",
@@ -97,29 +101,23 @@ class View:
             label="X depending of T",
             underline=13,
             accelerator="(Ctrl + X)",
-            command=lambda: self.controller.graph.graphX(),
+            command=lambda: self.graph(1),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-x>", lambda x: self.controller.graph.graphX()
-        )
+        self.fenetre.bind_all("<Control-Key-x>", lambda x: self.graph(1))
         menuGraph.add_command(
             label="Y depending of T",
             underline=13,
             accelerator="(Ctrl + Y)",
-            command=lambda: self.controller.graph.graphY(),
+            command=lambda: self.graph(2),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-y>", lambda y: self.controller.graph.graphY()
-        )
+        self.fenetre.bind_all("<Control-Key-y>", lambda y: self.graph(2))
         menuGraph.add_command(
             label="X and Y depending of T",
             underline=34,
             accelerator="(Ctrl + T)",
-            command=lambda: self.controller.graph.graph3(),
+            command=lambda: self.graph(3),
         )
-        self.fenetre.bind_all(
-            "<Control-Key-t>", lambda t: self.controller.graph.graph3()
-        )
+        self.fenetre.bind_all("<Control-Key-t>", lambda t: self.graph(3))
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
         # WORK IN PROGRESS
@@ -143,7 +141,7 @@ class View:
                 "calibri",
                 20,
             ),
-            command=lambda: self.controller.drawpoint.clickPutScale(),
+            command=lambda: self.controller.clickScale(),
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
@@ -214,7 +212,7 @@ class View:
             ),
         )
         buttonPoint.config(
-            command=lambda: self.controller.drawpoint.putPointClicked(buttonPoint)
+            command=lambda: self.controller.putPointClickedController(buttonPoint)
         )
         buttonPoint.pack(side=tk.LEFT, padx=30, pady=7)
 
@@ -287,9 +285,11 @@ class View:
         w_width = 1000
         w_height = int(H_Window.winfo_screenheight() / float(2))
         H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        TEXTE = "Liste des raccourcis clavier :\n  -Ctrl+0 = Open the video \n  -Ctrl+A = Save as \n  -Ctrl+S = Save \n  -Ctrl+Q = Quit the application \n  -Ctrl+V = Show values \n  -Ctrl+G = Go to frame \n  -Ctrl+I = Help" 
-        label = tk.Label(H_Window, text=TEXTE, background="#9DCDE3", wraplength = 500,justify = tk.LEFT)
-        label.pack(side=TOP, fill='x')
+        TEXTE = "Liste des raccourcis clavier :\n  -Ctrl+0 = Open the video \n  -Ctrl+A = Save as \n  -Ctrl+S = Save \n  -Ctrl+Q = Quit the application \n  -Ctrl+V = Show values \n  -Ctrl+G = Go to frame \n  -Ctrl+I = Help"
+        label = tk.Label(
+            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
+        )
+        label.pack(side=tk.TOP, fill="x")
         label.place(x=0, y=0)
         tk.Button(
             H_Window,
@@ -301,6 +301,93 @@ class View:
             font=("calibri", 20, "bold"),
             command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
     # WORK IN PROGRESS
     def goToFrameSV(self):
         pass
+
+    # PLOT GRAPH :
+
+    def graph(self, nb):
+        # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
+        self.controller.openFile()
+        self.windowGraph(nb)
+
+    def windowGraph(self, nb):
+        self.t = self.controller.get_t()
+        self.x = self.controller.get_x()
+        self.y = self.controller.get_y()
+        G_Window = tk.Toplevel()
+        G_Window.configure(background="#ADDAEF")
+        w_width = int(G_Window.winfo_screenwidth() / float(1.8))
+        w_height = int(G_Window.winfo_screenheight() / float(1.5))
+        G_Window.geometry(self.window_pos(G_Window, w_width, w_height))
+        G_Window.resizable(False, False)
+
+        # Construit le graphique demandé grâce à matplotlib
+        if nb == 1:
+            G_Window.title("Graph of X as a function of time T")
+            self.drawGraphX(G_Window)
+        elif nb == 2:
+            G_Window.title("Graph of Y as a function of time T")
+            self.drawGraphY(G_Window)
+        elif nb == 3:
+            G_Window.title("Graph of Y = f(X)")
+            self.drawGraph3(G_Window)
+
+        # Créer le bouton pour fermer la fenêtre avec Tkinter
+        tk.Button(
+            G_Window,
+            text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.controller.video.close(G_Window),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
+        G_Window.bind_all(
+            "<Return>",
+            lambda g: self.controller.video.close(G_Window),
+        )
+
+    def drawGraphX(self, window):
+        plot = plt.figure(figsize=(11, 6))
+        plt.scatter(self.t, self.x, c="#BB620D")
+        plt.title("Graph of X as a function of time T")
+        plt.xlabel("Time axis T")
+        plt.ylabel("X axis")
+        axis = plt.gca()
+        axis.set_facecolor("#ADDAEF")
+        plot.patch.set_facecolor("#ADDAEF")
+        graph = FigureCanvasTkAgg(plot, master=window)
+        graph.get_tk_widget().pack(side=tk.TOP)
+        graph.draw()
+
+    def drawGraphY(self, window):
+        plot = plt.figure(figsize=(11, 6))
+        plt.scatter(self.t, self.y, c="#BB620D")
+        plt.title("Graph of Y as a function of time T")
+        plt.xlabel("Time axis T")
+        plt.ylabel("Y axis")
+        axis = plt.gca()
+        axis.set_facecolor("#ADDAEF")
+        plot.patch.set_facecolor("#ADDAEF")
+        graph = FigureCanvasTkAgg(plot, master=window)
+        graph.get_tk_widget().pack(side=tk.TOP)
+        graph.draw()
+
+    def drawGraph3(self, window):
+        plot = plt.figure(figsize=(11, 6))
+        plt.scatter(self.x, self.y, c=self.t)
+        plt.title("Graph Y = f(X)")
+        plt.xlabel("X axis")
+        plt.ylabel("Y axis")
+        cbar = plt.colorbar()
+        cbar.ax.set_title("Time (in seconds)")
+        axis = plt.gca()
+        axis.set_facecolor("#ADDAEF")
+        plot.patch.set_facecolor("#ADDAEF")
+        graph = FigureCanvasTkAgg(plot, master=window)
+        graph.get_tk_widget().pack(side=tk.TOP)
+        graph.draw()
