@@ -46,6 +46,13 @@ class View:
             command=lambda: self.load_video(),
         )
         self.fenetre.bind_all("<Control-Key-o>", lambda o: self.load_video())
+        menuFile.add_command(
+            label="Read the video",
+            underline=0,
+            accelerator="(Ctrl + R)",
+            command=lambda: self.controller.video.read_video(),
+        )
+        self.fenetre.bind_all("<Control-Key-r>", lambda r: self.controller.video.read_video())
         Point1 = self.controller.point(0, 4)
         Point2 = self.controller.point(1.5, 5)
         Point3 = self.controller.point(111, -6)
@@ -91,6 +98,7 @@ class View:
             command=lambda: self.controller.video.quit(),
         )
         self.fenetre.bind_all("<Control-Key-q>", lambda q: self.controller.video.quit())
+        # WORK IN PROGRESS
         menuEdit = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Edit", menu=menuEdit)
         menuEdit.add_command(

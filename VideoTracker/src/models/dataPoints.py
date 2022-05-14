@@ -1,13 +1,15 @@
 
 class dataPoints:
     def __init__(self):
-        self.i = 0
-        self.tabPts = [0 for i in range(int(self.controller.video.videoLenght))]
-        self.tabTmp = [0 for i in range(int(self.controller.video.videoLenght))]
+        pass
 
     def setController(self, controller):
         print("dataPoints.py: Controller set")
         self.controller = controller
+
+    def create_tab(self):
+        self.tabPts = [0 for i in range(int(self.controller.video.videoLenght))]
+        self.tabTmp = [0 for i in range(int(self.controller.video.videoLenght))]
 
     def tabPoints(self, i):
         for i in range(int(self.controller.video.videoLenght)):

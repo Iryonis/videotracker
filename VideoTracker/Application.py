@@ -6,6 +6,7 @@ from src.models.Point import Point
 from src.models.FileRepo import FileRepo
 from src.models.Graph import Graph
 from src.models.drawPoint import drawPoint
+from src.models.dataPoints import dataPoints
 
 
 class Application(tk.Tk):
@@ -20,7 +21,9 @@ class Application(tk.Tk):
         print("Graph created")
         dp = drawPoint()
         print("drawPoint created")
-        controller = Controller(video, view, Point, filerepo, graph, dp)
+        dpts = dataPoints()
+        print("dataPoints created")
+        controller = Controller(video, view, Point, filerepo, graph, dp, dpts)
         print("Controller created")
         view.setController(controller)
         graph.setController(controller)

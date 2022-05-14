@@ -135,6 +135,18 @@ class Video:
         except:
             print("The video has come to an end.")
 
+    def read_video(self):
+        try:
+            if self.cap.isOpened():
+                self.pause = False
+                if not self.pause:
+                    self.play_video()
+        except:
+            messagebox.showerror(
+                "Error - Button Read the video",
+                "You haven't opened a video for the moment ; thus, you can't start it.",
+            )
+
     def play_video(self):
         try:
             ret, frame = self.get_frame()
@@ -144,7 +156,7 @@ class Video:
                 self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
-            print("play_video() - ERROR --> this is probably that video has ended.")
+            print("play_video() - ERROR --> this is probably that the video has ended.")
 
     def getTime(self):
         return (int(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
