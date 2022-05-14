@@ -135,18 +135,6 @@ class Video:
         except:
             print("The video has come to an end.")
 
-    def read_video(self):
-        try:
-            if self.cap.isOpened():
-                self.pause = False
-                if not self.pause:
-                    self.play_video()
-        except:
-            messagebox.showerror(
-                "Error - Button Read the video",
-                "You haven't opened a video for the moment ; thus, you can't start it.",
-            )
-
     def play_video(self):
         try:
             ret, frame = self.get_frame()
@@ -168,10 +156,3 @@ class Video:
     # Ferme juste la fenetre specifiee
     def close(self, window):
         window.destroy()
-
-    # Vérifie si une video est ouverte et retourne le booleen correspondant
-    def videoOpened(self):
-        if self.cap.isOpened():
-            return True
-        else:
-            return False
