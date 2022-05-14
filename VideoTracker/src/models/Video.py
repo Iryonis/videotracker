@@ -32,6 +32,7 @@ class Video:
         if ret:
             self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
             self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
+        self.videoLenght = str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
 
     def play_or_pause(self):
         try:
@@ -103,7 +104,7 @@ class Video:
                     "The current frame is : "
                     + str(int(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
                     + "/"
-                    + str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+                    + self.videoLenght
                 )
                 return frameActuelle
         except:
@@ -144,6 +145,9 @@ class Video:
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
             print("play_video() - ERROR --> this is probably that video has ended.")
+
+    def getTime(self):
+        return (int(self.cap.get(cv2.CAP_PROP_POS_FRAMES)))
 
     # Ferme toutes les fenetres et quitte le processus
     def quit(self):

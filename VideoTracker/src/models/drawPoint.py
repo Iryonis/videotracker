@@ -1,10 +1,10 @@
-from logging import makeLogRecord
 from tkinter import *
 
 class drawPoint:
     def __init__(self):
         self.state = False
         self.marker = (0,0)
+        self.i = 0
 
     def setController(self, controller):
         print("drawPoint.py: Controller set")
@@ -28,50 +28,48 @@ class drawPoint:
 
     def putPoint(self, event):
         xRep, yRep = self.marker
-        print(xRep)
-        print(yRep)
-        self.x = int(
-            self.controller.video.canvas.winfo_pointerx()
-            - self.controller.video.canvas.winfo_rootx()
+        x = int(
+            event.x
         )
-        self.y = int(
-            self.controller.video.canvas.winfo_pointery()
-            - self.controller.video.canvas.winfo_rooty()
+        y = int(
+            event.y
         )
-        print(self.x, self.y)
         self.controller.video.canvas.create_oval(
-            int(self.x),
-            int(self.y),
-            int(self.x + 7),
-            int(self.y + 7),
+            int(x-3),
+            int(y-3),
+            int(x + 4),
+            int(y + 4),
             width=0,
             fill="red",
         )
+        x = x - xRep
+        y = yRep - y
+        self.controller.point.setX(x)
+        self.controller.point.setY(y)
+        self.controller.datapoints.tabPoints(self.i)
 
     def clickMarker(self):
         self.controller.video.canvas.bind("<Control-1>", self.putMarker)
 
     def putMarker(self, event):
         x = int(
-            self.controller.video.canvas.winfo_pointerx()
-            - self.controller.video.canvas.winfo_rootx()
+            event.x
         )
         y = int(
-            self.controller.video.canvas.winfo_pointery()
-            - self.controller.video.canvas.winfo_rooty()
+            event.y
         )
         self.controller.video.canvas.create_oval(
-            int(x),
-            int(y),
-            int(x + 7),
-            int(y + 7),
+            int(x-3),
+            int(y-3),
+            int(x + 4),
+            int(y + 4),
             width=0,
             fill="red",
         )
-        self.controller.video.canvas.create_line(int(x+3), int(y+3), int(x+203), int(y+3), fill ="red")
-        self.controller.video.canvas.create_line(int(x+3), int(y+3), int(x+3), int(y-203), fill ="red")
+        self.controller.video.canvas.create_line(int(x), int(y), int(x+200), int(y), fill ="red")
+        self.controller.video.canvas.create_line(int(x), int(y), int(x), int(y-200), fill ="red")
         self.marker = (x, y)
-        print(self.marker)
+        self.time = self.controller.video.getTime()
 
     def clickPutScale(self):
         pass
