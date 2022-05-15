@@ -13,9 +13,9 @@ class FileRepo:
             text += (
                 str(dataTimes[i])
                 + delim
-                + str(dataPoints[i].getX())
+                + str(dataPoints[i].x)
                 + delim
-                + str(dataPoints[i].getY())
+                + str(dataPoints[i].y)
                 + " \n"
             )
         return text

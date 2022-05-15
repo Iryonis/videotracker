@@ -8,6 +8,8 @@ class drawPoint:
         self.marker = (0, 0)
         self.i = 0
         self.dpts = dataPoints()
+        global isScalePut
+        isScalePut = 0
 
     def get_canvas(self, canvas):
         self.canvas = canvas
@@ -63,4 +65,37 @@ class drawPoint:
         self.marker = (x, y)
 
     def clickPutScale(self):
-        pass
+        global isScalePut
+        if isScalePut == 0:
+            self.canvas.bind("<Button-1>", self.putScale)
+        else:
+            self.canvas.unbind("<Button-1>")
+            self.clickMarker(self.canvas)
+
+    def putScale(self, event):
+        global isScalePut
+        if isScalePut == 0:
+            self.x1 = int(event.x)
+            self.y1 = int(event.y)
+            self.canvas.create_oval(
+                int(self.x1 - 3),
+                int(self.y1 - 3),
+                int(self.x1 + 4),
+                int(self.y1 + 4),
+                width=0,
+                fill="red",
+            )
+            isScalePut = 1
+        else:
+            x2 = int(event.x)
+            y2 = int(event.y)
+            self.canvas.create_line(self.x1, self.y1, x2, y2, fill="red")
+            self.canvas.create_oval(
+                int(x2 - 3),
+                int(y2 - 3),
+                int(x2 + 4),
+                int(y2 + 4),
+                width=0,
+                fill="red",
+            )
+            self.clickPutScale()
