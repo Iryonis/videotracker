@@ -115,17 +115,17 @@ class Video:
     def chooseValue(self, entry, window):
         value = entry.get()
         if value == "":
-            window.destroy()
+            self.close(window)
         value = float(value)
         if value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)):
             print(value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
             maxF = (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, maxF)
             self.play_video()
-            window.destroy()
+            self.close(window)
         self.cap.set(cv2.CAP_PROP_POS_FRAMES, value - 1)
         self.play_video()
-        window.destroy()
+        self.close(window)
 
     def get_frame(self):
         try:
@@ -145,6 +145,9 @@ class Video:
                 self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
         except:
             print("play_video() - ERROR --> this is probably that the video has ended.")
+
+    def getTotTime(self):
+        return int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
     def getTime(self):
         return int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))

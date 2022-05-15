@@ -36,7 +36,7 @@ class Controller:
                 self.dp = drawPoint()
                 self.dp.get_canvas(self.video.get_canvas())
                 self.dp.clickMarker(self.video.get_canvas())
-                self.dp.dpts.create_tab(self.video.getTime())
+                self.dp.dpts.create_tab(self.video.getTime(), self.video.getTotTime())
         except:
             messagebox.showerror(
                 "Error - Set up scale", "You haven't opened a video yet."
