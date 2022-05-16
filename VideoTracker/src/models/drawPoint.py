@@ -16,9 +16,9 @@ class drawPoint:
 
     def clickPutPoint(self, canvas):
         if self.state == True:
-            canvas.bind("<Button-3>", self.putPoint)
+            canvas.bind("<Button-1>", self.putPoint)
         else:
-            canvas.unbind("<Button-3>")
+            canvas.unbind("<Button-1>")
 
     def putPointClicked(self, buttonPoint):
         if self.state == True:
@@ -67,9 +67,9 @@ class drawPoint:
     def clickPutScale(self):
         global isScalePut
         if isScalePut == 0:
-            self.canvas.bind("<Button-1>", self.putScale)
+            self.canvas.bind("<Button-3>", self.putScale)
         else:
-            self.canvas.unbind("<Button-1>")
+            self.canvas.unbind("<Button-3>")
             self.clickMarker(self.canvas)
 
     def putScale(self, event):
@@ -98,4 +98,43 @@ class drawPoint:
                 width=0,
                 fill="red",
             )
+            self.chooseScale(x2, y2)
             self.clickPutScale()
+
+    def chooseScale(self, x, y):
+        try:
+            S_Window = Toplevel()
+            S_Window.configure(background="#ADDAEF")
+            S_Window.title("Choose the value of the scale")
+            S_Window.grab_set()
+            w_width = 450
+            w_height = 150
+            S_Window.geometry(f"{w_width}x{w_height}+{x}+{y}")
+            S_Window.resizable(False, False)
+            Label(S_Window, text="Enter the distance between the two points").pack(
+                side=TOP, pady=7
+            )
+            entry = Entry(S_Window)
+            entry.pack(side=TOP, pady=7)
+            entry.focus()
+            Button(
+                S_Window,
+                text="OK",
+                width=20,
+                height=2,
+                background="#9DCDE3",
+                activebackground="#ADDAEF",
+                font=("calibri", 20, "bold"),
+                command=lambda: self.get_scale(entry, S_Window),
+            ).pack(side=BOTTOM, padx=25, pady=7)
+            S_Window.bind_all(
+                "<Return>",
+                lambda g: self.get_scale(entry, S_Window),
+            )
+        except:
+            pass
+
+    def get_scale(self, entry, window):
+        self.value = entry.get()
+        self.value = int(self.value)
+        window.destroy()
