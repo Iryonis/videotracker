@@ -13,51 +13,7 @@ class drawPoint:
     def get_canvas(self, canvas):
         self.canvas = canvas
 
-    def putPointClicked(self, buttonPoint):
-        if self.state == True:
-            self.state = False
-            buttonPoint["text"] = "Click to place the points"
-            return self.state
-        else:
-            self.state = True
-            buttonPoint["text"] = "Right-click on the video"
-            return self.state
-
-    def putPoint(self, event):
-        xRep, yRep = self.marker
-        x = int(event.x)
-        y = int(event.y)
-        self.canvas.create_oval(
-            int(x - 3),
-            int(y - 3),
-            int(x + 4),
-            int(y + 4),
-            width=0,
-            fill="red",
-        )
-        x = x - xRep
-        y = yRep - y
-        self.dpts.tabPoints(self.i, x, y)
-
-    def clickMarker(self, canvas):
-        canvas.bind("<Control-1>", self.putMarker)
-
-    def putMarker(self, event):
-        self.canvas.delete("marker")
-        x = int(event.x)
-        y = int(event.y)
-        self.canvas.create_oval(
-            int(x - 3),
-            int(y - 3),
-            int(x + 4),
-            int(y + 4),
-            width=0,
-            fill="red",
-            tags = "marker",
-        )
-        self.canvas.create_line(int(x), int(y), int(x + 200), int(y), fill="red", tags = "marker",)
-        self.canvas.create_line(int(x), int(y), int(x), int(y - 200), fill="red", tags = "marker",)
-        self.marker = (x, y)
+    # Put the scale :
 
     def clickPutScale(self):
         if self.stateScale == 0:
@@ -77,13 +33,20 @@ class drawPoint:
                 int(self.y1 + 4),
                 width=0,
                 fill="red",
-                tags = "scale",
+                tags="scale",
             )
             self.stateScale = 1
         else:
             x2 = int(event.x)
             y2 = int(event.y)
-            self.canvas.create_line(self.x1, self.y1, x2, y2, fill="red", tags = "scale",)
+            self.canvas.create_line(
+                self.x1,
+                self.y1,
+                x2,
+                y2,
+                fill="red",
+                tags="scale",
+            )
             self.canvas.create_oval(
                 int(x2 - 3),
                 int(y2 - 3),
@@ -91,7 +54,7 @@ class drawPoint:
                 int(y2 + 4),
                 width=0,
                 fill="red",
-                tags = "scale",
+                tags="scale",
             )
             self.chooseScale(x2, y2)
             self.clickPutScale()
@@ -134,3 +97,74 @@ class drawPoint:
         self.value = int(self.value)
         self.canvas.delete("scale")
         window.destroy()
+
+    # Put the marker :
+
+    def clickMarker(self, canvas):
+        canvas.bind("<Control-1>", self.putMarker)
+
+    def putMarker(self, event):
+        self.canvas.delete("marker")
+        x = int(event.x)
+        y = int(event.y)
+        self.canvas.create_oval(
+            int(x - 3),
+            int(y - 3),
+            int(x + 4),
+            int(y + 4),
+            width=0,
+            fill="red",
+            tags="marker",
+        )
+        self.canvas.create_line(
+            int(x),
+            int(y),
+            int(x + 200),
+            int(y),
+            fill="red",
+            tags="marker",
+        )
+        self.canvas.create_line(
+            int(x),
+            int(y),
+            int(x),
+            int(y - 200),
+            fill="red",
+            tags="marker",
+        )
+        self.marker = (x, y)
+
+    # Put the points :
+
+    def textButtonPoint(self, buttonPoint):
+        if self.state == True:
+            self.state = False
+            buttonPoint["text"] = "Click to place the points"
+            return self.state
+        else:
+            self.state = True
+            buttonPoint["text"] = "Left-click on the video"
+            return self.state
+
+    def putPoint(self, event):
+        if self.end == 0:
+            self.canvas.unbind("<button-1>")
+        else:
+            xRep, yRep = self.marker
+            x = int(event.x)
+            y = int(event.y)
+            self.canvas.create_oval(
+                int(x - 3),
+                int(y - 3),
+                int(x + 4),
+                int(y + 4),
+                width=0,
+                fill="red",
+            )
+            x = x - xRep
+            y = yRep - y
+            self.dpts.tabPoints(self.i, x, y)
+            self.end = self.end - 1
+
+    def calculEnd(self, current_frame, videoLenght):
+        self.end = videoLenght - current_frame

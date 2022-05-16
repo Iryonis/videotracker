@@ -149,7 +149,7 @@ class Video:
     def getTotTime(self):
         return int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    def getTime(self):
+    def get_currentframe(self):
         return int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
 
     # Ferme toutes les fenetres et quitte le processus

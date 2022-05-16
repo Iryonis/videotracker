@@ -159,7 +159,7 @@ class View:
                 "calibri",
                 20,
             ),
-            command=lambda: self.controller.clickScale(),
+            command=lambda: self.controller.clickButtonScale(),
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
@@ -230,7 +230,7 @@ class View:
             ),
         )
         buttonPoint.config(
-            command=lambda: self.controller.putPointClickedController(buttonPoint)
+            command=lambda: self.controller.clickButtonPoints(buttonPoint)
         )
         buttonPoint.pack(side=tk.LEFT, padx=30, pady=7)
 
