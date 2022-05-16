@@ -3,7 +3,7 @@ from .Point import Point
 
 class dataPoints:
     def __init__(self):
-        Point()
+        pass
 
     def create_tab(self, time, totTime):
         self.time = time

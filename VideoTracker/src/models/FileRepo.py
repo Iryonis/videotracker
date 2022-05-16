@@ -12,23 +12,21 @@ class FileRepo:
         for i in range(len(dataTime)):
             if dataTime[i] != 0 and dataTime[i - 1] != 0:
                 new_dataTime[i] = dataTime[i]
-            if dataPoints[i].x != 0 and dataPoints[i - 1].x != 0:
+            if dataPoints[i] != (0, 0) and dataPoints[i - 1] != (0, 0):
                 new_dataPoints[i].x = dataPoints[i].x
-            if dataPoints[i].y != 0 and dataPoints[i - 1].y != 0:
                 new_dataPoints[i].y = dataPoints[i].y
         self.exportDataToString(new_dataTime, new_dataPoints)
 
     def exportDataToString(self, dataTime, dataPoints):
-        print(dataPoints[0])
         text = ""
         delim = ";"
         for i in range(len(dataTime)):
             text += (
                 str(dataTime[i])
                 + delim
-                + str(dataPoints[i].x)
+                + str(dataPoints[i].getX())
                 + delim
-                + str(dataPoints[i].y)
+                + str(dataPoints[i].getY())
                 + " \n"
             )
         return text
@@ -45,10 +43,10 @@ class FileRepo:
     def saveAs(self, dataTime, dataPoints):
         nextPath = "/resources/resultats"
         self.filepath = fd.asksaveasfilename(
-            initialdir=os.getcwd() + nextPath,
-            initialfile="releve_de_points.csv",
-            defaultextension=".csv",
-            filetypes=[("CSV Files", "*.csv")],
+            initialdir = os.getcwd() + nextPath,
+            initialfile = "releve_de_points.csv",
+            defaultextension = ".csv",
+            filetypes = [("CSV Files", "*.csv")],
         )
         self.exportDataToCsv(dataTime, dataPoints, self.filepath)
 

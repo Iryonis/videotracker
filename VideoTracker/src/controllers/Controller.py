@@ -33,12 +33,12 @@ class Controller:
 
     def save(self, nb):
         if nb == 1:
-            self.controller.filerepo.saveAs(
+            self.filerepo.saveAs(
                 self.dp.dpts.get_tabTmp(),
                 self.dp.dpts.get_tabPts(),
             )
         elif nb == 2:
-            self.controller.filerepo.save(
+            self.filerepo.save(
                 self.dp.dpts.get_tabTmp(),
                 self.dp.dpts.get_tabPts(),
             )
