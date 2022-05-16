@@ -1,4 +1,4 @@
-from .Point import Point
+from .Point import *
 
 
 class dataPoints:
@@ -14,7 +14,6 @@ class dataPoints:
     def tabPoints(self, i, x, y):
         self.tabPts[i] = Point(x, y)
         self.tabTmp[i] = int(self.time + i)
-        print(self.tabPts[i])
 
     def get_tabPts(self):
         return self.tabPts

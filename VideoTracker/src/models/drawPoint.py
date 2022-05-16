@@ -69,7 +69,7 @@ class drawPoint:
             w_height = 150
             S_Window.geometry(f"{w_width}x{w_height}+{x}+{y}")
             S_Window.resizable(False, False)
-            Label(S_Window, text="Enter the distance between the two points").pack(
+            Label(S_Window, text="Enter the real distance between the two points").pack(
                 side=TOP, pady=7
             )
             entry = Entry(S_Window)
