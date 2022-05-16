@@ -164,6 +164,7 @@ class drawPoint:
             x = x - xRep
             y = yRep - y
             self.dpts.tabPoints(self.i, x, y)
+            self.i = self.i + 1
             self.end = self.end - 1
 
     def calculEnd(self, current_frame, videoLenght):

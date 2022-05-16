@@ -7,9 +7,7 @@ sys.path.append(parentdir)
 
 from src.models.Graph import Graph
 
-# Pour le moment, le test n'est pas très intéressant étant donné que les données utilisées pour contruire le graphique
-# sont des données définies manuellement lors de la programmation ; ce test unitaire prendra plus de sens lorsque les
-# points seront récupérés sur la vidéo.
+# Doit être mis à jour
 
 
 class Test_Graph(unittest.TestCase):

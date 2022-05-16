@@ -6,12 +6,25 @@ class FileRepo:
     def __init__(self):
         pass
 
-    def exportDataToString(self, dataTimes, dataPoints):
+    def cutting_tab(self, dataTime, dataPoints):
+        new_dataTime = []
+        new_dataPoints = []
+        for i in range(len(dataTime)):
+            if dataTime[i] != 0 and dataTime[i - 1] != 0:
+                new_dataTime[i] = dataTime[i]
+            if dataPoints[i].x != 0 and dataPoints[i - 1].x != 0:
+                new_dataPoints[i].x = dataPoints[i].x
+            if dataPoints[i].y != 0 and dataPoints[i - 1].y != 0:
+                new_dataPoints[i].y = dataPoints[i].y
+        self.exportDataToString(new_dataTime, new_dataPoints)
+
+    def exportDataToString(self, dataTime, dataPoints):
+        print(dataPoints[0])
         text = ""
         delim = ";"
-        for i in range(len(dataTimes)):
+        for i in range(len(dataTime)):
             text += (
-                str(dataTimes[i])
+                str(dataTime[i])
                 + delim
                 + str(dataPoints[i].x)
                 + delim
@@ -20,16 +33,16 @@ class FileRepo:
             )
         return text
 
-    def exportDataToCsv(self, dataTimes, dataPoints, filepath):
+    def exportDataToCsv(self, dataTime, dataPoints, filepath):
         try:
             file = open(filepath, mode="w")
-            text = self.exportDataToString(dataTimes, dataPoints)
+            text = self.exportDataToString(dataTime, dataPoints)
             file.write(text)
             file.close()
         except IOError:
             print("Error when creating the file, please retry.\n")
 
-    def saveAs(self, dataTimes, dataPoints):
+    def saveAs(self, dataTime, dataPoints):
         nextPath = "/resources/resultats"
         self.filepath = fd.asksaveasfilename(
             initialdir=os.getcwd() + nextPath,
@@ -37,10 +50,10 @@ class FileRepo:
             defaultextension=".csv",
             filetypes=[("CSV Files", "*.csv")],
         )
-        self.exportDataToCsv(dataTimes, dataPoints, self.filepath)
+        self.exportDataToCsv(dataTime, dataPoints, self.filepath)
 
-    def save(self, dataTimes, dataPoints):
+    def save(self, dataTime, dataPoints):
         try:
-            self.exportDataToCsv(dataTimes, dataPoints, self.filepath)
+            self.exportDataToCsv(dataTime, dataPoints, self.filepath)
         except:
-            self.saveAs(dataTimes, dataPoints)
+            self.saveAs(dataTime, dataPoints)

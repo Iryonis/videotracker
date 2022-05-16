@@ -57,34 +57,18 @@ class View:
             label="Save as",
             underline=1,
             accelerator="(Ctrl + A)",
-            command=lambda: self.controller.filerepo.saveAs(
-                self.controller.dp.dpts.get_tabTmp(),
-                self.controller.dp.dpts.get_tabPts(),
-            ),
-        )
+            command=lambda: self.controller.save(1))
         self.fenetre.bind_all(
             "<Control-Key-a>",
-            lambda a: self.controller.filerepo.saveAs(
-                self.controller.dp.dpts.get_tabTmp(),
-                self.controller.dp.dpts.get_tabPts(),
-            ),
-        )
+            lambda a: self.controller.save(1))
         menuFile.add_command(
             label="Save",
             underline=0,
             accelerator="(Ctrl + S)",
-            command=lambda: self.controller.filerepo.save(
-                self.controller.dp.dpts.get_tabTmp(),
-                self.controller.dp.dpts.get_tabPts(),
-            ),
-        )
+            command=lambda: self.controller.save(2))
         self.fenetre.bind_all(
             "<Control-Key-s>",
-            lambda s: self.controller.filerepo.save(
-                self.controller.dp.dpts.get_tabTmp(),
-                self.controller.dp.dpts.get_tabPts(),
-            ),
-        )
+            lambda s: self.controller.save(2))
         menuFile.add_separator()
         menuFile.add_command(
             label="Quit the app",
