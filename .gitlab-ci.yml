@@ -13,11 +13,6 @@ build-nom:
   script :
     - pip install coverage
 
-test-graph:
-  stage: test
-  script :
-    - python3 -m unittest -v VideoTracker/TestsUnitaires/TestGraph.py
-
 test-filerepo:
   stage: test
   script :
@@ -27,13 +22,6 @@ test-point:
   stage: test
   script :
     - python3 -m unittest -v VideoTracker/TestsUnitaires/TestPoint.py
-
-coverage-graph:
-    stage: coverage
-    script :
-      - coverage run -m unittest
-      - coverage run -m pytest VideoTracker/TestsUnitaires/TestGraph.py
-      - coverage report -m
 
 coverage-filerepo:
   stage: coverage
