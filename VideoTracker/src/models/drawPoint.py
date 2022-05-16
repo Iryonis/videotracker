@@ -8,27 +8,20 @@ class drawPoint:
         self.marker = (0, 0)
         self.i = 0
         self.dpts = dataPoints()
-        global isScalePut
-        isScalePut = 0
+        self.stateScale = 0
 
     def get_canvas(self, canvas):
         self.canvas = canvas
-
-    def clickPutPoint(self, canvas):
-        if self.state == True:
-            canvas.bind("<Button-1>", self.putPoint)
-        else:
-            canvas.unbind("<Button-1>")
 
     def putPointClicked(self, buttonPoint):
         if self.state == True:
             self.state = False
             buttonPoint["text"] = "Click to place the points"
-            self.clickPutPoint(self.canvas)
+            return self.state
         else:
             self.state = True
             buttonPoint["text"] = "Right-click on the video"
-            self.clickPutPoint(self.canvas)
+            return self.state
 
     def putPoint(self, event):
         xRep, yRep = self.marker
@@ -50,6 +43,7 @@ class drawPoint:
         canvas.bind("<Control-1>", self.putMarker)
 
     def putMarker(self, event):
+        self.canvas.delete("marker")
         x = int(event.x)
         y = int(event.y)
         self.canvas.create_oval(
@@ -59,22 +53,21 @@ class drawPoint:
             int(y + 4),
             width=0,
             fill="red",
+            tags = "marker",
         )
-        self.canvas.create_line(int(x), int(y), int(x + 200), int(y), fill="red")
-        self.canvas.create_line(int(x), int(y), int(x), int(y - 200), fill="red")
+        self.canvas.create_line(int(x), int(y), int(x + 200), int(y), fill="red", tags = "marker",)
+        self.canvas.create_line(int(x), int(y), int(x), int(y - 200), fill="red", tags = "marker",)
         self.marker = (x, y)
 
     def clickPutScale(self):
-        global isScalePut
-        if isScalePut == 0:
+        if self.stateScale == 0:
             self.canvas.bind("<Button-3>", self.putScale)
         else:
             self.canvas.unbind("<Button-3>")
             self.clickMarker(self.canvas)
 
     def putScale(self, event):
-        global isScalePut
-        if isScalePut == 0:
+        if self.stateScale == 0:
             self.x1 = int(event.x)
             self.y1 = int(event.y)
             self.canvas.create_oval(
@@ -84,12 +77,13 @@ class drawPoint:
                 int(self.y1 + 4),
                 width=0,
                 fill="red",
+                tags = "scale",
             )
-            isScalePut = 1
+            self.stateScale = 1
         else:
             x2 = int(event.x)
             y2 = int(event.y)
-            self.canvas.create_line(self.x1, self.y1, x2, y2, fill="red")
+            self.canvas.create_line(self.x1, self.y1, x2, y2, fill="red", tags = "scale",)
             self.canvas.create_oval(
                 int(x2 - 3),
                 int(y2 - 3),
@@ -97,6 +91,7 @@ class drawPoint:
                 int(y2 + 4),
                 width=0,
                 fill="red",
+                tags = "scale",
             )
             self.chooseScale(x2, y2)
             self.clickPutScale()
@@ -137,4 +132,5 @@ class drawPoint:
     def get_scale(self, entry, window):
         self.value = entry.get()
         self.value = int(self.value)
+        self.canvas.delete("scale")
         window.destroy()

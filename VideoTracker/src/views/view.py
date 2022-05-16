@@ -244,6 +244,7 @@ class View:
     def load_video(self):
         print("View.py: open_file() called")
         self.controller.browse_file()
+        self.controller.reset()
 
     def window_pos(self, window, w_width, w_height):
         s_width = window.winfo_screenwidth()

@@ -11,6 +11,7 @@ class Controller:
         self.point = point
         self.filerepo = filerepo
         self.graph = graph
+        self.window = self.video.window
 
     def changeTextPlay(self, buttonP):
         if self.video.pause == False:
@@ -43,7 +44,42 @@ class Controller:
             )
 
     def putPointClickedController(self, buttonPoint):
-        self.dp.putPointClicked(buttonPoint)
+        try:
+            print(self.dp.marker)
+            if self.dp.value != 0:
+                if self.dp.marker != (0, 0):
+                    self.buttonPoint = buttonPoint
+                    self.state = self.dp.putPointClicked(buttonPoint)
+                    self.clickPutPoint()
+                else:
+                    messagebox.showerror(
+                    "Error - Place the points", "You haven't set up a marker yet."
+                    )
+        except:
+            messagebox.showerror(
+                "Error - Place the points", "You haven't set up a scale yet."
+            )
+
+    def clickPutPoint(self):
+        self.canvas = self.video.get_canvas()
+        if self.state == True:
+            self.canvas.bind("<Button-1>", self.putPointController)
+        else:
+            self.canvas.unbind("<Button-1>")
+
+    def putPointController(self, event):
+        self.window.after(1, self.video.play_video)
+        self.dp.putPoint(event)
+
+    def reset(self):
+        self.dp.value = 0
+        self.dp.marker = (0, 0)
+        self.dp.stateScale = 0
+        if self.state == False:
+            self.dp.putPointClicked(self.buttonPoint)
+        self.canvas.unbind("<Button-1>")
+        self.canvas.unbind("<Button-3>")
+        self.canvas.unbind("<Control-1>")
 
     def openFile(self):
         nextPath = "/resources/resultats"
