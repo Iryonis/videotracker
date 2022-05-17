@@ -95,6 +95,13 @@ class View:
             command=lambda: self.goToFrameWindow(),
         )
         self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
+        menuTools.add_command(
+            label="Go to last frame",
+            underline=16,
+            accelerator="(Ctrl + E)",
+            command=lambda: self.controller.goToFrameEnd(),
+        )
+        self.fenetre.bind_all("<Control-Key-e>", lambda e: self.controller.goToFrameEnd())
         menuGraph = tk.Menu(menuTools, tearoff=0)
         menuTools.add_cascade(label="Plot Graph...", menu=menuGraph)
         menuGraph.add_command(

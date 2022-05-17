@@ -97,6 +97,20 @@ class Video:
                 "Error - First Frame", "You haven't opened a video yet."
             )
 
+    def lastFrame(self):
+        try:
+            if self.cap.isOpened():
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, (int(self.videoLenght) - 1))
+                print(
+                    "La frame actuelle (lastFrame) est :",
+                    (int(self.videoLenght) - 1)
+                )
+                self.play_video()
+        except:
+            messagebox.showerror(
+                "Error - Last Frame", "You haven't opened a video yet."
+            )
+
     def currentFrame(self):
         try:
             if self.cap.isOpened():

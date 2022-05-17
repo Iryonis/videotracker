@@ -106,7 +106,7 @@ class Controller:
 
     def stopPoint(self, event):
         self.canvas.unbind("<Button-1>")
-        self.dp.putPointClicked(self.buttonPoint)
+        self.dp.textButtonPoint(self.buttonPoint)
         self.stoppedPoint = True
 
     def putPointController(self, event):
@@ -126,3 +126,8 @@ class Controller:
             self.determineEnd()
         except:
             print("The reset has failed !")
+
+    # Video.py controller :
+
+    def goToFrameEnd(self):
+        self.video.lastFrame()
