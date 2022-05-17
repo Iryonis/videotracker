@@ -21,7 +21,7 @@ class Application(tk.Tk):
         print("Point created")
         controller = Controller(video, view, point, filerepo, graph)
         print("Controller created")
-        view.setController(controller)
+        view.set_controller(controller)
         print("Controller set for view.py")
         view.create_interface()
         print("Interface created")

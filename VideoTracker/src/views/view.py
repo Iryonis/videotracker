@@ -27,7 +27,7 @@ class View:
         except Exception as e:
             print("View.py: ERROR detected on open_window(): [", e, "]")
 
-    def setController(self, controller):
+    def set_controller(self, controller):
         print("View.py: Controller set")
         self.controller = controller
 
@@ -83,18 +83,18 @@ class View:
             underline=5,
             accelerator="(Ctrl + V)",
             state=tk.DISABLED,
-            command=lambda: self.goToSV(),
+            command=lambda: self.go_to_SV(),
         )
-        self.fenetre.bind_all("<Control-Key-v>", lambda v: self.goToSV())
+        self.fenetre.bind_all("<Control-Key-v>", lambda v: self.go_to_SV())
         menuTools = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Tools", menu=menuTools)
         menuTools.add_command(
             label="Go to frame...",
             underline=0,
             accelerator="(Ctrl + G)",
-            command=lambda: self.goToFrameWindow(),
+            command=lambda: self.go_to_frame_window(),
         )
-        self.fenetre.bind_all("<Control-Key-g>", lambda g: self.goToFrameWindow())
+        self.fenetre.bind_all("<Control-Key-g>", lambda g: self.go_to_frame_window())
         menuTools.add_command(
             label="Go to last frame",
             underline=16,
@@ -134,9 +134,9 @@ class View:
             label="Instruction manual",
             underline=0,
             accelerator="(Ctrl + I)",
-            command=lambda: self.goToHelp(),
+            command=lambda: self.go_to_help(),
         )
-        self.fenetre.bind_all("<Control-Key-i>", lambda h: self.goToHelp())
+        self.fenetre.bind_all("<Control-Key-i>", lambda h: self.go_to_help())
 
         # WORK IN PROGRESS
         buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
@@ -245,7 +245,7 @@ class View:
         pos = f"{w_width}x{w_height}+{self.center_x}+{self.center_y}"
         return pos
 
-    def goToFrameWindow(self):
+    def go_to_frame_window(self):
         try:
             # Si video ouverte --> creation d'une fenetre fille
             if self.controller.video.cap.isOpened() == True:
@@ -288,7 +288,7 @@ class View:
             )
 
     # WORK IN PROGRESS
-    def goToHelp(self):
+    def go_to_help(self):
         H_Window = tk.Toplevel()
         H_Window.configure(background="#ADDAEF")
         H_Window.title("Instruction manual")
@@ -313,7 +313,7 @@ class View:
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
     # WORK IN PROGRESS
-    def goToSV(self):
+    def go_to_SV(self):
         pass
 
     # PLOT GRAPH :
