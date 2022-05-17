@@ -99,9 +99,11 @@ class View:
             label="Go to last frame",
             underline=16,
             accelerator="(Ctrl + E)",
-            command=lambda: self.controller.goToFrameEnd(),
+            command=lambda: self.controller.go_to_frame_end(),
         )
-        self.fenetre.bind_all("<Control-Key-e>", lambda e: self.controller.goToFrameEnd())
+        self.fenetre.bind_all(
+            "<Control-Key-e>", lambda e: self.controller.go_to_frame_end()
+        )
         menuGraph = tk.Menu(menuTools, tearoff=0)
         menuTools.add_cascade(label="Plot Graph...", menu=menuGraph)
         menuGraph.add_command(
@@ -148,7 +150,7 @@ class View:
                 "calibri",
                 20,
             ),
-            command=lambda: self.controller.clickButtonScale(),
+            command=lambda: self.controller.click_button_scale(),
         ).pack(side=tk.RIGHT, padx=20, pady=7)
         tk.Button(
             buttonsFrame,
@@ -184,14 +186,14 @@ class View:
         button.config(
             command=lambda: [
                 self.controller.video.play_or_pause(),
-                self.controller.changeTextPlay(button),
+                self.controller.change_text_play(button),
             ]
         )
         self.fenetre.bind_all(
             "<space>",
             lambda s: [
                 self.controller.video.play_or_pause(),
-                self.controller.changeTextPlay(button),
+                self.controller.change_text_play(button),
             ],
         )
         button.pack(side=tk.LEFT, padx=10, pady=7)
@@ -219,7 +221,7 @@ class View:
             ),
         )
         buttonPoint.config(
-            command=lambda: self.controller.clickButtonPoints(buttonPoint)
+            command=lambda: self.controller.click_button_points(buttonPoint)
         )
         buttonPoint.pack(side=tk.LEFT, padx=30, pady=7)
 
@@ -232,7 +234,7 @@ class View:
 
     def load_video(self):
         print("View.py: open_file() called")
-        self.controller.browse_file()
+        self.controller.browse_file_video()
         self.controller.reset()
 
     def window_pos(self, window, w_width, w_height):
@@ -318,10 +320,10 @@ class View:
 
     def graph(self, nb):
         # Ouvre un explorateur de fichier pour que l'utilisateur indique quel fichier CSV il veut utiliser pour le graphe
-        self.controller.openFile()
-        self.windowGraph(nb)
+        self.controller.open_file_graph()
+        self.window_graph(nb)
 
-    def windowGraph(self, nb):
+    def window_graph(self, nb):
         self.t = self.controller.get_t()
         self.x = self.controller.get_x()
         self.y = self.controller.get_y()
@@ -335,13 +337,13 @@ class View:
         # Construit le graphique demandé grâce à matplotlib
         if nb == 1:
             G_Window.title("Graph of X as a function of time T")
-            self.drawGraphX(G_Window)
+            self.draw_graphX(G_Window)
         elif nb == 2:
             G_Window.title("Graph of Y as a function of time T")
-            self.drawGraphY(G_Window)
+            self.draw_graphY(G_Window)
         elif nb == 3:
             G_Window.title("Graph of Y = f(X)")
-            self.drawGraph3(G_Window)
+            self.draw_graph3(G_Window)
 
         # Créer le bouton pour fermer la fenêtre avec Tkinter
         tk.Button(
@@ -359,7 +361,7 @@ class View:
             lambda g: self.controller.video.close(G_Window),
         )
 
-    def drawGraphX(self, window):
+    def draw_graphX(self, window):
         plot = plt.figure(figsize=(11, 6))
         plt.scatter(self.t, self.x, c="#BB620D")
         plt.title("Graph of X as a function of time T")
@@ -372,7 +374,7 @@ class View:
         graph.get_tk_widget().pack(side=tk.TOP)
         graph.draw()
 
-    def drawGraphY(self, window):
+    def draw_graphY(self, window):
         plot = plt.figure(figsize=(11, 6))
         plt.scatter(self.t, self.y, c="#BB620D")
         plt.title("Graph of Y as a function of time T")
@@ -385,7 +387,7 @@ class View:
         graph.get_tk_widget().pack(side=tk.TOP)
         graph.draw()
 
-    def drawGraph3(self, window):
+    def draw_graph3(self, window):
         plot = plt.figure(figsize=(11, 6))
         plt.scatter(self.x, self.y, c=self.t)
         plt.title("Graph Y = f(X)")

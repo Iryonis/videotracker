@@ -5,7 +5,7 @@ class Graph:
     def __init__(self):
         pass
 
-    def retrieveData(self, filename):
+    def retrieve_data(self, filename):
         # Récupère les données des colonnes 0, 1 et 2
         self.t = []
         self.x = []

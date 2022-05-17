@@ -1,4 +1,5 @@
 from tkinter import *
+from tkinter import messagebox
 from .dataPoints import dataPoints
 
 
@@ -147,25 +148,18 @@ class drawPoint:
             return self.state
 
     def putPoint(self, event):
-        if self.end == 0:
-            self.canvas.unbind("<button-1>")
-        else:
-            xRep, yRep = self.marker
-            x = int(event.x)
-            y = int(event.y)
-            self.canvas.create_oval(
-                int(x - 3),
-                int(y - 3),
-                int(x + 4),
-                int(y + 4),
-                width=0,
-                fill="red",
-            )
-            x = x - xRep
-            y = yRep - y
-            self.dpts.tabPoints(self.i, x, y)
-            self.i = self.i + 1
-            self.end = self.end - 1
-
-    def calculEnd(self, current_frame, videoLenght):
-        self.end = videoLenght - current_frame
+        xRep, yRep = self.marker
+        x = int(event.x)
+        y = int(event.y)
+        self.canvas.create_oval(
+            int(x - 3),
+            int(y - 3),
+            int(x + 4),
+            int(y + 4),
+            width=0,
+            fill="red",
+        )
+        x = x - xRep
+        y = yRep - y
+        self.dpts.tabPoints(self.i, x, y)
+        self.i = self.i + 1

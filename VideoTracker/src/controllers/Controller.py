@@ -13,13 +13,13 @@ class Controller:
         self.graph = graph
         self.window = self.video.window
 
-    def changeTextPlay(self, buttonP):
+    def change_text_play(self, buttonP):
         if self.video.pause == False:
             buttonP["text"] = "||"
         elif self.video.pause == True:
             buttonP["text"] = ">"
 
-    def browse_file(self):
+    def browse_file_video(self):
         nextPath = "/resources/videos"
         self.video.pause = True
         filename = fd.askopenfilename(
@@ -29,7 +29,7 @@ class Controller:
                 ("MKV Files", "*.mkv"),
             ),
         )
-        self.video.open_file(filename)
+        self.video.open_file_video(filename)
 
     def save(self, nb):
         if nb == 1:
@@ -43,13 +43,13 @@ class Controller:
                 self.dp.dpts.get_tabPts(),
             )
 
-    def openFile(self):
+    def open_file_graph(self):
         nextPath = "/resources/resultats"
         filename = fd.askopenfilename(
             initialdir=(os.getcwd() + nextPath),
             filetypes=(("CSV Files", "*.csv"),),
         )
-        self.graph.retrieveData(filename)
+        self.graph.retrieve_data(filename)
 
     def get_t(self):
         return self.graph.window_t()
@@ -62,7 +62,7 @@ class Controller:
 
     # drawPoint controller :
 
-    def clickButtonScale(self):
+    def click_button_scale(self):
         try:
             if self.video.cap.isOpened():
                 self.dp = drawPoint()
@@ -76,14 +76,13 @@ class Controller:
                 "Error - Set up scale", "You haven't opened a video yet."
             )
 
-    def clickButtonPoints(self, buttonPoint):
+    def click_button_points(self, buttonPoint):
         try:
             if self.dp.value != 0:
                 if self.dp.marker != (0, 0):
-                    self.determineEnd()
                     self.buttonPoint = buttonPoint
                     self.state = self.dp.textButtonPoint(buttonPoint)
-                    self.bindPutPoint()
+                    self.bind_put_point()
                 else:
                     messagebox.showerror(
                         "Error - Place the points", "You haven't set up a marker yet."
@@ -93,25 +92,31 @@ class Controller:
                 "Error - Place the points", "You haven't set up a scale yet."
             )
 
-    def determineEnd(self):
-        self.dp.calculEnd(self.video.get_currentframe(), self.video.getTotTime())
-
-    def bindPutPoint(self):
+    def bind_put_point(self):
         self.canvas = self.video.get_canvas()
         if self.state == True:
-            self.canvas.bind("<Button-1>", self.putPointController)
-            self.window.bind("<Escape>", self.stopPoint)
+            self.canvas.bind("<Button-1>", self.put_point_controller)
+            self.window.bind("<Escape>", self.stop_point)
         else:
             self.canvas.unbind("<Button-1>")
 
-    def stopPoint(self, event):
+    def stop_point(self, event):
         self.canvas.unbind("<Button-1>")
         self.dp.textButtonPoint(self.buttonPoint)
         self.stoppedPoint = True
+        messagebox.showinfo("Info - Aiming", "You have stopped the aiming.")
 
-    def putPointController(self, event):
-        self.window.after(1, self.video.play_video)
-        self.dp.putPoint(event)
+    def put_point_controller(self, event):
+        if self.video.get_nextFrame() == True:
+            self.window.after(1, self.video.play_video)
+            self.dp.putPoint(event)
+        else:
+            self.canvas.unbind("<Button-1>")
+            self.dp.textButtonPoint(self.buttonPoint)
+            messagebox.showinfo(
+                "Info - Aiming",
+                "You have arrived at the end of the video, thus the aiming has stopped.",
+            )
 
     def reset(self):
         try:
@@ -123,11 +128,10 @@ class Controller:
             self.canvas.unbind("<Button-1>")
             self.canvas.unbind("<Button-3>")
             self.canvas.unbind("<Control-1>")
-            self.determineEnd()
         except:
             print("The reset has failed !")
 
     # Video.py controller :
 
-    def goToFrameEnd(self):
-        self.video.lastFrame()
+    def go_to_frame_end(self):
+        self.video.last_frame()

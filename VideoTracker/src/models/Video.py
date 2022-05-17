@@ -15,8 +15,8 @@ class Video:
         except Exception as e:
             print("Video.py: ERROR detected on __init__(): [", e, "]")
 
-    def open_file(self, filename):
-        print("Video.py: open_file()")
+    def open_file_video(self, filename):
+        print("Video.py: open_file_video()")
         self.cap = cv2.VideoCapture(filename)
         self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
         self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
@@ -97,13 +97,12 @@ class Video:
                 "Error - First Frame", "You haven't opened a video yet."
             )
 
-    def lastFrame(self):
+    def last_frame(self):
         try:
             if self.cap.isOpened():
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, (int(self.videoLenght) - 1))
                 print(
-                    "La frame actuelle (lastFrame) est :",
-                    (int(self.videoLenght) - 1)
+                    "La frame actuelle (last_frame) est :", (int(self.videoLenght) - 1)
                 )
                 self.play_video()
         except:
@@ -165,6 +164,13 @@ class Video:
 
     def get_currentframe(self):
         return int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
+
+    def get_nextFrame(self):
+        if int(self.get_currentframe() + 1) > self.getTotTime():
+            nf = False
+        else:
+            nf = True
+        return nf
 
     # Ferme toutes les fenetres et quitte le processus
     def quit(self):
