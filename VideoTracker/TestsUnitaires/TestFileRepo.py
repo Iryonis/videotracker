@@ -22,21 +22,21 @@ class Test_FileRepo(unittest.TestCase):
         self.nextPath = "/VideoTracker/resources/resultats"
         self.nextPathV = "/VideoTracker/TestsUnitaires"
 
-    # Test pour exportDataToString :
+    # Test pour export_data_to_string :
 
-    def test_exportDataToStringTrue(self):
-        self.text = self.fileCSV.exportDataToString(self.dataTimes, self.dataPoints)
+    def test_export_data_to_string_true(self):
+        self.text = self.fileCSV.export_data_to_string(self.dataTimes, self.dataPoints)
         self.assertEqual(self.text, self.testTrue)
 
-    def test_exportDataToStringFalse(self):
-        self.text = self.fileCSV.exportDataToString(self.dataTimes, self.dataPoints)
+    def test_export_data_to_string_false(self):
+        self.text = self.fileCSV.export_data_to_string(self.dataTimes, self.dataPoints)
         self.assertNotEqual(self.text, self.testFalse)
 
-    # Test pour exportDataToCsv :
+    # Test pour export_data_to_csv :
 
-    def test_exportDataToCsvTrue(self):
+    def test_export_data_to_csv_true(self):
         filepath = os.getcwd() + self.nextPath + "/releve_de_points.csv"
-        self.fileCSV.exportDataToCsv(self.dataTimes, self.dataPoints, filepath)
+        self.fileCSV.export_data_to_csv(self.dataTimes, self.dataPoints, filepath)
         self.assertTrue(
             filecmp.cmp(
                 os.getcwd() + self.nextPath + "/releve_de_points.csv",
@@ -44,9 +44,9 @@ class Test_FileRepo(unittest.TestCase):
             )
         )
 
-    def test_exportDataToCsvFalse(self):
+    def test_export_data_to_csv_false(self):
         filepath = os.getcwd() + self.nextPath + "/releve_de_points.csv"
-        self.fileCSV.exportDataToCsv(self.dataTimes, self.dataPoints, filepath)
+        self.fileCSV.export_data_to_csv(self.dataTimes, self.dataPoints, filepath)
         self.assertFalse(
             filecmp.cmp(
                 os.getcwd() + self.nextPath + "/releve_de_points.csv",

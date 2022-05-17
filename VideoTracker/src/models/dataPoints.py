@@ -11,7 +11,7 @@ class dataPoints:
         self.tabPts = [0 for i in range(int(self.totTime))]
         self.tabTmp = [0 for i in range(int(self.totTime))]
 
-    def tabPoints(self, i, x, y):
+    def tab_points(self, i, x, y):
         self.tabPts[i] = Point(x, y)
         self.tabTmp[i] = int(self.time + i)
 

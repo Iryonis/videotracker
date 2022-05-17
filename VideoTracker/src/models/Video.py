@@ -46,7 +46,7 @@ class Video:
                 "You haven't opened a video for the moment ; thus, you can't start it.",
             )
 
-    def nextFrame(self, buttonP):
+    def next_frame(self, buttonP):
         try:
             buttonP["text"] = ">"
             if self.cap.isOpened():
@@ -54,7 +54,7 @@ class Video:
                     self.pause = True
                 self.window.after(1, self.play_video)
                 print(
-                    "La frame actuelle (nextFrame) est :",
+                    "La frame actuelle (next_frame) est :",
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
         except:
@@ -62,7 +62,7 @@ class Video:
                 "Error - Next Frame", "You haven't opened a video yet."
             )
 
-    def previousFrame(self, buttonP):
+    def previous_frame(self, buttonP):
         try:
             buttonP["text"] = ">"
             if self.cap.isOpened():
@@ -71,7 +71,7 @@ class Video:
                 frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame - 2)
                 print(
-                    "La frame actuelle (previousFrame) est :",
+                    "La frame actuelle (previous_frame) est :",
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
                 self.play_video()
@@ -80,7 +80,7 @@ class Video:
                 "Error - Previous Frame", "You haven't opened a video yet."
             )
 
-    def firstFrame(self, buttonP):
+    def first_frame(self, buttonP):
         try:
             buttonP["text"] = ">"
             if self.cap.isOpened():
@@ -88,7 +88,7 @@ class Video:
                     self.pause = True
                 self.cap.set(cv2.CAP_PROP_POS_FRAMES, 0)
                 print(
-                    "La frame actuelle (firstFrame) est :",
+                    "La frame actuelle (first_frame) est :",
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
                 self.play_video()
@@ -110,7 +110,7 @@ class Video:
                 "Error - Last Frame", "You haven't opened a video yet."
             )
 
-    def currentFrame(self):
+    def current_frame(self):
         try:
             if self.cap.isOpened():
                 frameActuelle = (
@@ -125,7 +125,7 @@ class Video:
                 "Error - Current Frame", "You haven't opened a video yet."
             )
 
-    def chooseValue(self, entry, window):
+    def choose_value(self, entry, window):
         value = entry.get()
         if value == "":
             self.close(window)
@@ -159,14 +159,14 @@ class Video:
         except:
             print("play_video() - ERROR --> this is probably that the video has ended.")
 
-    def getTotTime(self):
+    def get_TotTime(self):
         return int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
 
-    def get_currentframe(self):
+    def get_current_frame(self):
         return int(self.cap.get(cv2.CAP_PROP_POS_FRAMES))
 
-    def get_nextFrame(self):
-        if int(self.get_currentframe() + 1) > self.getTotTime():
+    def get_next_frame(self):
+        if int(self.get_current_frame() + 1) > self.get_TotTime():
             nf = False
         else:
             nf = True

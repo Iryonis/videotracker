@@ -33,7 +33,7 @@ class Controller:
 
     def save(self, nb):
         if nb == 1:
-            self.filerepo.saveAs(
+            self.filerepo.save_as(
                 self.dp.dpts.get_tabTmp(),
                 self.dp.dpts.get_tabPts(),
             )
@@ -67,9 +67,9 @@ class Controller:
             if self.video.cap.isOpened():
                 self.dp = drawPoint()
                 self.dp.get_canvas(self.video.get_canvas())
-                self.dp.clickPutScale()
+                self.dp.click_put_scale()
                 self.dp.dpts.create_tab(
-                    self.video.get_currentframe(), self.video.getTotTime()
+                    self.video.get_current_frame(), self.video.get_TotTime()
                 )
         except:
             messagebox.showerror(
@@ -81,7 +81,7 @@ class Controller:
             if self.dp.value != 0:
                 if self.dp.marker != (0, 0):
                     self.buttonPoint = buttonPoint
-                    self.state = self.dp.textButtonPoint(buttonPoint)
+                    self.state = self.dp.text_button_point(buttonPoint)
                     self.bind_put_point()
                 else:
                     messagebox.showerror(
@@ -102,17 +102,17 @@ class Controller:
 
     def stop_point(self, event):
         self.canvas.unbind("<Button-1>")
-        self.dp.textButtonPoint(self.buttonPoint)
+        self.dp.text_button_point(self.buttonPoint)
         self.stoppedPoint = True
         messagebox.showinfo("Info - Aiming", "You have stopped the aiming.")
 
     def put_point_controller(self, event):
-        if self.video.get_nextFrame() == True:
+        if self.video.get_next_frame() == True:
             self.window.after(1, self.video.play_video)
-            self.dp.putPoint(event)
+            self.dp.put_point(event)
         else:
             self.canvas.unbind("<Button-1>")
-            self.dp.textButtonPoint(self.buttonPoint)
+            self.dp.text_button_point(self.buttonPoint)
             messagebox.showinfo(
                 "Info - Aiming",
                 "You have arrived at the end of the video, thus the aiming has stopped.",
@@ -124,7 +124,7 @@ class Controller:
             self.dp.marker = (0, 0)
             self.dp.stateScale = 0
             if self.state == True:
-                self.dp.textButtonPoint(self.buttonPoint)
+                self.dp.text_button_point(self.buttonPoint)
             self.canvas.unbind("<Button-1>")
             self.canvas.unbind("<Button-3>")
             self.canvas.unbind("<Control-1>")

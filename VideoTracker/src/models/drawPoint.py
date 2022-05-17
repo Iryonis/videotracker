@@ -16,14 +16,14 @@ class drawPoint:
 
     # Put the scale :
 
-    def clickPutScale(self):
+    def click_put_scale(self):
         if self.stateScale == 0:
-            self.canvas.bind("<Button-3>", self.putScale)
+            self.canvas.bind("<Button-3>", self.put_scale)
         else:
             self.canvas.unbind("<Button-3>")
-            self.clickMarker(self.canvas)
+            self.click_marker(self.canvas)
 
-    def putScale(self, event):
+    def put_scale(self, event):
         if self.stateScale == 0:
             self.x1 = int(event.x)
             self.y1 = int(event.y)
@@ -57,10 +57,10 @@ class drawPoint:
                 fill="red",
                 tags="scale",
             )
-            self.chooseScale(x2, y2)
-            self.clickPutScale()
+            self.choose_scale(x2, y2)
+            self.click_put_scale()
 
-    def chooseScale(self, x, y):
+    def choose_scale(self, x, y):
         try:
             S_Window = Toplevel()
             S_Window.configure(background="#ADDAEF")
@@ -101,10 +101,10 @@ class drawPoint:
 
     # Put the marker :
 
-    def clickMarker(self, canvas):
-        canvas.bind("<Control-1>", self.putMarker)
+    def click_marker(self, canvas):
+        canvas.bind("<Control-1>", self.put_marker)
 
-    def putMarker(self, event):
+    def put_marker(self, event):
         self.canvas.delete("marker")
         x = int(event.x)
         y = int(event.y)
@@ -137,7 +137,7 @@ class drawPoint:
 
     # Put the points :
 
-    def textButtonPoint(self, buttonPoint):
+    def text_button_point(self, buttonPoint):
         if self.state == True:
             self.state = False
             buttonPoint["text"] = "Click to place the points"
@@ -147,7 +147,7 @@ class drawPoint:
             buttonPoint["text"] = "Left-click on the video"
             return self.state
 
-    def putPoint(self, event):
+    def put_point(self, event):
         xRep, yRep = self.marker
         x = int(event.x)
         y = int(event.y)
@@ -161,5 +161,5 @@ class drawPoint:
         )
         x = x - xRep
         y = yRep - y
-        self.dpts.tabPoints(self.i, x, y)
+        self.dpts.tab_points(self.i, x, y)
         self.i = self.i + 1

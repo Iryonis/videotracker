@@ -158,10 +158,10 @@ class View:
             bg="#FF9F45",
             activebackground="#ADDAEF",
             font=("calibri", 18),
-            command=lambda: self.controller.video.firstFrame(button),
+            command=lambda: self.controller.video.first_frame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all(
-            "<Control-Key-b>", lambda b: self.controller.video.firstFrame(button)
+            "<Control-Key-b>", lambda b: self.controller.video.first_frame(button)
         )
         tk.Button(
             buttonsFrame,
@@ -170,10 +170,10 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.previousFrame(button),
+            command=lambda: self.controller.video.previous_frame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all(
-            "<Left>", lambda l: self.controller.video.previousFrame(button)
+            "<Left>", lambda l: self.controller.video.previous_frame(button)
         )
         button = tk.Button(
             buttonsFrame,
@@ -204,10 +204,10 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.nextFrame(button),
+            command=lambda: self.controller.video.next_frame(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all(
-            "<Right>", lambda r: self.controller.video.nextFrame(button)
+            "<Right>", lambda r: self.controller.video.next_frame(button)
         )
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         buttonPoint = tk.Button(
@@ -265,7 +265,7 @@ class View:
                 entry = tk.Entry(F_Window)
                 entry.pack(side=tk.TOP, pady=7)
                 entry.focus()
-                tk.Label(F_Window, text=self.controller.video.currentFrame()).pack(
+                tk.Label(F_Window, text=self.controller.video.current_frame()).pack(
                     side=tk.LEFT, padx=10
                 )
                 tk.Button(
@@ -276,11 +276,11 @@ class View:
                     background="#9DCDE3",
                     activebackground="#ADDAEF",
                     font=("calibri", 20, "bold"),
-                    command=lambda: self.controller.video.chooseValue(entry, F_Window),
+                    command=lambda: self.controller.video.choose_value(entry, F_Window),
                 ).pack(side=tk.BOTTOM, padx=30, pady=7)
                 F_Window.bind_all(
                     "<Return>",
-                    lambda g: self.controller.video.chooseValue(entry, F_Window),
+                    lambda g: self.controller.video.choose_value(entry, F_Window),
                 )
         except:
             messagebox.showerror(
