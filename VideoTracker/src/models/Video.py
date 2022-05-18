@@ -54,15 +54,17 @@ class Video:
 
     def next_frame(self, buttonP):
         try:
-            buttonP["text"] = ">"
+            buttonP["text"] = "▶"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
-                self.window.after(1, self.play_video)
+                frame = self.cap.get(cv2.CAP_PROP_POS_FRAMES)
+                self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame)
                 print(
                     "La frame actuelle (next_frame) est :",
                     self.cap.get(cv2.CAP_PROP_POS_FRAMES),
                 )
+                self.play_video()
         except:
             messagebox.showerror(
                 "Error - Next Frame", "You haven't opened a video yet."
@@ -70,7 +72,7 @@ class Video:
 
     def previous_frame(self, buttonP):
         try:
-            buttonP["text"] = ">"
+            buttonP["text"] = "▶"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
@@ -88,7 +90,7 @@ class Video:
 
     def first_frame(self, buttonP):
         try:
-            buttonP["text"] = ">"
+            buttonP["text"] = "▶"
             if self.cap.isOpened():
                 if self.pause == False:
                     self.pause = True
