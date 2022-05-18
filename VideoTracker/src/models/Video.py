@@ -17,19 +17,25 @@ class Video:
 
     def open_file_video(self, filename):
         print("Video.py: open_file_video()")
-        self.cap = cv2.VideoCapture(filename)
-        self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
-        self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
-        if self.height > self.max_height:
-            self.canvas.config(width=self.width, height=self.max_height)
+        if filename == "":
+            messagebox.showwarning(
+                "Warning - Open_file (Video.py)",
+                "You haven't chosen any videos ; please try again.",
+            )
         else:
-            self.canvas.config(width=self.width, height=self.height)
-        self.delay = (1 / self.cap.get(cv2.CAP_PROP_FPS)) * 1000
-        ret, frame = self.get_frame()
-        if ret:
-            self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
-            self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
-        self.videoLenght = str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+            self.cap = cv2.VideoCapture(filename)
+            self.width = self.cap.get(cv2.CAP_PROP_FRAME_WIDTH)
+            self.height = self.cap.get(cv2.CAP_PROP_FRAME_HEIGHT)
+            if self.height > self.max_height:
+                self.canvas.config(width=self.width, height=self.max_height)
+            else:
+                self.canvas.config(width=self.width, height=self.height)
+            self.delay = (1 / self.cap.get(cv2.CAP_PROP_FPS)) * 1000
+            ret, frame = self.get_frame()
+            if ret:
+                self.photo = PIL.ImageTk.PhotoImage(image=PIL.Image.fromarray(frame))
+                self.canvas.create_image(0, 0, image=self.photo, anchor=NW)
+            self.videoLenght = str(int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
 
     def get_canvas(self):
         return self.canvas
@@ -129,14 +135,13 @@ class Video:
         value = entry.get()
         if value == "":
             self.close(window)
-        value = float(value)
-        if value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)):
-            print(value > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)))
+            return None
+        if float(value) > (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)):
             maxF = (self.cap.get(cv2.CAP_PROP_FRAME_COUNT)) - 1
             self.cap.set(cv2.CAP_PROP_POS_FRAMES, maxF)
             self.play_video()
             self.close(window)
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, value - 1)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, float(value) - 1)
         self.play_video()
         self.close(window)
 

@@ -13,7 +13,6 @@ class dataPoints:
     def tab_points(self, i, x, y, time):
         self.tabPts[i] = Point(x, y)
         self.tabTmp[i] = int(time)
-        print(self.tabTmp[i], self.tabPts[i].x, self.tabPts[i].y)
 
     def get_tabPts(self):
         return self.tabPts
