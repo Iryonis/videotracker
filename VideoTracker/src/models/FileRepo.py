@@ -46,5 +46,3 @@ class FileRepo:
             self.export_data_to_csv(dataTime, dataPoints, self.filepath, ratio)
         except:
             self.save_as(dataTime, dataPoints, ratio)
-
-

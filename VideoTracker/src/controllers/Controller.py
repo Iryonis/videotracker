@@ -32,17 +32,23 @@ class Controller:
         self.video.open_file_video(filename)
 
     def save(self, nb):
-        if nb == 1:
-            self.filerepo.save_as(
-                self.dp.dpts.get_tabTmp(),
-                self.dp.dpts.get_tabPts(),
-                self.dp.get_ratio(),
-            )
-        elif nb == 2:
-            self.filerepo.save(
-                self.dp.dpts.get_tabTmp(),
-                self.dp.dpts.get_tabPts(),
-                self.dp.get_ratio(),
+        if self.aimingState == False:
+            if nb == 1:
+                self.filerepo.save_as(
+                    self.dp.dpts.get_tabTmp(),
+                    self.dp.dpts.get_tabPts(),
+                    self.dp.get_ratio(),
+                )
+            elif nb == 2:
+                self.filerepo.save(
+                    self.dp.dpts.get_tabTmp(),
+                    self.dp.dpts.get_tabPts(),
+                    self.dp.get_ratio(),
+                )
+        else:
+            messagebox.showwarning(
+                "Warning - Save",
+                "You haven't ended the aiming yet.\nEnd it before trying again.",
             )
 
     def open_file_graph(self):
@@ -68,6 +74,7 @@ class Controller:
         try:
             if self.video.cap.isOpened():
                 self.dp = drawPoint()
+                self.aimingState = False
                 self.dp.get_canvas(self.video.get_canvas())
                 self.dp.click_put_scale()
                 self.dp.dpts.create_tab(self.video.get_TotTime())
@@ -95,12 +102,15 @@ class Controller:
     def bind_put_point(self):
         self.canvas = self.video.get_canvas()
         if self.state == True:
+            self.aimingState = True
             self.canvas.bind("<Button-1>", self.put_point_controller)
             self.window.bind("<Escape>", self.stop_point)
         else:
+            self.aimingState = False
             self.canvas.unbind("<Button-1>")
 
     def stop_point(self, event):
+        self.aimingState = False
         self.canvas.unbind("<Button-1>")
         self.dp.text_button_point(self.buttonPoint)
         self.stoppedPoint = True
@@ -108,11 +118,14 @@ class Controller:
 
     def put_point_controller(self, event):
         if self.video.get_next_frame() == True:
+            if self.aimingState == False:
+                self.aimingState = True
             self.window.after(1, self.video.play_video)
             self.time = self.video.get_current_frame()
             self.dp.put_point(event, self.time)
         else:
             self.canvas.unbind("<Button-1>")
+            self.aimingState = False
             self.dp.text_button_point(self.buttonPoint)
             messagebox.showinfo(
                 "Info - Aiming",
