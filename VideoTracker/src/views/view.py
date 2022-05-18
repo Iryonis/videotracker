@@ -1,6 +1,8 @@
+from msilib.schema import tables
 import tkinter as tk
 import platform
 from tkinter import messagebox
+from src.models.dataPoints import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -82,8 +84,7 @@ class View:
             label="Show values...",
             underline=5,
             accelerator="(Ctrl + V)",
-            state=tk.DISABLED,
-            command=lambda: self.go_to_SV(),
+            command=lambda: self.go_to_edit(),
         )
         self.fenetre.bind_all("<Control-Key-v>", lambda v: self.go_to_SV())
         menuTools = tk.Menu(menuBar, tearoff=0)
@@ -129,6 +130,8 @@ class View:
         self.fenetre.bind_all("<Control-Key-t>", lambda t: self.graph(3))
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
+     
+
         # WORK IN PROGRESS
         menuHelp.add_command(
             label="Instruction manual",
@@ -137,6 +140,15 @@ class View:
             command=lambda: self.go_to_help(),
         )
         self.fenetre.bind_all("<Control-Key-i>", lambda h: self.go_to_help())
+
+        menuHelp.add_command(
+            label="About Us",
+
+            accelerator="(Ctrl + L)",
+            underline=0,
+            command=lambda: self.About_Us(),
+        )
+        self.fenetre.bind_all("<Control-Key-l>", lambda h: self.About_Us())
 
         # WORK IN PROGRESS
         buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
@@ -312,6 +324,53 @@ class View:
             command=lambda: self.controller.video.close(H_Window),
         ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
+    def About_Us(self):
+        H_Window = tk.Toplevel()
+        H_Window.configure(background="#ADDAEF")
+        H_Window.title("About Us")
+        w_width = 1000
+        w_height = int(H_Window.winfo_screenheight() / float(2))
+        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
+        TEXTE = "Hello. \nWe are two students at the University of Bordeaux. We are called Léo Tarpin and Guilhem Bonnefous. We made this video tracker as a year-end project. This project allowed us to deepen our knowledge in the field of computer science. Specifically in coding with Python. This project also allowed us to learn new things like tkinter."
+        label = tk.Label(
+            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
+        )
+        label.pack(side=tk.TOP, fill="x")
+        label.place(x=0, y=0)
+        tk.Button(
+            H_Window,
+            text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.controller.video.close(H_Window),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
+
+    def go_to_edit(self):
+        H_Window = tk.Toplevel()
+        H_Window.configure(background="#ADDAEF")
+        H_Window.title("Points")
+        w_width = 1000
+        w_height = int(H_Window.winfo_screenheight() / float(2))
+        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
+        TEXTE = 'test'
+        label = tk.Label(
+            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
+        )
+        label.pack(side=tk.TOP, fill="x")
+        label.place(x=0, y=0)
+        tk.Button(
+            H_Window,
+            text="OK",
+            width=20,
+            height=2,
+            background="#9DCDE3",
+            activebackground="#ADDAEF",
+            font=("calibri", 20, "bold"),
+            command=lambda: self.controller.video.close(H_Window),
+        ).pack(side=tk.BOTTOM, padx=30, pady=7)
     # WORK IN PROGRESS
     def go_to_SV(self):
         pass
