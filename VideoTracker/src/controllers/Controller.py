@@ -2,6 +2,7 @@ from tkinter import filedialog as fd
 import os
 from ..models.drawPoint import drawPoint
 from tkinter import messagebox
+import time
 
 
 class Controller:
@@ -120,7 +121,9 @@ class Controller:
         if self.video.get_next_frame() == True:
             if self.aimingState == False:
                 self.aimingState = True
-            self.window.after(1, self.video.play_video)
+            frame = int(self.video.get_current_frame())
+            self.video.cap.set(frame, frame + 1)
+            self.video.play_video()
             self.time = self.video.get_current_frame()
             self.dp.put_point(event, self.time)
         else:

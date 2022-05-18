@@ -189,7 +189,7 @@ class View:
         )
         button = tk.Button(
             buttonsFrame,
-            text=">",
+            text="▶",
             bg="#FF9F45",
             activebackground="#ADDAEF",
             width=15,

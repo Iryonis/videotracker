@@ -170,6 +170,3 @@ class drawPoint:
         y = yRep - y
         self.dpts.tab_points(self.i, x, y, time)
         self.i = self.i + 1
-
-    def show_all_points(self):
-        pass
