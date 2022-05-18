@@ -2,7 +2,6 @@ from tkinter import filedialog as fd
 import os
 from ..models.drawPoint import drawPoint
 from tkinter import messagebox
-import time
 
 
 class Controller:

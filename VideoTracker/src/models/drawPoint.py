@@ -155,7 +155,7 @@ class drawPoint:
             return self.state
 
     def put_point(self, event, time):
-        xRep, yRep = self.marker
+        self.xRep, self.yRep = self.marker
         x = int(event.x)
         y = int(event.y)
         self.canvas.create_oval(
@@ -166,7 +166,22 @@ class drawPoint:
             width=0,
             fill="red",
         )
-        x = x - xRep
-        y = yRep - y
+        self.show_all_points()
+        x = x - self.xRep
+        y = self.yRep - y
         self.dpts.tab_points(self.i, x, y, time)
         self.i = self.i + 1
+
+    def show_all_points(self):
+        tabPts = self.dpts.get_tabPts()
+        for j in range(self.i):
+            if tabPts[j] != 0:
+                self.canvas.create_oval(
+                    (int(tabPts[j].getX()) - 3 + self.xRep),
+                    (int(self.yRep - tabPts[j].getY()) - 3),
+                    (int(tabPts[j].getX()) + 4 + self.xRep),
+                    (int(self.yRep - tabPts[j].getY()) + 4),
+                    width=0,
+                    fill="red",
+                )
+            j = j + 1

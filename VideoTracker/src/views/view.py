@@ -1,8 +1,6 @@
-from msilib.schema import tables
 import tkinter as tk
 import platform
 from tkinter import messagebox
-from src.models.dataPoints import *
 import matplotlib.pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
@@ -77,14 +75,13 @@ class View:
             command=lambda: self.controller.video.quit(),
         )
         self.fenetre.bind_all("<Control-Key-q>", lambda q: self.controller.video.quit())
-        # WORK IN PROGRESS
         menuEdit = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Edit", menu=menuEdit)
         menuEdit.add_command(
             label="Show values...",
             underline=5,
             accelerator="(Ctrl + V)",
-            command=lambda: self.go_to_edit(),
+            command=lambda: self.go_to_SV(),
         )
         self.fenetre.bind_all("<Control-Key-v>", lambda v: self.go_to_SV())
         menuTools = tk.Menu(menuBar, tearoff=0)
@@ -130,27 +127,23 @@ class View:
         self.fenetre.bind_all("<Control-Key-t>", lambda t: self.graph(3))
         menuHelp = tk.Menu(menuBar, tearoff=0)
         menuBar.add_cascade(label="Help", menu=menuHelp)
-     
 
-        # WORK IN PROGRESS
         menuHelp.add_command(
-            label="Instruction manual",
-            underline=0,
+            label="Shortcuts's list",
+            underline=14,
             accelerator="(Ctrl + I)",
-            command=lambda: self.go_to_help(),
+            command=lambda: self.go_to_shortcut(),
         )
-        self.fenetre.bind_all("<Control-Key-i>", lambda h: self.go_to_help())
+        self.fenetre.bind_all("<Control-Key-i>", lambda i: self.go_to_shortcut())
 
         menuHelp.add_command(
             label="About Us",
-
-            accelerator="(Ctrl + L)",
-            underline=0,
-            command=lambda: self.About_Us(),
+            accelerator="(Ctrl + U)",
+            underline=7,
+            command=lambda: self.go_to_about_us(),
         )
-        self.fenetre.bind_all("<Control-Key-l>", lambda h: self.About_Us())
+        self.fenetre.bind_all("<Control-Key-u>", lambda u: self.go_to_about_us())
 
-        # WORK IN PROGRESS
         buttonsFrame = tk.Frame(self.fenetre, bg="#BB620D")
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         tk.Button(
@@ -299,81 +292,39 @@ class View:
                 "Error - Go to frame...", "You haven't opened a video yet."
             )
 
-    # WORK IN PROGRESS
-    def go_to_help(self):
-        H_Window = tk.Toplevel()
-        H_Window.configure(background="#ADDAEF")
-        H_Window.title("Instruction manual")
-        w_width = 1000
-        w_height = int(H_Window.winfo_screenheight() / float(2))
-        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        TEXTE = "Liste des raccourcis clavier :\n  -Ctrl+0 = Open the video \n  -Ctrl+A = Save as \n  -Ctrl+S = Save \n  -Ctrl+Q = Quit the application \n  -Ctrl+V = Show values \n  -Ctrl+G = Go to frame \n  -Ctrl+I = Help"
-        label = tk.Label(
-            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
+    def go_to_shortcut(self):
+        messagebox.showinfo(
+            "Shortcuts's list :",
+            "You can find all the shortcuts by pressing the key 'Alt' :\n  - Ctrl + o => Open the video \n  - Ctrl + p => Play the video \n  - Ctrl + a => Save as \n  - Ctrl + s => Save (if you have already saved one time) \n  - Ctrl + q => Quit the application \n"
+            + "  - Ctrl + v => Show values \n  - Ctrl + g => Go to frame \n  - Ctrl + e => Go to last frame \n  - Ctrl + x => Plot the graph x(t) \n  - Ctrl + y => Plot the graph y(t) \n  - Ctrl + t => Plot the graph y(x) \n"
+            + "  - Ctrl + i => Help \n  - Ctrl + u => About us \n  - Ctrl + b => Start from the beginning button \n  - Left => Previous frame button \n  - Space => Play or Pause button \n  - Right => Next frame button \n \n"
+            + "After pressing the 'Set up scale' button, you will be able to define a scale by right-clicking two times on the video. Then, with the key's combinaison 'Ctrl + left click', you will have to put a marker to define a new origin."
+            + "To finish, by clicking on the 'Click to place the points' button, a left click on the video will put a point and allow you to track the object you want to track.",
         )
-        label.pack(side=tk.TOP, fill="x")
-        label.place(x=0, y=0)
-        tk.Button(
-            H_Window,
-            text="OK",
-            width=20,
-            height=2,
-            background="#9DCDE3",
-            activebackground="#ADDAEF",
-            font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.close(H_Window),
-        ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
-    def About_Us(self):
-        H_Window = tk.Toplevel()
-        H_Window.configure(background="#ADDAEF")
-        H_Window.title("About Us")
-        w_width = 1000
-        w_height = int(H_Window.winfo_screenheight() / float(2))
-        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        TEXTE = "Hello. \nWe are two students at the University of Bordeaux. We are called Léo Tarpin and Guilhem Bonnefous. We made this video tracker as a year-end project. This project allowed us to deepen our knowledge in the field of computer science. Specifically in coding with Python. This project also allowed us to learn new things like tkinter."
-        label = tk.Label(
-            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
+    def go_to_about_us(self):
+        messagebox.showinfo(
+            "About us :",
+            "We are Léo and Guilhem, two students at the University of Bordeaux, France.\n"
+            + "We had 3 months to do the VideoTracker as a year-end project.\n This project allowed us to deepen our knowledge in the field of computer science,"
+            + "more precisely in coding with Python, and with certain modules such as Tkinter or Opencv.",
         )
-        label.pack(side=tk.TOP, fill="x")
-        label.place(x=0, y=0)
-        tk.Button(
-            H_Window,
-            text="OK",
-            width=20,
-            height=2,
-            background="#9DCDE3",
-            activebackground="#ADDAEF",
-            font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.close(H_Window),
-        ).pack(side=tk.BOTTOM, padx=30, pady=7)
 
-    def go_to_edit(self):
-        H_Window = tk.Toplevel()
-        H_Window.configure(background="#ADDAEF")
-        H_Window.title("Points")
-        w_width = 1000
-        w_height = int(H_Window.winfo_screenheight() / float(2))
-        H_Window.geometry(self.window_pos(H_Window, w_width, w_height))
-        TEXTE = 'test'
-        label = tk.Label(
-            H_Window, text=TEXTE, background="#9DCDE3", wraplength=500, justify=tk.LEFT
-        )
-        label.pack(side=tk.TOP, fill="x")
-        label.place(x=0, y=0)
-        tk.Button(
-            H_Window,
-            text="OK",
-            width=20,
-            height=2,
-            background="#9DCDE3",
-            activebackground="#ADDAEF",
-            font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.close(H_Window),
-        ).pack(side=tk.BOTTOM, padx=30, pady=7)
-    # WORK IN PROGRESS
     def go_to_SV(self):
-        pass
+        Pts = self.controller.dp.dpts.get_tabPts()
+        Tmp = self.controller.dp.dpts.get_tabTmp()
+        Text = "Time\tX pos'\tY pos'\n \n"
+        for i in range(len(Tmp)):
+            if Tmp[i] != 0:
+                Text += (
+                    str(Tmp[i])
+                    + "\t"
+                    + str(Pts[i].getX())
+                    + "\t"
+                    + str(Pts[i].getY())
+                    + "\n"
+                )
+        messagebox.showinfo("Array of points (in pixels)", Text)
 
     # PLOT GRAPH :
 
