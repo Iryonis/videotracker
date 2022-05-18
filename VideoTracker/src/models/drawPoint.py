@@ -1,6 +1,6 @@
 from tkinter import *
-from tkinter import messagebox
 from .dataPoints import dataPoints
+import math
 
 
 class drawPoint:
@@ -38,26 +38,26 @@ class drawPoint:
             )
             self.stateScale = 1
         else:
-            x2 = int(event.x)
-            y2 = int(event.y)
+            self.x2 = int(event.x)
+            self.y2 = int(event.y)
             self.canvas.create_line(
                 self.x1,
                 self.y1,
-                x2,
-                y2,
+                self.x2,
+                self.y2,
                 fill="red",
                 tags="scale",
             )
             self.canvas.create_oval(
-                int(x2 - 3),
-                int(y2 - 3),
-                int(x2 + 4),
-                int(y2 + 4),
+                int(self.x2 - 3),
+                int(self.y2 - 3),
+                int(self.x2 + 4),
+                int(self.y2 + 4),
                 width=0,
                 fill="red",
                 tags="scale",
             )
-            self.choose_scale(x2, y2)
+            self.choose_scale(self.x2, self.y2)
             self.click_put_scale()
 
     def choose_scale(self, x, y):
@@ -98,6 +98,16 @@ class drawPoint:
         self.value = int(self.value)
         self.canvas.delete("scale")
         window.destroy()
+
+    def get_ratio(self):
+        x = self.x2 - self.x1
+        y = self.y2 - self.y1
+        ratioTemp = math.sqrt((x**2) + (y**2))
+        print(ratioTemp)
+        ratio = ratioTemp / self.value
+        print(self.value)
+        print(ratio)
+        return int(ratio)
 
     # Put the marker :
 
@@ -147,7 +157,7 @@ class drawPoint:
             buttonPoint["text"] = "Left-click on the video"
             return self.state
 
-    def put_point(self, event):
+    def put_point(self, event, time):
         xRep, yRep = self.marker
         x = int(event.x)
         y = int(event.y)
@@ -161,5 +171,5 @@ class drawPoint:
         )
         x = x - xRep
         y = yRep - y
-        self.dpts.tab_points(self.i, x, y)
+        self.dpts.tab_points(self.i, x, y, time)
         self.i = self.i + 1

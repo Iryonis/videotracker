@@ -36,11 +36,13 @@ class Controller:
             self.filerepo.save_as(
                 self.dp.dpts.get_tabTmp(),
                 self.dp.dpts.get_tabPts(),
+                self.dp.get_ratio(),
             )
         elif nb == 2:
             self.filerepo.save(
                 self.dp.dpts.get_tabTmp(),
                 self.dp.dpts.get_tabPts(),
+                self.dp.get_ratio(),
             )
 
     def open_file_graph(self):
@@ -68,9 +70,7 @@ class Controller:
                 self.dp = drawPoint()
                 self.dp.get_canvas(self.video.get_canvas())
                 self.dp.click_put_scale()
-                self.dp.dpts.create_tab(
-                    self.video.get_current_frame(), self.video.get_TotTime()
-                )
+                self.dp.dpts.create_tab(self.video.get_TotTime())
         except:
             messagebox.showerror(
                 "Error - Set up scale", "You haven't opened a video yet."
@@ -109,7 +109,8 @@ class Controller:
     def put_point_controller(self, event):
         if self.video.get_next_frame() == True:
             self.window.after(1, self.video.play_video)
-            self.dp.put_point(event)
+            self.time = self.video.get_current_frame()
+            self.dp.put_point(event, self.time)
         else:
             self.canvas.unbind("<Button-1>")
             self.dp.text_button_point(self.buttonPoint)
