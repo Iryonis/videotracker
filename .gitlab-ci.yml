@@ -13,22 +13,10 @@ build-nom:
   script :
     - pip install coverage
 
-test-filerepo:
-  stage: test
-  script :
-    - python3 -m unittest -v VideoTracker/TestsUnitaires/TestFileRepo.py
-
 test-point:
   stage: test
   script :
     - python3 -m unittest -v VideoTracker/TestsUnitaires/TestPoint.py
-
-coverage-filerepo:
-  stage: coverage
-  script :
-    - coverage run -m unittest
-    - coverage run -m pytest VideoTracker/TestsUnitaires/TestFileRepo.py
-    - coverage report -m
 
 coverage-point:
   stage: coverage
