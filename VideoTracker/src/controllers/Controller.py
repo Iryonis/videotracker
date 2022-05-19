@@ -17,7 +17,7 @@ class Controller:
         if self.video.pause == False:
             buttonP["text"] = "||"
         elif self.video.pause == True:
-            buttonP["text"] = ">"
+            buttonP["text"] = "▶"
 
     def browse_file_video(self):
         nextPath = "/resources/videos"
@@ -76,6 +76,7 @@ class Controller:
                 self.dp = drawPoint()
                 self.aimingState = False
                 self.dp.get_canvas(self.video.get_canvas())
+                self.dp.get_TotTime(self.video.get_TotTime())
                 self.dp.click_put_scale()
                 self.dp.dpts.create_tab(self.video.get_TotTime())
         except:

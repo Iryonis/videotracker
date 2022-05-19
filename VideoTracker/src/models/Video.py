@@ -174,7 +174,7 @@ class Video:
 
     def point_next_frame(self):
         frame = int(self.get_current_frame())
-        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame + 1)
+        self.cap.set(cv2.CAP_PROP_POS_FRAMES, frame)
 
     def get_next_frame(self):
         if int(self.get_current_frame() + 1) > self.get_TotTime():
