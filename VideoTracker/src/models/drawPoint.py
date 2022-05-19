@@ -21,7 +21,7 @@ class drawPoint:
             self.canvas.bind("<Button-3>", self.put_scale)
         else:
             self.canvas.unbind("<Button-3>")
-            self.click_marker(self.canvas)
+            self.click_marker()
 
     def put_scale(self, event):
         if self.stateScale == 0:
@@ -70,9 +70,10 @@ class drawPoint:
             w_height = 150
             S_Window.geometry(f"{w_width}x{w_height}+{x}+{y}")
             S_Window.resizable(False, False)
-            Label(S_Window, text="Enter the real distance between the two points").pack(
-                side=TOP, pady=7
-            )
+            Label(
+                S_Window,
+                text="Enter the real distance between the two points (in centimeters)",
+            ).pack(side=TOP, pady=7)
             entry = Entry(S_Window)
             entry.pack(side=TOP, pady=7)
             entry.focus()
@@ -108,8 +109,9 @@ class drawPoint:
 
     # Put the marker :
 
-    def click_marker(self, canvas):
-        canvas.bind("<Control-1>", self.put_marker)
+    def click_marker(self):
+        self.canvas.bind("<Control-1>", self.put_marker)
+        self.stateMarker = False
 
     def put_marker(self, event):
         self.canvas.delete("marker")
@@ -141,6 +143,7 @@ class drawPoint:
             tags="marker",
         )
         self.marker = (x, y)
+        self.stateMarker = True
 
     # Put the points :
 
@@ -155,6 +158,8 @@ class drawPoint:
             return self.state
 
     def put_point(self, event, time):
+        if self.stateMarker == True:
+            self.canvas.unbind("<Control-1>")
         self.time = time
         self.xRep, self.yRep = self.marker
         x = int(event.x)

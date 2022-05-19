@@ -185,7 +185,13 @@ class Video:
 
     # Ferme toutes les fenetres et quitte le processus
     def quit(self):
-        sys.exit()
+        quitConf = messagebox.askquestion(
+            "Quit the app", "Are you sure you want to quit ?"
+        )
+        if quitConf == "yes":
+            sys.exit()
+        else:
+            pass
 
     # Ferme juste la fenetre specifiee
     def close(self, window):

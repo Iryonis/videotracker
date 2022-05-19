@@ -12,7 +12,7 @@ class View:
             self.fenetre = tk.Tk()
             self.fenetre.configure(bg="black")
             self.fenetre.withdraw
-            self.fenetre.title("Video Tracker - V0.1.0")
+            self.fenetre.title("VideoTracker - Final build")
             if platform.system() == "Windows":
                 self.fenetre.attributes("-fullscreen", True)
             elif platform.system() == "Linux":
@@ -306,8 +306,9 @@ class View:
 
     def go_to_about_us(self):
         messagebox.showinfo(
-            "About us :",
-            "We are Léo and Guilhem, two students at the University of Bordeaux, France.\n"
+            "About us",
+            "Project VideoTracker - Final build\nAll rights reserved - 2022\n \n"
+            + "We are Léo and Guilhem, two students at the University of Bordeaux, France.\n"
             + "We had 3 months to do the VideoTracker as a year-end project.\n This project allowed us to deepen our knowledge in the field of computer science,"
             + "more precisely in coding with Python, and with certain modules such as Tkinter or Opencv.",
         )
