@@ -48,10 +48,10 @@ class View:
             label="Play the video",
             underline=0,
             accelerator="(Ctrl + P)",
-            command=lambda: self.controller.video.play_or_pause(),
+            command=lambda: self.controller.play_or_pause_controller(),
         )
         self.fenetre.bind_all(
-            "<Control-Key-p>", lambda p: self.controller.video.play_or_pause()
+            "<Control-Key-p>", lambda p: self.controller.play_or_pause_controller()
         )
         menuFile.add_command(
             label="Save as",
@@ -163,10 +163,10 @@ class View:
             bg="#FF9F45",
             activebackground="#ADDAEF",
             font=("calibri", 18),
-            command=lambda: self.controller.video.first_frame(button),
+            command=lambda: self.controller.first_frame_controller(button),
         ).pack(side=tk.LEFT, padx=30, pady=7)
         self.fenetre.bind_all(
-            "<Control-Key-b>", lambda b: self.controller.video.first_frame(button)
+            "<Control-Key-b>", lambda b: self.controller.first_frame_controller(button)
         )
         tk.Button(
             buttonsFrame,
@@ -175,10 +175,10 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.previous_frame(button),
+            command=lambda: self.controller.previous_frame_controller(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all(
-            "<Left>", lambda l: self.controller.video.previous_frame(button)
+            "<Left>", lambda l: self.controller.previous_frame_controller(button)
         )
         button = tk.Button(
             buttonsFrame,
@@ -209,10 +209,10 @@ class View:
             activebackground="#ADDAEF",
             width=10,
             font=("calibri", 20, "bold"),
-            command=lambda: self.controller.video.next_frame(button),
+            command=lambda: self.controller.next_frame_controller(button),
         ).pack(side=tk.LEFT, padx=30, pady=7, fill="none", expand=True)
         self.fenetre.bind_all(
-            "<Right>", lambda r: self.controller.video.next_frame(button)
+            "<Right>", lambda r: self.controller.next_frame_controller(button)
         )
         buttonsFrame.pack(side=tk.BOTTOM, fill=tk.X)
         buttonPoint = tk.Button(
@@ -281,11 +281,13 @@ class View:
                     background="#9DCDE3",
                     activebackground="#ADDAEF",
                     font=("calibri", 20, "bold"),
-                    command=lambda: self.controller.video.choose_value(entry, F_Window),
+                    command=lambda: self.controller.choose_value_controller(
+                        entry, F_Window
+                    ),
                 ).pack(side=tk.BOTTOM, padx=30, pady=7)
                 F_Window.bind_all(
                     "<Return>",
-                    lambda g: self.controller.video.choose_value(entry, F_Window),
+                    lambda g: self.controller.choose_value_controller(entry, F_Window),
                 )
         except:
             messagebox.showerror(
@@ -299,7 +301,7 @@ class View:
             + "  - Ctrl + v => Show values \n  - Ctrl + g => Go to frame \n  - Ctrl + e => Go to last frame \n  - Ctrl + x => Plot the graph x(t) \n  - Ctrl + y => Plot the graph y(t) \n  - Ctrl + t => Plot the graph y(x) \n"
             + "  - Ctrl + i => Help \n  - Ctrl + u => About us \n  - Ctrl + b => Start from the beginning button \n  - Left => Previous frame button \n  - Space => Play or Pause button \n  - Right => Next frame button \n \n"
             + "After pressing the 'Set up scale' button, you will be able to define a scale by right-clicking two times on the video. Then, with the key's combinaison 'Ctrl + left click', you will have to put a marker to define a new origin."
-            + "To finish, by clicking on the 'Click to place the points' button, a left click on the video will put a point and allow you to track the object you want to track.",
+            + "To finish, by clicking on the 'Click to place the points' button, a left click on the video will put a point and allow you to track the object you want to track.\nDon't forget to stop the aiming when you want to save your work.",
         )
 
     def go_to_about_us(self):

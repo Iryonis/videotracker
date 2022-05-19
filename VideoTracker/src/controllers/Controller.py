@@ -120,8 +120,7 @@ class Controller:
         if self.video.get_next_frame() == True:
             if self.aimingState == False:
                 self.aimingState = True
-            frame = int(self.video.get_current_frame())
-            self.video.cap.set(frame, frame + 1)
+            self.video.point_next_frame()
             self.video.play_video()
             self.time = self.video.get_current_frame()
             self.dp.put_point(event, self.time)
@@ -151,3 +150,42 @@ class Controller:
 
     def go_to_frame_end(self):
         self.video.last_frame()
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
+
+    def next_frame_controller(self, buttonP):
+        self.video.next_frame(buttonP)
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
+
+    def previous_frame_controller(self, buttonP):
+        self.video.previous_frame(buttonP)
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
+
+    def first_frame_controller(self, buttonP):
+        self.video.first_frame(buttonP)
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
+
+    def play_or_pause_controller(self):
+        self.video.play_or_pause()
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
+
+    def choose_value_controller(self, entry, window):
+        self.video.choose_value(entry, window)
+        try:
+            self.dp.show_all_points()
+        except:
+            pass
